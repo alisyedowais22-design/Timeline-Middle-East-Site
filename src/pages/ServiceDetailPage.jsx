@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import {
   MapPin,
@@ -160,177 +160,177 @@ const SERVICES = {
       'Food and beverage logistics',
       'Pharma and healthcare delivery',
       'Cold chain transport',
-      'Refrigerated truck fleets',
+      'Refrigerated trucks and vans',
     ],
   },
 
   'container-tracking': {
     title: 'Container Tracking',
-    eyebrow: 'Cargo Movement Visibility',
+    eyebrow: 'Cargo Security Intelligence',
     icon: Truck,
     image:
-      'https://images.unsplash.com/photo-1504370805625-d32c54b16100?q=80&w=1800&auto=format&fit=crop',
+      'https://images.unsplash.com/photo-1494412651409-8963ce7935a7?q=80&w=1800&auto=format&fit=crop',
     hero:
-      'https://images.unsplash.com/photo-1504370805625-d32c54b16100?q=80&w=1800&auto=format&fit=crop',
+      'https://images.unsplash.com/photo-1494412651409-8963ce7935a7?q=80&w=1800&auto=format&fit=crop',
     intro:
-      'Track containers, cargo units and logistics movement across ports, warehouses, yards and long-haul transport routes.',
+      'Track containers, cargo movement and high-value shipments with live visibility, route alerts and security-focused monitoring.',
     description:
-      'Container tracking gives logistics companies better control over cargo movement. With GPS tracking, geo-fencing and movement alerts, businesses can monitor container location, reduce delays and improve shipment visibility.',
+      'Container tracking helps logistics and shipping businesses secure cargo from origin to destination. With location visibility, movement alerts, geo-fencing and route history, businesses can reduce risk and improve shipment accountability.',
     features: [
-      'Container location tracking',
-      'Port and yard visibility',
-      'Cargo movement alerts',
-      'Geo-fence based monitoring',
-      'Long-route shipment visibility',
-      'Transport status reporting',
+      'Live container location',
+      'Geo-fence security alerts',
+      'Route deviation monitoring',
+      'Cargo movement history',
+      'Unauthorized movement alerts',
+      'Shipment visibility reports',
     ],
     benefits: [
       'Improve cargo security',
-      'Reduce shipment uncertainty',
-      'Monitor container movement',
-      'Improve logistics coordination',
+      'Reduce shipment visibility gaps',
+      'Monitor route compliance',
+      'Protect high-value goods',
     ],
     useCases: [
-      'Port logistics',
-      'Container transport',
-      'Warehouse movement',
-      'Cross-border cargo operations',
+      'Shipping and logistics companies',
+      'Import and export operations',
+      'Container yards and ports',
+      'High-value cargo transport',
     ],
   },
 
   'tire-management-system': {
     title: 'Tire Management System',
-    eyebrow: 'Fleet Safety & Maintenance',
-    icon: ShieldCheck,
+    eyebrow: 'Fleet Maintenance Intelligence',
+    icon: Settings,
     image:
       'https://images.unsplash.com/photo-1487754180451-c456f719a1fc?q=80&w=1800&auto=format&fit=crop',
     hero:
       'https://images.unsplash.com/photo-1487754180451-c456f719a1fc?q=80&w=1800&auto=format&fit=crop',
     intro:
-      'Improve fleet safety with tire pressure, tire condition and maintenance monitoring for trucks, buses and heavy vehicles.',
+      'Improve fleet safety and reduce breakdowns with tire monitoring, maintenance visibility and condition-based fleet insights.',
     description:
-      'Tire issues can cause downtime, safety risks and unnecessary maintenance cost. Timeline Telematics tire management helps operators monitor tire health, receive alerts and maintain safer heavy fleet operations.',
+      'Tire management helps fleet operators monitor tire condition, reduce unexpected failures and manage maintenance cycles. It supports safer driving, better fuel efficiency and reduced downtime for heavy commercial fleets.',
     features: [
-      'Tire pressure monitoring',
-      'Tire health alerts',
+      'Tire health monitoring',
+      'Pressure and condition visibility',
       'Maintenance reminders',
-      'Heavy vehicle support',
-      'Safety risk visibility',
+      'Tire lifecycle tracking',
+      'Breakdown risk reduction',
       'Fleet maintenance reporting',
     ],
     benefits: [
-      'Reduce tire-related breakdowns',
-      'Improve driver and road safety',
-      'Lower maintenance surprises',
-      'Improve vehicle uptime',
+      'Reduce tire-related downtime',
+      'Improve road safety',
+      'Extend tire lifecycle',
+      'Lower maintenance cost',
     ],
     useCases: [
-      'Heavy trucks',
-      'Buses and passenger fleets',
-      'Construction fleets',
-      'Long-haul transport vehicles',
+      'Heavy trucks and trailers',
+      'Long-haul transport fleets',
+      'Bus and staff transport fleets',
+      'Construction and logistics vehicles',
     ],
   },
 
   'personal-tracking-software': {
     title: 'Personal Tracking Software',
-    eyebrow: 'People Safety',
+    eyebrow: 'Workforce Safety Tracking',
     icon: Smartphone,
     image:
       'https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=1800&auto=format&fit=crop',
     hero:
       'https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=1800&auto=format&fit=crop',
     intro:
-      'Monitor field staff, mobile workers, drivers, supervisors and security teams with location visibility and safety-focused tracking.',
+      'Track field teams, mobile staff, security personnel and lone workers with live location, emergency alerts and movement visibility.',
     description:
-      'Personal tracking software supports organizations with field teams and mobile operations. It improves staff safety, route visibility and workforce accountability, especially for teams operating across multiple locations.',
+      'Personal tracking software is designed for businesses that manage staff outside office locations. It improves safety, attendance visibility, route monitoring and emergency response for field operations.',
     features: [
-      'Live staff location visibility',
-      'Field team tracking',
-      'Emergency location support',
-      'Route and visit history',
-      'Mobile workforce monitoring',
-      'Team accountability reporting',
+      'Live staff location',
+      'SOS emergency alerts',
+      'Route and movement history',
+      'Geo-fence attendance support',
+      'Mobile workforce visibility',
+      'Daily activity reporting',
     ],
     benefits: [
       'Improve field staff safety',
-      'Monitor mobile operations',
-      'Increase workforce accountability',
+      'Increase operational accountability',
       'Support emergency response',
+      'Track workforce movement',
     ],
     useCases: [
-      'Field service teams',
-      'Security operations',
-      'Delivery supervisors',
-      'Remote workforce management',
+      'Field sales teams',
+      'Security staff',
+      'Delivery riders',
+      'Remote workers and lone workers',
     ],
   },
 
   'portable-tracking-device': {
     title: 'Portable Tracking Device',
-    eyebrow: 'Flexible Tracking',
+    eyebrow: 'Flexible GPS Tracking',
     icon: Radio,
     image:
       'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?q=80&w=1800&auto=format&fit=crop',
     hero:
       'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?q=80&w=1800&auto=format&fit=crop',
     intro:
-      'Use compact portable GPS devices for temporary assets, rental vehicles, field equipment, cargo movement and mobile tracking needs.',
+      'Use compact portable GPS tracking devices for temporary vehicles, assets, containers, personal safety and flexible tracking needs.',
     description:
-      'Portable tracking devices are ideal for businesses that need flexible deployment without fixed installation. They can be used for temporary monitoring, rental operations, cargo tracking and field asset protection.',
+      'Portable tracking devices are ideal when fixed installation is not required. They help businesses track valuable assets, temporary shipments, rental vehicles and mobile teams using flexible GPS monitoring.',
     features: [
       'Portable GPS tracking',
-      'Quick deployment',
-      'Rechargeable device support',
-      'Temporary asset monitoring',
-      'Compact tracking hardware',
-      'Flexible location visibility',
+      'Long battery support',
+      'Motion detection alerts',
+      'Geo-fence monitoring',
+      'Compact device design',
+      'Real-time location reporting',
     ],
     benefits: [
-      'Track assets without permanent installation',
-      'Support rental and temporary operations',
-      'Improve cargo visibility',
-      'Deploy tracking quickly',
+      'Flexible tracking without wiring',
+      'Protect temporary assets',
+      'Quick deployment',
+      'Improve asset visibility',
     ],
     useCases: [
+      'Temporary vehicle tracking',
       'Rental assets',
-      'Temporary vehicles',
-      'Cargo movement',
-      'Field operations',
+      'Cargo and equipment',
+      'Personal safety applications',
     ],
   },
 
   'auto-conductor': {
     title: 'Auto Conductor',
-    eyebrow: 'Smart Vehicle Control',
-    icon: Settings,
+    eyebrow: 'Passenger Fleet Automation',
+    icon: ShieldCheck,
     image:
-      'https://images.unsplash.com/photo-1537151608828-ea2b11777ee8?q=80&w=1800&auto=format&fit=crop',
+      'https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?q=80&w=1800&auto=format&fit=crop',
     hero:
-      'https://images.unsplash.com/photo-1537151608828-ea2b11777ee8?q=80&w=1800&auto=format&fit=crop',
+      'https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?q=80&w=1800&auto=format&fit=crop',
     intro:
-      'Smart automation and vehicle operation control for modern fleets using connected devices, sensors and platform intelligence.',
+      'Digitize passenger transport operations with smart route visibility, trip monitoring, passenger flow and fleet accountability.',
     description:
-      'Auto Conductor helps fleet operators connect devices, sensors, automation workflows and vehicle control features. It supports smarter operations by combining telematics data with practical control and monitoring tools.',
+      'Auto Conductor solutions help public transport, staff transport and passenger fleet operators manage routes, trips and vehicle activity with better visibility. It improves operational control and passenger mobility management.',
     features: [
-      'Smart vehicle operation workflows',
-      'Device and sensor integration',
-      'Automation-ready fleet control',
-      'Event-based alerts',
-      'Operational command support',
-      'Fleet intelligence integration',
+      'Route and trip monitoring',
+      'Passenger operation visibility',
+      'Fleet activity reports',
+      'Driver and vehicle accountability',
+      'Schedule visibility',
+      'Transport operation analytics',
     ],
     benefits: [
-      'Improve operational control',
-      'Automate monitoring workflows',
-      'Connect sensors and devices',
-      'Support smart mobility operations',
+      'Improve passenger transport control',
+      'Increase route accountability',
+      'Monitor vehicle activity',
+      'Digitize transport operations',
     ],
     useCases: [
-      'Enterprise fleets',
-      'Smart mobility operators',
-      'Vehicle control workflows',
-      'Connected fleet operations',
+      'Public transport fleets',
+      'Staff transport buses',
+      'School bus operations',
+      'Passenger shuttle services',
     ],
   },
 };
@@ -339,568 +339,379 @@ const PROCESS = [
   {
     icon: Activity,
     title: 'Analyze',
-    text: 'We understand your fleet size, routes, industry and operational challenges.',
+    text: 'We understand your fleet size, routes, industry, vehicles and daily operational challenges.',
   },
   {
     icon: Settings,
     title: 'Deploy',
-    text: 'We recommend the right hardware, sensors and platform setup for your use case.',
+    text: 'We recommend the right hardware, sensors and platform setup according to your business use case.',
   },
   {
     icon: BarChart3,
     title: 'Optimize',
-    text: 'You get live insights, alerts and reports to improve performance and reduce cost.',
+    text: 'You get live insights, alerts and reports to improve performance, safety and operating cost.',
   },
 ];
+
+const useReveal = () => {
+  const ref = useRef(null);
+  const [visible, setVisible] = useState(false);
+
+  useEffect(() => {
+    const obs = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) setVisible(true);
+      },
+      { threshold: 0.12 }
+    );
+
+    if (ref.current) obs.observe(ref.current);
+    return () => obs.disconnect();
+  }, []);
+
+  return [ref, visible];
+};
+
+const Reveal = ({ children, delay = 0, className = '' }) => {
+  const [ref, visible] = useReveal();
+
+  return (
+    <div
+      ref={ref}
+      className={`sd-reveal ${visible ? 'show' : ''} ${className}`}
+      style={{ transitionDelay: `${delay}s` }}
+    >
+      {children}
+    </div>
+  );
+};
+
+const DetailSlider = ({ items }) => {
+  const [active, setActive] = useState(0);
+
+  useEffect(() => {
+    if (!items?.length) return undefined;
+
+    const timer = setInterval(() => {
+      setActive((prev) => (prev + 1) % items.length);
+    }, 3600);
+
+    return () => clearInterval(timer);
+  }, [items]);
+
+  if (!items?.length) return null;
+
+  const goNext = () => setActive((prev) => (prev + 1) % items.length);
+  const goPrev = () => setActive((prev) => (prev - 1 + items.length) % items.length);
+
+  return (
+    <div className="sd-slider">
+      <button className="sd-slider-btn sd-slider-prev" onClick={goPrev} type="button">
+        ‹
+      </button>
+
+      <div className="sd-slider-stage">
+        {items.map((item, index) => (
+          <article key={item} className={`sd-slide ${active === index ? 'active' : ''}`}>
+            <span className="sd-slide-number">{String(index + 1).padStart(2, '0')}</span>
+            <h3>{item}</h3>
+            <p>
+              Smart fleet intelligence designed to help your team monitor, control
+              and improve daily operations with complete visibility.
+            </p>
+          </article>
+        ))}
+      </div>
+
+      <button className="sd-slider-btn sd-slider-next" onClick={goNext} type="button">
+        ›
+      </button>
+
+      <div className="sd-slider-dots">
+        {items.map((item, index) => (
+          <button
+            key={item}
+            type="button"
+            className={active === index ? 'active' : ''}
+            onClick={() => setActive(index)}
+            aria-label={`Go to slide ${index + 1}`}
+          />
+        ))}
+      </div>
+    </div>
+  );
+};
 
 const ServiceDetailPage = () => {
   const { slug } = useParams();
   const service = SERVICES[slug] || SERVICES['vehicle-tracking'];
   const Icon = service.icon;
 
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [slug]);
+
   return (
-    <div style={{ fontFamily: P, background: '#fff' }}>
+    <div className="sd-page">
       <TopBar />
       <Navbar />
 
-      <main style={{ paddingTop: '112px' }}>
-        {/* Hero */}
+      <main className="sd-main">
         <section
+          className="sd-hero"
           style={{
-            position: 'relative',
-            minHeight: '540px',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            overflow: 'hidden',
-            color: '#fff',
-            padding: '90px 24px',
-            background: `linear-gradient(rgba(3,7,18,0.56), rgba(3,7,18,0.76)), url(${service.hero})`,
-            backgroundSize: 'cover',
-            backgroundPosition: 'center',
+            backgroundImage: `
+              linear-gradient(90deg, rgba(8,20,46,0.92) 0%, rgba(8,20,46,0.74) 48%, rgba(3,7,18,0.84) 100%),
+              url(${service.hero})
+            `,
           }}
         >
-          <div
-            style={{
-              position: 'absolute',
-              inset: 0,
-              background:
-                'linear-gradient(90deg, rgba(8,20,46,0.86) 0%, rgba(8,20,46,0.52) 52%, rgba(3,7,18,0.72) 100%)',
-              zIndex: 1,
-            }}
-          />
+          <div className="sd-hero-red-line" />
 
-          <div
-            style={{
-              position: 'relative',
-              zIndex: 2,
-              maxWidth: '1050px',
-              margin: '0 auto',
-              textAlign: 'center',
-            }}
-          >
-            <div
-              style={{
-                width: '74px',
-                height: '74px',
-                borderRadius: '22px',
-                background: RED,
-                color: '#fff',
-                display: 'inline-flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                marginBottom: '22px',
-                boxShadow: '0 18px 44px rgba(232,49,42,0.34)',
-              }}
-            >
-              <Icon size={34} />
-            </div>
+          <div className="sd-container">
+            <Reveal>
+              <div className="sd-breadcrumb">
+                <Link to="/">Home</Link>
+                <span>›</span>
+                <Link to="/solutions">Solutions</Link>
+                <span>›</span>
+                <strong>{service.title}</strong>
+              </div>
 
-            <div
-              style={{
-                color: RED,
-                fontSize: '11px',
-                fontWeight: 900,
-                letterSpacing: '3px',
-                textTransform: 'uppercase',
-                marginBottom: '14px',
-              }}
-            >
-              {service.eyebrow}
-            </div>
+              <div className="sd-hero-icon">
+                <Icon size={34} />
+              </div>
 
-            <h1
-              style={{
-                margin: 0,
-                fontSize: 'clamp(42px, 5vw, 72px)',
-                fontWeight: 900,
-                lineHeight: 1.1,
-                letterSpacing: '-1.8px',
-              }}
-            >
-              {service.title}
-            </h1>
+              <div className="sd-eyebrow">{service.eyebrow}</div>
 
-            <p
-              style={{
-                margin: '24px auto 0',
-                maxWidth: '760px',
-                color: 'rgba(255,255,255,0.84)',
-                fontSize: '17px',
-                lineHeight: 1.8,
-              }}
-            >
-              {service.intro}
-            </p>
+              <h1>
+                {service.title}
+                <span>.</span>
+              </h1>
 
-            <div
-              style={{
-                marginTop: '34px',
-                display: 'flex',
-                justifyContent: 'center',
-                gap: '14px',
-                flexWrap: 'wrap',
-              }}
-            >
-              <Link
-                to="/contact"
-                style={{
-                  height: '52px',
-                  padding: '0 30px',
-                  borderRadius: '8px',
-                  background: RED,
-                  color: '#fff',
-                  textDecoration: 'none',
-                  display: 'inline-flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  fontSize: '14px',
-                  fontWeight: 900,
-                }}
-              >
-                Book a Demo
-              </Link>
+              <p>{service.intro}</p>
 
-              <Link
-                to="/solutions"
-                style={{
-                  height: '52px',
-                  padding: '0 28px',
-                  borderRadius: '8px',
-                  color: '#fff',
-                  textDecoration: 'none',
-                  display: 'inline-flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  fontSize: '14px',
-                  fontWeight: 900,
-                  border: '1px solid rgba(255,255,255,0.24)',
-                  background: 'rgba(255,255,255,0.08)',
-                }}
-              >
-                View All Services
-              </Link>
-            </div>
+              <div className="sd-hero-actions">
+                <Link to="/contact" className="sd-btn sd-btn-red">
+                  Book a Demo <ArrowRight size={17} />
+                </Link>
+
+                <a href="#features" className="sd-btn sd-btn-ghost">
+                  Explore Features
+                </a>
+              </div>
+            </Reveal>
           </div>
         </section>
 
-        {/* Overview */}
-        <section style={{ padding: '86px 24px', background: '#fff' }}>
-          <div
-            style={{
-              maxWidth: '1180px',
-              margin: '0 auto',
-              display: 'grid',
-              gridTemplateColumns: '0.95fr 1.05fr',
-              gap: '54px',
-              alignItems: 'center',
-            }}
-            className="service-overview-grid"
-          >
-            <div
-              style={{
-                borderRadius: '26px',
-                overflow: 'hidden',
-                minHeight: '430px',
-                backgroundImage: `url(${service.image})`,
-                backgroundSize: 'cover',
-                backgroundPosition: 'center',
-                boxShadow: '0 24px 60px rgba(8,20,46,0.16)',
-              }}
-            />
+        <section className="sd-section sd-white">
+          <div className="sd-container sd-overview-grid">
+            <Reveal>
+              <div className="sd-image-card">
+                <img src={service.image} alt={service.title} />
 
-            <div>
-              <div
-                style={{
-                  color: RED,
-                  fontSize: '11px',
-                  fontWeight: 900,
-                  letterSpacing: '3px',
-                  textTransform: 'uppercase',
-                  marginBottom: '14px',
-                }}
-              >
-                Service Overview
-              </div>
-
-              <h2
-                style={{
-                  margin: '0 0 18px',
-                  color: NAVY,
-                  fontSize: 'clamp(30px, 4vw, 48px)',
-                  fontWeight: 900,
-                  lineHeight: 1.16,
-                  letterSpacing: '-1.2px',
-                }}
-              >
-                Built for smarter fleet control in Dubai and the Middle East.
-              </h2>
-
-              <p
-                style={{
-                  margin: 0,
-                  color: TEXT,
-                  fontSize: '15.5px',
-                  lineHeight: 1.85,
-                }}
-              >
-                {service.description}
-              </p>
-
-              <div
-                style={{
-                  marginTop: '28px',
-                  display: 'grid',
-                  gridTemplateColumns: 'repeat(2, 1fr)',
-                  gap: '12px',
-                }}
-                className="service-feature-grid"
-              >
-                {service.features.map((feature) => (
-                  <div
-                    key={feature}
-                    style={{
-                      display: 'flex',
-                      alignItems: 'flex-start',
-                      gap: '9px',
-                      color: '#374151',
-                      fontSize: '13.5px',
-                      fontWeight: 700,
-                      lineHeight: 1.5,
-                    }}
-                  >
-                    <CheckCircle size={16} color={RED} style={{ marginTop: 2, flexShrink: 0 }} />
-                    {feature}
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Benefits */}
-        <section style={{ padding: '76px 24px', background: '#f8fafc' }}>
-          <div style={{ maxWidth: '1180px', margin: '0 auto' }}>
-            <div style={{ textAlign: 'center', marginBottom: '44px' }}>
-              <div
-                style={{
-                  color: RED,
-                  fontSize: '11px',
-                  fontWeight: 900,
-                  letterSpacing: '3px',
-                  textTransform: 'uppercase',
-                  marginBottom: '12px',
-                }}
-              >
-                Key Benefits
-              </div>
-
-              <h2
-                style={{
-                  margin: 0,
-                  color: NAVY,
-                  fontSize: 'clamp(30px, 4vw, 46px)',
-                  fontWeight: 900,
-                  letterSpacing: '-1.2px',
-                }}
-              >
-                Why businesses choose this service
-              </h2>
-            </div>
-
-            <div
-              style={{
-                display: 'grid',
-                gridTemplateColumns: 'repeat(4, 1fr)',
-                gap: '18px',
-              }}
-              className="service-benefits-grid"
-            >
-              {service.benefits.map((benefit, index) => (
-                <div
-                  key={benefit}
-                  style={{
-                    background: '#fff',
-                    borderRadius: '18px',
-                    padding: '24px',
-                    border: '1px solid #e5e7eb',
-                    boxShadow: '0 10px 34px rgba(8,20,46,0.06)',
-                  }}
-                >
-                  <div
-                    style={{
-                      width: '42px',
-                      height: '42px',
-                      borderRadius: '12px',
-                      background: 'rgba(232,49,42,0.10)',
-                      color: RED,
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      marginBottom: '18px',
-                      fontSize: '15px',
-                      fontWeight: 900,
-                    }}
-                  >
-                    {String(index + 1).padStart(2, '0')}
-                  </div>
-
-                  <h3
-                    style={{
-                      margin: 0,
-                      color: NAVY,
-                      fontSize: '17px',
-                      fontWeight: 900,
-                      lineHeight: 1.4,
-                    }}
-                  >
-                    {benefit}
-                  </h3>
+                <div className="sd-image-badge">
+                  <Bell size={18} />
+                  Live Alerts Enabled
                 </div>
+              </div>
+            </Reveal>
+
+            <Reveal delay={0.12}>
+              <div className="sd-copy">
+                <div className="sd-eyebrow dark">Service Overview</div>
+                <h2>Built for smarter fleet control in Dubai and the Middle East.</h2>
+                <p>{service.description}</p>
+
+                <div className="sd-quick-grid">
+                  {service.features.slice(0, 4).map((feature) => (
+                    <div className="sd-quick-item" key={feature}>
+                      <CheckCircle size={17} />
+                      <span>{feature}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </Reveal>
+          </div>
+        </section>
+
+        <section id="features" className="sd-section sd-light">
+          <div className="sd-container">
+            <Reveal className="sd-heading">
+              <div className="sd-eyebrow dark">Core Capabilities</div>
+              <h2>Professional tools for real fleet operations</h2>
+              <p>
+                A complete solution designed for live visibility, reporting,
+                alerts, safety and business control.
+              </p>
+            </Reveal>
+
+            <Reveal delay={0.12}>
+              <DetailSlider items={service.features} />
+            </Reveal>
+          </div>
+        </section>
+
+        <section className="sd-section sd-white">
+          <div className="sd-container sd-dashboard-grid">
+            <Reveal>
+              <div className="sd-copy">
+                <div className="sd-eyebrow dark">Dashboard Experience</div>
+                <h2>Everything visible from one command center.</h2>
+                <p>
+                  Monitor live movement, check alerts, view activity reports and
+                  understand performance without switching between multiple tools.
+                </p>
+
+                <div className="sd-dashboard-points">
+                  <div>
+                    <BarChart3 size={21} />
+                    <span>Real-time analytics</span>
+                  </div>
+
+                  <div>
+                    <Route size={21} />
+                    <span>Route & trip visibility</span>
+                  </div>
+
+                  <div>
+                    <Bell size={21} />
+                    <span>Instant event alerts</span>
+                  </div>
+                </div>
+              </div>
+            </Reveal>
+
+            <Reveal delay={0.12}>
+              <div className="sd-dashboard">
+                <div className="sd-dashboard-top">
+                  <span>Fleet Dashboard</span>
+                  <i />
+                  <i />
+                  <i />
+                </div>
+
+                <div className="sd-dashboard-body">
+                  <div className="sd-sidebar">
+                    <span />
+                    <span />
+                    <span />
+                    <span />
+                  </div>
+
+                  <div className="sd-map">
+                    <div className="sd-route" />
+                    <div className="sd-pin pin-1" />
+                    <div className="sd-pin pin-2" />
+                    <div className="sd-pin pin-3" />
+
+                    <div className="sd-widget widget-1">
+                      <strong>Fleet Status</strong>
+                      <div className="sd-donut" />
+                    </div>
+
+                    <div className="sd-widget widget-2">
+                      <strong>Driver Alerts</strong>
+                      <div className="sd-bars">
+                        <span />
+                        <span />
+                        <span />
+                        <span />
+                      </div>
+                    </div>
+
+                    <div className="sd-widget widget-3">
+                      <strong>Live Reports</strong>
+                      <p>Trip activity, stops, routes and exceptions.</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </Reveal>
+          </div>
+        </section>
+
+        <section className="sd-section sd-light">
+          <div className="sd-container">
+            <Reveal className="sd-heading">
+              <div className="sd-eyebrow dark">Key Benefits</div>
+              <h2>Why businesses choose this solution</h2>
+            </Reveal>
+
+            <div className="sd-benefits-grid">
+              {service.benefits.map((benefit, index) => (
+                <Reveal key={benefit} delay={index * 0.08}>
+                  <article className="sd-benefit-card">
+                    <span>{String(index + 1).padStart(2, '0')}</span>
+                    <h3>{benefit}</h3>
+                  </article>
+                </Reveal>
               ))}
             </div>
           </div>
         </section>
 
-        {/* Use cases + process */}
-        <section style={{ padding: '86px 24px', background: '#fff' }}>
-          <div
-            style={{
-              maxWidth: '1180px',
-              margin: '0 auto',
-              display: 'grid',
-              gridTemplateColumns: '1fr 1fr',
-              gap: '34px',
-            }}
-            className="service-two-grid"
-          >
-            <div
-              style={{
-                borderRadius: '24px',
-                background: NAVY,
-                color: '#fff',
-                padding: '38px',
-                overflow: 'hidden',
-                position: 'relative',
-              }}
-            >
-              <div
-                style={{
-                  position: 'absolute',
-                  right: '-70px',
-                  top: '-70px',
-                  width: '190px',
-                  height: '190px',
-                  borderRadius: '50%',
-                  background: 'rgba(232,49,42,0.18)',
-                }}
-              />
+        <section className="sd-section sd-white">
+          <div className="sd-container sd-two-grid">
+            <Reveal>
+              <div className="sd-dark-card">
+                <div className="sd-eyebrow light">Best Use Cases</div>
+                <h2>Where this solution works best</h2>
 
-              <h3
-                style={{
-                  margin: '0 0 18px',
-                  fontSize: '30px',
-                  fontWeight: 900,
-                  letterSpacing: '-0.8px',
-                }}
-              >
-                Best use cases
-              </h3>
-
-              <div style={{ display: 'grid', gap: '14px' }}>
-                {service.useCases.map((item) => (
-                  <div
-                    key={item}
-                    style={{
-                      display: 'flex',
-                      alignItems: 'center',
-                      gap: '11px',
-                      color: 'rgba(255,255,255,0.82)',
-                      fontSize: '15px',
-                      fontWeight: 700,
-                    }}
-                  >
-                    <Route size={18} color={RED} />
-                    {item}
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            <div
-              style={{
-                borderRadius: '24px',
-                background: '#f8fafc',
-                padding: '38px',
-                border: '1px solid #e5e7eb',
-              }}
-            >
-              <h3
-                style={{
-                  margin: '0 0 18px',
-                  color: NAVY,
-                  fontSize: '30px',
-                  fontWeight: 900,
-                  letterSpacing: '-0.8px',
-                }}
-              >
-                How we deploy
-              </h3>
-
-              <div style={{ display: 'grid', gap: '18px' }}>
-                {PROCESS.map((step) => {
-                  const StepIcon = step.icon;
-                  return (
-                    <div
-                      key={step.title}
-                      style={{
-                        display: 'flex',
-                        gap: '14px',
-                        alignItems: 'flex-start',
-                      }}
-                    >
-                      <div
-                        style={{
-                          width: '44px',
-                          height: '44px',
-                          borderRadius: '13px',
-                          background: RED,
-                          color: '#fff',
-                          display: 'flex',
-                          alignItems: 'center',
-                          justifyContent: 'center',
-                          flexShrink: 0,
-                        }}
-                      >
-                        <StepIcon size={20} />
-                      </div>
-
-                      <div>
-                        <div
-                          style={{
-                            color: NAVY,
-                            fontSize: '16px',
-                            fontWeight: 900,
-                            marginBottom: '4px',
-                          }}
-                        >
-                          {step.title}
-                        </div>
-
-                        <div
-                          style={{
-                            color: TEXT,
-                            fontSize: '13.5px',
-                            lineHeight: 1.65,
-                          }}
-                        >
-                          {step.text}
-                        </div>
-                      </div>
+                <div className="sd-list">
+                  {service.useCases.map((item) => (
+                    <div key={item}>
+                      <Route size={18} />
+                      <span>{item}</span>
                     </div>
-                  );
-                })}
+                  ))}
+                </div>
               </div>
-            </div>
+            </Reveal>
+
+            <Reveal delay={0.12}>
+              <div className="sd-process-card">
+                <div className="sd-eyebrow dark">Deployment Flow</div>
+                <h2>How we deploy</h2>
+
+                <div className="sd-process-list">
+                  {PROCESS.map((step) => {
+                    const StepIcon = step.icon;
+
+                    return (
+                      <div className="sd-process-item" key={step.title}>
+                        <div className="sd-process-icon">
+                          <StepIcon size={20} />
+                        </div>
+
+                        <div>
+                          <h3>{step.title}</h3>
+                          <p>{step.text}</p>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+            </Reveal>
           </div>
         </section>
 
-        {/* CTA */}
-        <section
-          style={{
-            padding: '78px 24px',
-            background: 'linear-gradient(135deg, #08142E 0%, #101827 55%, #1b0f12 100%)',
-            color: '#fff',
-          }}
-        >
-          <div
-            style={{
-              maxWidth: '1050px',
-              margin: '0 auto',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'space-between',
-              gap: '30px',
-              flexWrap: 'wrap',
-            }}
-          >
+        <section className="sd-cta">
+          <div className="sd-container sd-cta-inner">
             <div>
-              <div
-                style={{
-                  color: RED,
-                  fontSize: '10px',
-                  fontWeight: 900,
-                  letterSpacing: '3px',
-                  textTransform: 'uppercase',
-                  marginBottom: '12px',
-                }}
-              >
-                Ready to deploy?
-              </div>
-
-              <h2
-                style={{
-                  margin: 0,
-                  fontSize: 'clamp(28px, 4vw, 44px)',
-                  fontWeight: 900,
-                  lineHeight: 1.18,
-                }}
-              >
-                Get a tailored {service.title.toLowerCase()} solution for your fleet.
-              </h2>
-
-              <p
-                style={{
-                  margin: '14px 0 0',
-                  maxWidth: '650px',
-                  color: 'rgba(255,255,255,0.72)',
-                  fontSize: '15px',
-                  lineHeight: 1.75,
-                }}
-              >
-                Share your fleet size, vehicle type and operational needs. Our team will recommend
-                the right devices, platform features and deployment approach.
+              <div className="sd-eyebrow light">Ready to deploy?</div>
+              <h2>Get a tailored {service.title.toLowerCase()} solution for your fleet.</h2>
+              <p>
+                Share your fleet size, vehicle type and operational needs.
+                Our team will recommend the right devices, platform features
+                and deployment approach.
               </p>
             </div>
 
-            <Link
-              to="/contact"
-              style={{
-                height: '52px',
-                padding: '0 30px',
-                borderRadius: '10px',
-                background: RED,
-                color: '#fff',
-                display: 'inline-flex',
-                alignItems: 'center',
-                gap: '8px',
-                textDecoration: 'none',
-                fontWeight: 900,
-                fontSize: '14px',
-                boxShadow: '0 18px 44px rgba(232,49,42,0.30)',
-              }}
-            >
-              Book a Demo <ArrowRight size={17} />
+            <Link to="/contact" className="sd-btn sd-btn-red">
+              Request a Quote <ArrowRight size={17} />
             </Link>
           </div>
         </section>
@@ -909,29 +720,852 @@ const ServiceDetailPage = () => {
       <Footer />
 
       <style>{`
-        html {
-          scroll-behavior: smooth;
+        .sd-page {
+          font-family: ${P};
+          background: #fff;
+          color: #111827;
+        }
+
+        .sd-main {
+          padding-top: 116px;
+        }
+
+        .sd-container {
+          max-width: 1180px;
+          margin: 0 auto;
+          padding: 0 24px;
+        }
+
+        .sd-hero {
+          position: relative;
+          min-height: 560px;
+          display: flex;
+          align-items: center;
+          background-size: cover;
+          background-position: center;
+          color: #fff;
+          overflow: hidden;
+          padding: 95px 0;
+        }
+
+        .sd-hero::after {
+          content: '';
+          position: absolute;
+          inset: 0;
+          background:
+            radial-gradient(circle at 15% 25%, rgba(232,49,42,0.22), transparent 28%),
+            linear-gradient(to top, rgba(0,0,0,0.35), transparent 45%);
+          z-index: 1;
+        }
+
+        .sd-hero .sd-container {
+          position: relative;
+          z-index: 2;
+        }
+
+        .sd-hero-red-line {
+          position: absolute;
+          left: 0;
+          top: 0;
+          bottom: 0;
+          width: 5px;
+          background: ${RED};
+          z-index: 3;
+        }
+
+        .sd-breadcrumb {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          gap: 9px;
+          margin-bottom: 24px;
+          font-size: 12px;
+          font-weight: 700;
+          letter-spacing: 1px;
+          text-transform: uppercase;
+          flex-wrap: wrap;
+        }
+
+        .sd-breadcrumb a {
+          color: rgba(255,255,255,0.55);
+          text-decoration: none;
+        }
+
+        .sd-breadcrumb a:hover,
+        .sd-breadcrumb strong {
+          color: ${RED};
+        }
+
+        .sd-hero-icon {
+          width: 78px;
+          height: 78px;
+          margin: 0 auto 22px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          border-radius: 20px;
+          background: ${RED};
+          color: #fff;
+          box-shadow: 0 22px 50px rgba(232,49,42,0.34);
+        }
+
+        .sd-eyebrow {
+          text-align: center;
+          font-size: 11px;
+          font-weight: 900;
+          letter-spacing: 3px;
+          text-transform: uppercase;
+          color: ${RED};
+          margin-bottom: 14px;
+        }
+
+        .sd-eyebrow.dark {
+          color: ${RED};
+          text-align: left;
+        }
+
+        .sd-heading .sd-eyebrow.dark {
+          text-align: center;
+        }
+
+        .sd-eyebrow.light {
+          color: rgba(255,255,255,0.72);
+          text-align: left;
+        }
+
+        .sd-hero h1 {
+          max-width: 980px;
+          margin: 0 auto;
+          text-align: center;
+          font-size: clamp(42px, 5vw, 74px);
+          font-weight: 900;
+          line-height: 1.07;
+          letter-spacing: -1.8px;
+        }
+
+        .sd-hero h1 span {
+          color: ${RED};
+        }
+
+        .sd-hero p {
+          max-width: 780px;
+          margin: 24px auto 0;
+          text-align: center;
+          color: rgba(255,255,255,0.82);
+          font-size: 17px;
+          line-height: 1.85;
+        }
+
+        .sd-hero-actions {
+          display: flex;
+          justify-content: center;
+          flex-wrap: wrap;
+          gap: 14px;
+          margin-top: 34px;
+        }
+
+        .sd-btn {
+          min-height: 52px;
+          padding: 0 28px;
+          border-radius: 8px;
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          gap: 8px;
+          text-decoration: none;
+          font-size: 14px;
+          font-weight: 900;
+          transition: 0.25s ease;
+        }
+
+        .sd-btn-red {
+          background: ${RED};
+          color: #fff;
+          box-shadow: 0 18px 42px rgba(232,49,42,0.28);
+        }
+
+        .sd-btn-red:hover {
+          transform: translateY(-3px);
+          background: #c41020;
+        }
+
+        .sd-btn-ghost {
+          color: #fff;
+          border: 1px solid rgba(255,255,255,0.24);
+          background: rgba(255,255,255,0.08);
+          backdrop-filter: blur(8px);
+        }
+
+        .sd-btn-ghost:hover {
+          background: rgba(255,255,255,0.15);
+          transform: translateY(-3px);
+        }
+
+        .sd-section {
+          padding: 86px 0;
+        }
+
+        .sd-white {
+          background: #fff;
+        }
+
+        .sd-light {
+          background: #f8fafc;
+        }
+
+        .sd-overview-grid,
+        .sd-dashboard-grid,
+        .sd-two-grid {
+          display: grid;
+          grid-template-columns: 0.95fr 1.05fr;
+          gap: 54px;
+          align-items: center;
+        }
+
+        .sd-image-card {
+          position: relative;
+          min-height: 430px;
+          border-radius: 24px;
+          overflow: hidden;
+          box-shadow: 0 24px 60px rgba(8,20,46,0.16);
+          background: #f3f4f6;
+        }
+
+        .sd-image-card img {
+          width: 100%;
+          height: 430px;
+          object-fit: cover;
+          display: block;
+          transition: 0.5s ease;
+        }
+
+        .sd-image-card:hover img {
+          transform: scale(1.04);
+        }
+
+        .sd-image-badge {
+          position: absolute;
+          left: 22px;
+          bottom: 22px;
+          display: inline-flex;
+          align-items: center;
+          gap: 9px;
+          padding: 12px 16px;
+          border-radius: 12px;
+          background: rgba(255,255,255,0.92);
+          color: ${NAVY};
+          font-size: 13px;
+          font-weight: 900;
+          box-shadow: 0 16px 34px rgba(0,0,0,0.16);
+          backdrop-filter: blur(8px);
+        }
+
+        .sd-copy h2,
+        .sd-heading h2,
+        .sd-dark-card h2,
+        .sd-process-card h2,
+        .sd-cta h2 {
+          margin: 0 0 18px;
+          color: ${NAVY};
+          font-size: clamp(30px, 4vw, 48px);
+          font-weight: 900;
+          line-height: 1.15;
+          letter-spacing: -1.2px;
+        }
+
+        .sd-copy p,
+        .sd-heading p {
+          margin: 0;
+          color: ${TEXT};
+          font-size: 15.5px;
+          line-height: 1.85;
+        }
+
+        .sd-quick-grid {
+          display: grid;
+          grid-template-columns: repeat(2, 1fr);
+          gap: 12px;
+          margin-top: 28px;
+        }
+
+        .sd-quick-item {
+          display: flex;
+          gap: 9px;
+          align-items: flex-start;
+          color: #374151;
+          font-size: 13.5px;
+          font-weight: 800;
+          line-height: 1.5;
+        }
+
+        .sd-quick-item svg {
+          color: ${RED};
+          flex-shrink: 0;
+          margin-top: 2px;
+        }
+
+        .sd-heading {
+          text-align: center;
+          max-width: 820px;
+          margin: 0 auto 46px;
+        }
+
+        .sd-slider {
+          position: relative;
+          max-width: 940px;
+          margin: 0 auto;
+          padding: 0 70px 42px;
+        }
+
+        .sd-slider-stage {
+          position: relative;
+          min-height: 265px;
+        }
+
+        .sd-slide {
+          position: absolute;
+          inset: 0;
+          opacity: 0;
+          pointer-events: none;
+          transform: translateX(34px) scale(0.97);
+          transition: 0.5s ease;
+          padding: 40px;
+          border-radius: 18px;
+          background: #fff;
+          border: 1px solid #e5e7eb;
+          box-shadow: 0 24px 60px rgba(8,20,46,0.10);
+        }
+
+        .sd-slide.active {
+          opacity: 1;
+          pointer-events: auto;
+          transform: translateX(0) scale(1);
+        }
+
+        .sd-slide-number {
+          width: 52px;
+          height: 52px;
+          border-radius: 14px;
+          background: rgba(232,49,42,0.10);
+          color: ${RED};
+          display: grid;
+          place-items: center;
+          font-weight: 900;
+          margin-bottom: 22px;
+        }
+
+        .sd-slide h3 {
+          margin: 0 0 12px;
+          color: ${NAVY};
+          font-size: 30px;
+          font-weight: 900;
+          letter-spacing: -0.7px;
+        }
+
+        .sd-slide p {
+          max-width: 700px;
+          margin: 0;
+          color: ${TEXT};
+          font-size: 15px;
+          line-height: 1.8;
+        }
+
+        .sd-slider-btn {
+          position: absolute;
+          top: 88px;
+          z-index: 3;
+          width: 50px;
+          height: 50px;
+          border-radius: 50%;
+          border: none;
+          background: ${NAVY};
+          color: #fff;
+          font-size: 36px;
+          cursor: pointer;
+          transition: 0.25s ease;
+        }
+
+        .sd-slider-btn:hover {
+          background: ${RED};
+          transform: translateY(-3px);
+        }
+
+        .sd-slider-prev {
+          left: 0;
+        }
+
+        .sd-slider-next {
+          right: 0;
+        }
+
+        .sd-slider-dots {
+          display: flex;
+          justify-content: center;
+          gap: 9px;
+          margin-top: 24px;
+        }
+
+        .sd-slider-dots button {
+          width: 9px;
+          height: 9px;
+          border: none;
+          border-radius: 999px;
+          background: rgba(8,20,46,0.22);
+          cursor: pointer;
+          transition: 0.25s ease;
+        }
+
+        .sd-slider-dots button.active {
+          width: 32px;
+          background: ${RED};
+        }
+
+        .sd-dashboard {
+          overflow: hidden;
+          border-radius: 20px;
+          background: #fff;
+          border: 1px solid #e5e7eb;
+          box-shadow: 0 24px 70px rgba(8,20,46,0.14);
+        }
+
+        .sd-dashboard-top {
+          height: 58px;
+          padding: 0 22px;
+          display: flex;
+          align-items: center;
+          gap: 8px;
+          background: ${NAVY};
+          color: #fff;
+          font-weight: 900;
+        }
+
+        .sd-dashboard-top span {
+          margin-right: auto;
+        }
+
+        .sd-dashboard-top i {
+          width: 10px;
+          height: 10px;
+          border-radius: 50%;
+          background: rgba(255,255,255,0.7);
+        }
+
+        .sd-dashboard-body {
+          display: grid;
+          grid-template-columns: 70px 1fr;
+          min-height: 430px;
+        }
+
+        .sd-sidebar {
+          background: #061026;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          gap: 24px;
+          padding-top: 32px;
+        }
+
+        .sd-sidebar span {
+          width: 24px;
+          height: 24px;
+          border-radius: 8px;
+          background: rgba(255,255,255,0.18);
+        }
+
+        .sd-map {
+          position: relative;
+          overflow: hidden;
+          background:
+            linear-gradient(rgba(8,20,46,0.045) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(8,20,46,0.045) 1px, transparent 1px),
+            #f7fbff;
+          background-size: 42px 42px;
+        }
+
+        .sd-route {
+          position: absolute;
+          left: 11%;
+          top: 48%;
+          width: 72%;
+          height: 7px;
+          border-radius: 999px;
+          background: linear-gradient(90deg, ${RED}, ${NAVY});
+          transform: rotate(-9deg);
+          box-shadow: 0 0 24px rgba(232,49,42,0.28);
+        }
+
+        .sd-pin {
+          position: absolute;
+          width: 18px;
+          height: 18px;
+          border-radius: 50%;
+          background: ${RED};
+          box-shadow: 0 0 0 10px rgba(232,49,42,0.12);
+          animation: sdPulse 1.8s infinite;
+        }
+
+        .pin-1 { left: 20%; top: 50%; }
+        .pin-2 { left: 52%; top: 41%; animation-delay: .5s; }
+        .pin-3 { right: 15%; top: 34%; animation-delay: 1s; }
+
+        .sd-widget {
+          position: absolute;
+          padding: 18px;
+          border-radius: 16px;
+          background: rgba(255,255,255,0.92);
+          border: 1px solid #e5e7eb;
+          box-shadow: 0 18px 45px rgba(8,20,46,0.12);
+          backdrop-filter: blur(10px);
+        }
+
+        .sd-widget strong {
+          display: block;
+          color: ${NAVY};
+          font-size: 13px;
+          margin-bottom: 12px;
+        }
+
+        .widget-1 {
+          left: 6%;
+          top: 12%;
+          width: 210px;
+        }
+
+        .widget-2 {
+          right: 8%;
+          top: 13%;
+          width: 230px;
+        }
+
+        .widget-3 {
+          right: 12%;
+          bottom: 12%;
+          width: 260px;
+        }
+
+        .sd-donut {
+          width: 95px;
+          height: 95px;
+          border-radius: 50%;
+          margin: 0 auto;
+          background: conic-gradient(${RED} 0 45%, #f59e0b 45% 68%, #22c55e 68% 100%);
+        }
+
+        .sd-bars {
+          height: 80px;
+          display: flex;
+          align-items: end;
+          gap: 10px;
+        }
+
+        .sd-bars span {
+          flex: 1;
+          border-radius: 8px 8px 0 0;
+          background: ${NAVY};
+        }
+
+        .sd-bars span:nth-child(1) { height: 42%; }
+        .sd-bars span:nth-child(2) { height: 74%; }
+        .sd-bars span:nth-child(3) { height: 54%; }
+        .sd-bars span:nth-child(4) { height: 88%; background: ${RED}; }
+
+        .sd-widget p {
+          margin: 0;
+          color: ${TEXT};
+          font-size: 13px;
+          line-height: 1.65;
+        }
+
+        .sd-dashboard-points {
+          display: grid;
+          gap: 14px;
+          margin-top: 28px;
+        }
+
+        .sd-dashboard-points div {
+          display: flex;
+          align-items: center;
+          gap: 11px;
+          color: ${NAVY};
+          font-size: 14px;
+          font-weight: 900;
+        }
+
+        .sd-dashboard-points svg {
+          color: ${RED};
+        }
+
+        .sd-benefits-grid {
+          display: grid;
+          grid-template-columns: repeat(4, 1fr);
+          gap: 18px;
+        }
+
+        .sd-benefit-card {
+          min-height: 170px;
+          padding: 26px;
+          border-radius: 18px;
+          background: #fff;
+          border: 1px solid #e5e7eb;
+          box-shadow: 0 14px 38px rgba(8,20,46,0.07);
+          transition: 0.25s ease;
+        }
+
+        .sd-benefit-card:hover {
+          transform: translateY(-7px);
+          box-shadow: 0 24px 60px rgba(8,20,46,0.12);
+        }
+
+        .sd-benefit-card span {
+          width: 44px;
+          height: 44px;
+          border-radius: 13px;
+          display: grid;
+          place-items: center;
+          background: rgba(232,49,42,0.10);
+          color: ${RED};
+          font-weight: 900;
+          margin-bottom: 18px;
+        }
+
+        .sd-benefit-card h3 {
+          margin: 0;
+          color: ${NAVY};
+          font-size: 17px;
+          line-height: 1.45;
+          font-weight: 900;
+        }
+
+        .sd-dark-card,
+        .sd-process-card {
+          min-height: 420px;
+          border-radius: 24px;
+          padding: 38px;
+        }
+
+        .sd-dark-card {
+          position: relative;
+          overflow: hidden;
+          background: ${NAVY};
+          color: #fff;
+        }
+
+        .sd-dark-card::after {
+          content: '';
+          position: absolute;
+          right: -90px;
+          top: -90px;
+          width: 230px;
+          height: 230px;
+          border-radius: 50%;
+          background: rgba(232,49,42,0.20);
+        }
+
+        .sd-dark-card h2 {
+          color: #fff;
+          position: relative;
+          z-index: 2;
+        }
+
+        .sd-list {
+          position: relative;
+          z-index: 2;
+          display: grid;
+          gap: 16px;
+          margin-top: 24px;
+        }
+
+        .sd-list div {
+          display: flex;
+          align-items: center;
+          gap: 12px;
+          color: rgba(255,255,255,0.84);
+          font-size: 15px;
+          font-weight: 800;
+        }
+
+        .sd-list svg {
+          color: ${RED};
+          flex-shrink: 0;
+        }
+
+        .sd-process-card {
+          background: #f8fafc;
+          border: 1px solid #e5e7eb;
+        }
+
+        .sd-process-list {
+          display: grid;
+          gap: 20px;
+          margin-top: 24px;
+        }
+
+        .sd-process-item {
+          display: flex;
+          gap: 15px;
+          align-items: flex-start;
+        }
+
+        .sd-process-icon {
+          width: 48px;
+          height: 48px;
+          border-radius: 14px;
+          background: ${RED};
+          color: #fff;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          flex-shrink: 0;
+        }
+
+        .sd-process-item h3 {
+          margin: 0 0 5px;
+          color: ${NAVY};
+          font-size: 17px;
+          font-weight: 900;
+        }
+
+        .sd-process-item p {
+          margin: 0;
+          color: ${TEXT};
+          font-size: 13.5px;
+          line-height: 1.7;
+        }
+
+        .sd-cta {
+          padding: 78px 0;
+          background: linear-gradient(135deg, #08142E 0%, #101827 58%, #1b0f12 100%);
+          color: #fff;
+        }
+
+        .sd-cta-inner {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          gap: 34px;
+        }
+
+        .sd-cta h2 {
+          color: #fff;
+          max-width: 760px;
+        }
+
+        .sd-cta p {
+          max-width: 720px;
+          margin: 0;
+          color: rgba(255,255,255,0.72);
+          font-size: 15px;
+          line-height: 1.75;
+        }
+
+        .sd-reveal {
+          opacity: 0;
+          transform: translateY(34px);
+          transition:
+            opacity 0.7s cubic-bezier(0.16,1,0.3,1),
+            transform 0.7s cubic-bezier(0.16,1,0.3,1);
+        }
+
+        .sd-reveal.show {
+          opacity: 1;
+          transform: translateY(0);
+        }
+
+        @keyframes sdPulse {
+          0% {
+            box-shadow: 0 0 0 0 rgba(232,49,42,0.32);
+          }
+
+          100% {
+            box-shadow: 0 0 0 24px rgba(232,49,42,0);
+          }
         }
 
         @media (max-width: 980px) {
-          .service-overview-grid,
-          .service-two-grid {
-            grid-template-columns: 1fr !important;
+          .sd-overview-grid,
+          .sd-dashboard-grid,
+          .sd-two-grid {
+            grid-template-columns: 1fr;
           }
 
-          .service-benefits-grid {
-            grid-template-columns: repeat(2, 1fr) !important;
+          .sd-benefits-grid {
+            grid-template-columns: repeat(2, 1fr);
+          }
+
+          .sd-cta-inner {
+            flex-direction: column;
+            align-items: flex-start;
           }
         }
 
-        @media (max-width: 640px) {
-          main {
-            padding-top: 110px !important;
+        @media (max-width: 720px) {
+          .sd-main {
+            padding-top: 110px;
           }
 
-          .service-feature-grid,
-          .service-benefits-grid {
-            grid-template-columns: 1fr !important;
+          .sd-hero {
+            min-height: 520px;
+            padding: 78px 0;
+          }
+
+          .sd-hero h1 {
+            font-size: 38px;
+          }
+
+          .sd-hero p {
+            font-size: 15px;
+          }
+
+          .sd-quick-grid,
+          .sd-benefits-grid {
+            grid-template-columns: 1fr;
+          }
+
+          .sd-image-card,
+          .sd-image-card img {
+            min-height: 320px;
+            height: 320px;
+          }
+
+          .sd-slider {
+            padding-left: 0;
+            padding-right: 0;
+          }
+
+          .sd-slider-btn {
+            display: none;
+          }
+
+          .sd-slider-stage {
+            min-height: 340px;
+          }
+
+          .sd-slide {
+            padding: 30px 24px;
+          }
+
+          .sd-slide h3 {
+            font-size: 24px;
+          }
+
+          .sd-dashboard-body {
+            grid-template-columns: 56px 1fr;
+            min-height: 620px;
+          }
+
+          .sd-widget {
+            left: 74px !important;
+            right: 16px !important;
+            width: auto !important;
+          }
+
+          .widget-1 { top: 34px; }
+          .widget-2 { top: 235px; }
+          .widget-3 { bottom: 34px; }
+
+          .sd-dark-card,
+          .sd-process-card {
+            padding: 28px 22px;
           }
         }
       `}</style>
