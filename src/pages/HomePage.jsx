@@ -886,20 +886,20 @@ const ValCard = ({ icon, title, desc }) => {
 
 const REGIONS = [
   {
-    code: 'PK',
-    name: 'United Arab Emirates',
-    flag: '🇵🇰',
-    offices: 'Dubai · Abu Dhabi · Sharjah',
-    status: 'live',
-    img: 'https://images.unsplash.com/photo-1608020932658-d0e19a69580b?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-  },
-  {
     code: 'AE',
     name: 'Middle East',
     flag: '🇦🇪',
     offices: 'Dubai · Abu Dhabi',
     status: 'live',
     img: 'https://images.unsplash.com/photo-1512453979798-5ea266f8880c?w=600&q=80',
+  },
+  {
+    code: 'PK',
+    name: 'Pakistan',
+    flag: '🇵🇰',
+    offices: 'Karachi · Lahore · Islamabad',
+    status: 'live',
+    img: 'https://images.unsplash.com/photo-1608020932658-d0e19a69580b?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
   },
   {
     code: 'EU',

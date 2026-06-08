@@ -1,29 +1,25 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { Phone, Mail, MapPin, Clock, Send, ChevronDown } from 'lucide-react';
+import { Phone, Mail, MapPin, Clock, Send, ChevronDown, ArrowRight } from 'lucide-react';
 
 import TopBar from '../components/TopBar';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 
+const RED = '#E8312A';
+const NAVY = '#08142E';
+const TEXT = '#5f6675';
+const P = "'Poppins', sans-serif";
+
+const CONTACT_HERO_IMAGE =
+  'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=1800&auto=format&fit=crop';
+
 const OFFICES = [
-  {
-    region: 'Europe Office',
-    code: 'EU',
-    flag: '🇪🇺',
-    address: 'Frankfurt am Main, Germany',
-    phone: '+97 1563863615',
-    email: 'info.eu@timelinetelematics.com',
-    hours: 'Mon–Fri: 9:00 AM – 5:00 PM CET',
-    color: '#003399',
-    image: 'https://images.unsplash.com/photo-1467269204594-9661b134dd2b?w=800&q=80',
-    tagline: 'European Regional Office',
-  },
   {
     region: 'UAE Office',
     code: 'AE',
     flag: '🇦🇪',
     address: 'Silicon Oasis, Business Center, Dubai, UAE',
-    phone: '+97 1563863615',
+    phone: '+971 56 386 3615',
     email: 'info.ae@timelinetelematics.com',
     hours: 'Mon–Fri: 9:00 AM – 6:00 PM GST',
     color: '#009A44',
@@ -31,16 +27,29 @@ const OFFICES = [
     tagline: 'Middle East Regional Office',
   },
   {
-    region: 'UAE',
+    region: 'Pakistan Office',
     code: 'PK',
     flag: '🇵🇰',
-    address: 'Dubai Silicon Oasis, Dubai, UAE',
+    address: 'Karachi, Pakistan',
     phone: '+971 56 386 3615',
     email: 'info.pk@timelinetelematics.com',
     hours: 'Mon–Sat: 9:00 AM – 6:00 PM PKT',
     color: '#E8312A',
-    image: 'https://images.unsplash.com/photo-1635016288720-c52507b9a717?q=80&w=435&auto=format&fit=crop',
-    tagline: 'Regional Office',
+    image:
+      'https://images.unsplash.com/photo-1608020932658-d0e19a69580b?q=80&w=1200&auto=format&fit=crop',
+    tagline: 'Pakistan Regional Support',
+  },
+  {
+    region: 'Europe Office',
+    code: 'EU',
+    flag: '🇪🇺',
+    address: 'Frankfurt am Main, Germany',
+    phone: '+971 56 386 3615',
+    email: 'info.eu@timelinetelematics.com',
+    hours: 'Mon–Fri: 9:00 AM – 5:00 PM CET',
+    color: '#003399',
+    image: 'https://images.unsplash.com/photo-1467269204594-9661b134dd2b?w=800&q=80',
+    tagline: 'European Regional Office',
   },
 ];
 
@@ -56,7 +65,7 @@ const SUBJECTS = [
 const inputBase = {
   width: '100%',
   padding: '13px 16px',
-  fontFamily: 'Poppins, sans-serif',
+  fontFamily: P,
   fontSize: '14px',
   border: '1.5px solid #e5e7eb',
   borderRadius: '10px',
@@ -83,13 +92,13 @@ const Field = ({
     <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
       <label
         style={{
-          fontFamily: 'Poppins, sans-serif',
+          fontFamily: P,
           fontSize: '13px',
           fontWeight: '600',
           color: '#374151',
         }}
       >
-        {label} {required && <span style={{ color: '#E8312A' }}>*</span>}
+        {label} {required && <span style={{ color: RED }}>*</span>}
       </label>
 
       <input
@@ -102,7 +111,7 @@ const Field = ({
         onBlur={() => setFocused(false)}
         style={{
           ...inputBase,
-          borderColor: error ? '#ef4444' : focused ? '#E8312A' : '#e5e7eb',
+          borderColor: error ? '#ef4444' : focused ? RED : '#e5e7eb',
           boxShadow: focused ? '0 0 0 3px rgba(232,49,42,0.1)' : 'none',
         }}
       />
@@ -112,7 +121,7 @@ const Field = ({
           style={{
             color: '#ef4444',
             fontSize: '12px',
-            fontFamily: 'Poppins, sans-serif',
+            fontFamily: P,
           }}
         >
           {error}
@@ -247,7 +256,7 @@ const OfficeCard = ({ office, index }) => {
               borderRadius: '999px',
               letterSpacing: '2px',
               textTransform: 'uppercase',
-              fontFamily: 'Poppins, sans-serif',
+              fontFamily: P,
             }}
           >
             {office.code}
@@ -264,7 +273,7 @@ const OfficeCard = ({ office, index }) => {
         >
           <div
             style={{
-              fontFamily: 'Poppins, sans-serif',
+              fontFamily: P,
               fontWeight: '800',
               fontSize: '18px',
               color: '#fff',
@@ -276,7 +285,7 @@ const OfficeCard = ({ office, index }) => {
 
           <div
             style={{
-              fontFamily: 'Poppins, sans-serif',
+              fontFamily: P,
               fontSize: '11px',
               color: 'rgba(255,255,255,0.7)',
               marginTop: '3px',
@@ -295,7 +304,7 @@ const OfficeCard = ({ office, index }) => {
           { Icon: Clock, text: office.hours, href: null },
         ].map(({ Icon, text, href }) => (
           <div
-            key={text}
+            key={`${office.code}-${text}`}
             style={{
               display: 'flex',
               gap: '12px',
@@ -322,7 +331,7 @@ const OfficeCard = ({ office, index }) => {
               <a
                 href={href}
                 style={{
-                  fontFamily: 'Poppins, sans-serif',
+                  fontFamily: P,
                   fontSize: '13.5px',
                   color: '#4b5563',
                   textDecoration: 'none',
@@ -342,7 +351,7 @@ const OfficeCard = ({ office, index }) => {
             ) : (
               <span
                 style={{
-                  fontFamily: 'Poppins, sans-serif',
+                  fontFamily: P,
                   fontSize: '13.5px',
                   color: '#4b5563',
                   lineHeight: '1.5',
@@ -409,9 +418,174 @@ const Contact = () => {
       <TopBar />
       <Navbar />
 
-      <main style={{ paddingTop: '128px' }}>
+      <main style={{ paddingTop: '112px' }}>
+        <section
+          className="contact-hero"
+          style={{
+            position: 'relative',
+            minHeight: '500px',
+            display: 'flex',
+            alignItems: 'center',
+            overflow: 'hidden',
+            backgroundImage: `
+              linear-gradient(90deg, rgba(8,20,46,0.94) 0%, rgba(8,20,46,0.82) 45%, rgba(8,20,46,0.55) 100%),
+              url(${CONTACT_HERO_IMAGE})
+            `,
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+            color: '#fff',
+          }}
+        >
+          <div
+            style={{
+              position: 'absolute',
+              left: 0,
+              top: 0,
+              bottom: 0,
+              width: '6px',
+              background: RED,
+              zIndex: 3,
+            }}
+          />
+
+          <div
+            style={{
+              position: 'absolute',
+              inset: 0,
+              background:
+                'radial-gradient(circle at 20% 30%, rgba(232,49,42,0.28), transparent 32%)',
+              zIndex: 1,
+            }}
+          />
+
+          <div
+            style={{
+              maxWidth: '1180px',
+              margin: '0 auto',
+              padding: '90px 24px',
+              width: '100%',
+              position: 'relative',
+              zIndex: 2,
+            }}
+          >
+            <FadeIn>
+              <div
+                style={{
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: '10px',
+                  padding: '8px 14px',
+                  borderRadius: '999px',
+                  background: 'rgba(255,255,255,0.10)',
+                  border: '1px solid rgba(255,255,255,0.18)',
+                  backdropFilter: 'blur(8px)',
+                  marginBottom: '22px',
+                  fontFamily: P,
+                  fontSize: '11px',
+                  fontWeight: 800,
+                  letterSpacing: '2px',
+                  textTransform: 'uppercase',
+                  color: 'rgba(255,255,255,0.82)',
+                }}
+              >
+                <span style={{ width: '28px', height: '2px', background: RED }} />
+                Contact Timeline Telematics
+              </div>
+
+              <h1
+                style={{
+                  maxWidth: '760px',
+                  margin: 0,
+                  fontFamily: P,
+                  fontSize: 'clamp(42px, 5vw, 72px)',
+                  lineHeight: 1.05,
+                  letterSpacing: '-2px',
+                  fontWeight: 900,
+                  color: '#fff',
+                }}
+              >
+                Let’s build a smarter fleet operation.
+              </h1>
+
+              <p
+                style={{
+                  maxWidth: '650px',
+                  margin: '24px 0 0',
+                  fontFamily: P,
+                  fontSize: '17px',
+                  lineHeight: 1.85,
+                  color: 'rgba(255,255,255,0.78)',
+                }}
+              >
+                Talk to our team for GPS tracking, AI dashcams, fuel monitoring,
+                temperature monitoring, asset visibility and complete fleet intelligence
+                solutions for UAE and GCC businesses.
+              </p>
+
+              <div
+                style={{
+                  display: 'flex',
+                  flexWrap: 'wrap',
+                  gap: '14px',
+                  marginTop: '34px',
+                }}
+              >
+                <a
+                  href="#contact-form"
+                  style={{
+                    minHeight: '52px',
+                    padding: '0 28px',
+                    borderRadius: '10px',
+                    background: RED,
+                    color: '#fff',
+                    textDecoration: 'none',
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    gap: '9px',
+                    fontFamily: P,
+                    fontSize: '14px',
+                    fontWeight: 900,
+                    boxShadow: '0 18px 42px rgba(232,49,42,0.35)',
+                  }}
+                >
+                  Send Enquiry <ArrowRight size={17} />
+                </a>
+
+                <a
+                  href="tel:+971563863615"
+                  style={{
+                    minHeight: '52px',
+                    padding: '0 28px',
+                    borderRadius: '10px',
+                    background: 'rgba(255,255,255,0.10)',
+                    border: '1px solid rgba(255,255,255,0.22)',
+                    color: '#fff',
+                    textDecoration: 'none',
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    gap: '9px',
+                    fontFamily: P,
+                    fontSize: '14px',
+                    fontWeight: 900,
+                    backdropFilter: 'blur(8px)',
+                  }}
+                >
+                  <Phone size={17} /> +971 56 386 3615
+                </a>
+              </div>
+            </FadeIn>
+          </div>
+        </section>
+
         <section id="contact" style={{ background: '#fff' }}>
-          <div style={{ maxWidth: '1100px', margin: '0 auto', padding: '70px 24px 80px' }}>
+          <div
+            id="contact-form"
+            style={{
+              maxWidth: '1100px',
+              margin: '0 auto',
+              padding: '90px 24px 90px',
+            }}
+          >
             <div
               style={{
                 display: 'grid',
@@ -426,9 +600,9 @@ const Contact = () => {
                   <div>
                     <h2
                       style={{
-                        fontFamily: 'Poppins, sans-serif',
+                        fontFamily: P,
                         fontWeight: '800',
-                        fontSize: '26px',
+                        fontSize: '28px',
                         color: '#111',
                         marginBottom: '10px',
                       }}
@@ -438,7 +612,7 @@ const Contact = () => {
 
                     <p
                       style={{
-                        fontFamily: 'Poppins, sans-serif',
+                        fontFamily: P,
                         fontSize: '14.5px',
                         color: '#6b7280',
                         lineHeight: '1.75',
@@ -484,13 +658,13 @@ const Contact = () => {
                             justifyContent: 'center',
                           }}
                         >
-                          <Icon size={18} color="#E8312A" />
+                          <Icon size={18} color={RED} />
                         </div>
 
                         <div>
                           <div
                             style={{
-                              fontFamily: 'Poppins, sans-serif',
+                              fontFamily: P,
                               fontSize: '11px',
                               fontWeight: '600',
                               color: '#9ca3af',
@@ -505,14 +679,14 @@ const Contact = () => {
                             <a
                               href={href}
                               style={{
-                                fontFamily: 'Poppins, sans-serif',
+                                fontFamily: P,
                                 fontWeight: '600',
                                 fontSize: '14.5px',
                                 color: '#111',
                                 textDecoration: 'none',
                               }}
                               onMouseEnter={(e) => {
-                                e.currentTarget.style.color = '#E8312A';
+                                e.currentTarget.style.color = RED;
                               }}
                               onMouseLeave={(e) => {
                                 e.currentTarget.style.color = '#111';
@@ -523,7 +697,7 @@ const Contact = () => {
                           ) : (
                             <div
                               style={{
-                                fontFamily: 'Poppins, sans-serif',
+                                fontFamily: P,
                                 fontWeight: '600',
                                 fontSize: '14.5px',
                                 color: '#111',
@@ -571,7 +745,7 @@ const Contact = () => {
                     <div>
                       <div
                         style={{
-                          fontFamily: 'Poppins, sans-serif',
+                          fontFamily: P,
                           fontWeight: '700',
                           fontSize: '14px',
                         }}
@@ -581,7 +755,7 @@ const Contact = () => {
 
                       <div
                         style={{
-                          fontFamily: 'Poppins, sans-serif',
+                          fontFamily: P,
                           fontSize: '11px',
                           opacity: 0.85,
                         }}
@@ -620,7 +794,7 @@ const Contact = () => {
 
                   <h3
                     style={{
-                      fontFamily: 'Poppins, sans-serif',
+                      fontFamily: P,
                       fontWeight: '800',
                       fontSize: '20px',
                       color: '#111',
@@ -690,13 +864,13 @@ const Contact = () => {
                   <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
                     <label
                       style={{
-                        fontFamily: 'Poppins, sans-serif',
+                        fontFamily: P,
                         fontSize: '13px',
                         fontWeight: '600',
                         color: '#374151',
                       }}
                     >
-                      Subject <span style={{ color: '#E8312A' }}>*</span>
+                      Subject <span style={{ color: RED }}>*</span>
                     </label>
 
                     <div style={{ position: 'relative' }}>
@@ -713,11 +887,9 @@ const Contact = () => {
                           borderColor: errors.subject
                             ? '#ef4444'
                             : subjectFocused
-                              ? '#E8312A'
+                              ? RED
                               : '#e5e7eb',
-                          boxShadow: subjectFocused
-                            ? '0 0 0 3px rgba(232,49,42,0.1)'
-                            : 'none',
+                          boxShadow: subjectFocused ? '0 0 0 3px rgba(232,49,42,0.1)' : 'none',
                         }}
                       >
                         <option value="">Select a subject...</option>
@@ -746,7 +918,7 @@ const Contact = () => {
                         style={{
                           color: '#ef4444',
                           fontSize: '12px',
-                          fontFamily: 'Poppins, sans-serif',
+                          fontFamily: P,
                         }}
                       >
                         {errors.subject}
@@ -757,13 +929,13 @@ const Contact = () => {
                   <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
                     <label
                       style={{
-                        fontFamily: 'Poppins, sans-serif',
+                        fontFamily: P,
                         fontSize: '13px',
                         fontWeight: '600',
                         color: '#374151',
                       }}
                     >
-                      Message <span style={{ color: '#E8312A' }}>*</span>
+                      Message <span style={{ color: RED }}>*</span>
                     </label>
 
                     <textarea
@@ -781,7 +953,7 @@ const Contact = () => {
                         borderColor: errors.message
                           ? '#ef4444'
                           : msgFocused
-                            ? '#E8312A'
+                            ? RED
                             : '#e5e7eb',
                         boxShadow: msgFocused ? '0 0 0 3px rgba(232,49,42,0.1)' : 'none',
                       }}
@@ -792,7 +964,7 @@ const Contact = () => {
                         style={{
                           color: '#ef4444',
                           fontSize: '12px',
-                          fontFamily: 'Poppins, sans-serif',
+                          fontFamily: P,
                         }}
                       >
                         {errors.message}
@@ -803,12 +975,12 @@ const Contact = () => {
                   <button
                     type="submit"
                     style={{
-                      background: '#E8312A',
+                      background: RED,
                       color: '#fff',
                       border: 'none',
                       padding: '14px',
                       borderRadius: '10px',
-                      fontFamily: 'Poppins, sans-serif',
+                      fontFamily: P,
                       fontWeight: '700',
                       fontSize: '15px',
                       cursor: 'pointer',
@@ -823,7 +995,7 @@ const Contact = () => {
                       e.currentTarget.style.background = '#c72a23';
                     }}
                     onMouseLeave={(e) => {
-                      e.currentTarget.style.background = '#E8312A';
+                      e.currentTarget.style.background = RED;
                     }}
                   >
                     <Send size={16} /> Send Message
@@ -831,7 +1003,7 @@ const Contact = () => {
 
                   <p
                     style={{
-                      fontFamily: 'Poppins, sans-serif',
+                      fontFamily: P,
                       fontSize: '12px',
                       color: '#9ca3af',
                       textAlign: 'center',
@@ -849,7 +1021,7 @@ const Contact = () => {
             style={{
               background: '#fffefe',
               padding: '100px 24px',
-              borderTop: '1px solid #ff0000',
+              borderTop: `1px solid ${RED}`,
             }}
           >
             <div style={{ maxWidth: '1100px', margin: '0 auto' }}>
@@ -858,7 +1030,7 @@ const Contact = () => {
                   style={{
                     display: 'inline-block',
                     background: 'rgba(232,49,42,0.15)',
-                    color: '#E8312A',
+                    color: RED,
                     fontSize: '10px',
                     fontWeight: '700',
                     padding: '5px 16px',
@@ -866,7 +1038,7 @@ const Contact = () => {
                     letterSpacing: '2.5px',
                     textTransform: 'uppercase',
                     marginBottom: '20px',
-                    fontFamily: 'Poppins, sans-serif',
+                    fontFamily: P,
                   }}
                 >
                   Locations
@@ -874,7 +1046,7 @@ const Contact = () => {
 
                 <h2
                   style={{
-                    fontFamily: 'Poppins, sans-serif',
+                    fontFamily: P,
                     fontWeight: '900',
                     fontSize: 'clamp(28px, 4vw, 44px)',
                     color: '#000',
@@ -882,12 +1054,12 @@ const Contact = () => {
                     margin: '0 0 16px',
                   }}
                 >
-                  Our <span style={{ color: '#E8312A' }}>Offices</span>
+                  Our <span style={{ color: RED }}>Offices</span>
                 </h2>
 
                 <p
                   style={{
-                    fontFamily: 'Poppins, sans-serif',
+                    fontFamily: P,
                     fontSize: '15px',
                     color: '#767c85',
                     maxWidth: '440px',
@@ -916,6 +1088,14 @@ const Contact = () => {
 
           <style>{`
             @media(max-width: 768px) {
+              main {
+                padding-top: 74px !important;
+              }
+
+              .contact-hero {
+                min-height: 520px !important;
+              }
+
               .contact-grid {
                 grid-template-columns: 1fr !important;
               }

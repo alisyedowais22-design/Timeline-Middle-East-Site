@@ -5,7 +5,6 @@ import {
   Bus,
   Fuel,
   Building2,
-  HeartPulse,
   Landmark,
   Tractor,
   Car,
@@ -13,6 +12,7 @@ import {
   Snowflake,
   ArrowRight,
   CheckCircle,
+  BriefcaseBusiness,
 } from 'lucide-react';
 
 import TopBar from '../components/TopBar';
@@ -129,7 +129,7 @@ const IndustriesPage = () => {
       <TopBar />
       <Navbar />
 
-      <main style={{ paddingTop: '112px' }}>
+      <main style={{ paddingTop: 112 }}>
         {/* Hero */}
         <section
           style={{
@@ -139,30 +139,46 @@ const IndustriesPage = () => {
             alignItems: 'center',
             justifyContent: 'center',
             overflow: 'hidden',
-            background:
-              'linear-gradient(rgba(5, 8, 14, 0.58), rgba(5, 8, 14, 0.70)), url("https://images.unsplash.com/photo-1512453979798-5ea266f8880c?q=80&w=1600&auto=format&fit=crop")',
+            color: '#fff',
+            backgroundImage: `
+              linear-gradient(90deg, rgba(8,20,46,0.94) 0%, rgba(8,20,46,0.82) 45%, rgba(8,20,46,0.55) 100%),
+              url('https://images.unsplash.com/photo-1512453979798-5ea266f8880c?q=80&w=1800&auto=format&fit=crop')
+            `,
             backgroundSize: 'cover',
             backgroundPosition: 'center',
-            color: '#fff',
-            padding: '90px 24px',
+            backgroundRepeat: 'no-repeat',
           }}
         >
           <div
             style={{
               position: 'absolute',
+              left: 0,
+              top: 0,
+              bottom: 0,
+              width: '6px',
+              background: RED,
+              zIndex: 3,
+            }}
+          />
+
+          <div
+            style={{
+              position: 'absolute',
               inset: 0,
               background:
-                'linear-gradient(90deg, rgba(3,7,18,0.68) 0%, rgba(8,20,46,0.48) 52%, rgba(3,7,18,0.62) 100%)',
+                'radial-gradient(circle at 20% 32%, rgba(232,49,42,0.30), transparent 34%)',
               zIndex: 1,
             }}
           />
 
           <div
             style={{
+              maxWidth: '1180px',
+              width: '100%',
+              margin: '0 auto',
+              padding: '95px 24px',
               position: 'relative',
               zIndex: 2,
-              maxWidth: '1000px',
-              margin: '0 auto',
               textAlign: 'center',
             }}
           >
@@ -171,29 +187,35 @@ const IndustriesPage = () => {
                 display: 'inline-flex',
                 alignItems: 'center',
                 justifyContent: 'center',
-                background: 'rgba(232,49,42,0.24)',
-                color: '#fff',
+                gap: '10px',
+                padding: '8px 14px',
                 borderRadius: '999px',
-                padding: '8px 22px',
+                background: 'rgba(255,255,255,0.10)',
+                border: '1px solid rgba(255,255,255,0.18)',
+                backdropFilter: 'blur(8px)',
                 marginBottom: '24px',
+                fontFamily: P,
                 fontSize: '11px',
-                fontWeight: 900,
-                letterSpacing: '3px',
+                fontWeight: 800,
+                letterSpacing: '2px',
                 textTransform: 'uppercase',
-                border: '1px solid rgba(232,49,42,0.25)',
-                backdropFilter: 'blur(4px)',
+                color: 'rgba(255,255,255,0.82)',
               }}
             >
+              <span style={{ width: '28px', height: '2px', background: RED }} />
               Industries We Serve
             </div>
 
             <h1
               style={{
-                margin: 0,
-                fontSize: 'clamp(40px, 5vw, 68px)',
-                lineHeight: 1.12,
-                letterSpacing: '-1.6px',
+                maxWidth: '920px',
+                margin: '0 auto',
+                fontFamily: P,
+                fontSize: 'clamp(44px, 5vw, 76px)',
+                lineHeight: 1.05,
+                letterSpacing: '-2px',
                 fontWeight: 900,
+                color: '#fff',
               }}
             >
               Smart Fleet Solutions for{' '}
@@ -202,16 +224,18 @@ const IndustriesPage = () => {
 
             <p
               style={{
+                maxWidth: '790px',
                 margin: '24px auto 0',
-                maxWidth: '760px',
-                color: 'rgba(255,255,255,0.84)',
+                fontFamily: P,
                 fontSize: '17px',
-                lineHeight: 1.8,
+                lineHeight: 1.85,
+                color: 'rgba(255,255,255,0.78)',
               }}
             >
-              From Dubai logistics and construction fleets to oil & gas, public transport,
-              cold chain and government operations — Timeline Telematics helps every sector
-              move smarter with real-time GPS tracking and fleet intelligence.
+              From Dubai logistics and construction fleets to oil & gas, public
+              transport, cold chain and government operations — Timeline Telematics
+              helps every sector move smarter with real-time GPS tracking and fleet
+              intelligence.
             </p>
 
             <div
@@ -226,9 +250,9 @@ const IndustriesPage = () => {
               <Link
                 to="/contact"
                 style={{
-                  height: '52px',
+                  minHeight: '52px',
                   padding: '0 30px',
-                  borderRadius: '8px',
+                  borderRadius: '10px',
                   background: RED,
                   color: '#fff',
                   display: 'inline-flex',
@@ -237,18 +261,18 @@ const IndustriesPage = () => {
                   textDecoration: 'none',
                   fontSize: '14px',
                   fontWeight: 900,
-                  boxShadow: '0 18px 42px rgba(232,49,42,0.30)',
+                  boxShadow: '0 18px 42px rgba(232,49,42,0.35)',
                 }}
               >
-                Book a Demo
+                Book a Demo <ArrowRight size={17} style={{ marginLeft: 8 }} />
               </Link>
 
               <a
                 href="#industry-grid"
                 style={{
-                  height: '52px',
+                  minHeight: '52px',
                   padding: '0 28px',
-                  borderRadius: '8px',
+                  borderRadius: '10px',
                   color: '#fff',
                   display: 'inline-flex',
                   alignItems: 'center',
@@ -258,10 +282,42 @@ const IndustriesPage = () => {
                   fontWeight: 900,
                   border: '1px solid rgba(255,255,255,0.24)',
                   background: 'rgba(255,255,255,0.08)',
+                  backdropFilter: 'blur(8px)',
                 }}
               >
                 Explore Industries
               </a>
+            </div>
+
+            <div
+              style={{
+                display: 'flex',
+                justifyContent: 'center',
+                flexWrap: 'wrap',
+                gap: '14px',
+                marginTop: '38px',
+              }}
+            >
+              {['Logistics', 'Construction', 'Oil & Gas', 'Cold Chain'].map((item) => (
+                <div
+                  key={item}
+                  style={{
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    gap: '8px',
+                    padding: '10px 16px',
+                    borderRadius: '999px',
+                    background: 'rgba(255,255,255,0.10)',
+                    border: '1px solid rgba(255,255,255,0.16)',
+                    color: 'rgba(255,255,255,0.82)',
+                    fontSize: '12px',
+                    fontWeight: 800,
+                  }}
+                >
+                  <BriefcaseBusiness size={14} color={RED} />
+                  {item}
+                </div>
+              ))}
             </div>
           </div>
         </section>
@@ -450,7 +506,11 @@ const IndustriesPage = () => {
                               fontWeight: 600,
                             }}
                           >
-                            <CheckCircle size={15} color={RED} style={{ marginTop: '2px', flexShrink: 0 }} />
+                            <CheckCircle
+                              size={15}
+                              color={RED}
+                              style={{ marginTop: '2px', flexShrink: 0 }}
+                            />
                             {point}
                           </div>
                         ))}
@@ -584,7 +644,7 @@ const IndustriesPage = () => {
 
         @media (max-width: 640px) {
           main {
-            padding-top: 110px !important;
+            padding-top: 0 !important;
           }
 
           .industries-page-grid {

@@ -27,6 +27,8 @@ const NAVY = '#08142E';
 const TEXT = '#5f6675';
 const P = "'Poppins', sans-serif";
 
+const SERVICE_IMAGE_BASE = '/images/services';
+
 const SERVICES = {
   'vehicle-tracking': {
     title: 'Vehicle Tracking',
@@ -36,6 +38,7 @@ const SERVICES = {
       'https://images.unsplash.com/photo-1601584115197-04ecc0da31d7?q=80&w=1800&auto=format&fit=crop',
     hero:
       'https://images.unsplash.com/photo-1601584115197-04ecc0da31d7?q=80&w=1800&auto=format&fit=crop',
+    visual: `${SERVICE_IMAGE_BASE}/vehicle-tracking.png`,
     intro:
       'Track cars, trucks, vans, buses and enterprise fleets across Dubai, UAE and Middle East routes with accurate real-time GPS visibility.',
     description:
@@ -70,6 +73,7 @@ const SERVICES = {
       'https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?q=80&w=1800&auto=format&fit=crop',
     hero:
       'https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?q=80&w=1800&auto=format&fit=crop',
+    visual: `${SERVICE_IMAGE_BASE}/asset-tracking-software.png`,
     intro:
       'Track trailers, containers, generators, machinery, equipment and field assets with smart IoT devices and a centralized monitoring dashboard.',
     description:
@@ -104,6 +108,7 @@ const SERVICES = {
       'https://images.unsplash.com/photo-1516937941344-00b4e0337589?q=80&w=1800&auto=format&fit=crop',
     hero:
       'https://images.unsplash.com/photo-1516937941344-00b4e0337589?q=80&w=1800&auto=format&fit=crop',
+    visual: `${SERVICE_IMAGE_BASE}/fuel-monitoring.png`,
     intro:
       'Monitor fuel levels, detect theft, track refills and analyze consumption patterns for trucks, buses, construction fleets and heavy vehicles.',
     description:
@@ -135,9 +140,10 @@ const SERVICES = {
     eyebrow: 'Cold Chain Control',
     icon: Thermometer,
     image:
-      'https://images.unsplash.com/photo-1580674285054-bed31e145f59?q=80&w=1800&auto=format&fit=crop',
+      'https://images.unsplash.com/photo-1595508774032-4609924fbfe5?q=80&w=1800&auto=format&fit=crop',
     hero:
-      'https://images.unsplash.com/photo-1580674285054-bed31e145f59?q=80&w=1800&auto=format&fit=crop',
+      'https://images.unsplash.com/photo-1595508774032-4609924fbfe5?q=80&w=1800&auto=format&fit=crop',
+    visual: `${SERVICE_IMAGE_BASE}/temperature-monitoring.png`,
     intro:
       'Monitor temperature-sensitive goods for cold chain logistics, food delivery, healthcare, pharma and refrigerated transport operations.',
     description:
@@ -169,9 +175,10 @@ const SERVICES = {
     eyebrow: 'Cargo Security Intelligence',
     icon: Truck,
     image:
-      'https://images.unsplash.com/photo-1494412651409-8963ce7935a7?q=80&w=1800&auto=format&fit=crop',
+      'https://images.unsplash.com/photo-1605745341112-85968b19335b?q=80&w=1800&auto=format&fit=crop',
     hero:
-      'https://images.unsplash.com/photo-1494412651409-8963ce7935a7?q=80&w=1800&auto=format&fit=crop',
+      'https://images.unsplash.com/photo-1605745341112-85968b19335b?q=80&w=1800&auto=format&fit=crop',
+    visual: `${SERVICE_IMAGE_BASE}/container-tracking.png`,
     intro:
       'Track containers, cargo movement and high-value shipments with live visibility, route alerts and security-focused monitoring.',
     description:
@@ -206,6 +213,7 @@ const SERVICES = {
       'https://images.unsplash.com/photo-1487754180451-c456f719a1fc?q=80&w=1800&auto=format&fit=crop',
     hero:
       'https://images.unsplash.com/photo-1487754180451-c456f719a1fc?q=80&w=1800&auto=format&fit=crop',
+    visual: `${SERVICE_IMAGE_BASE}/tire-management-system.png`,
     intro:
       'Improve fleet safety and reduce breakdowns with tire monitoring, maintenance visibility and condition-based fleet insights.',
     description:
@@ -240,6 +248,7 @@ const SERVICES = {
       'https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=1800&auto=format&fit=crop',
     hero:
       'https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=1800&auto=format&fit=crop',
+    visual: `${SERVICE_IMAGE_BASE}/personal-tracking-software.png`,
     intro:
       'Track field teams, mobile staff, security personnel and lone workers with live location, emergency alerts and movement visibility.',
     description:
@@ -274,6 +283,7 @@ const SERVICES = {
       'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?q=80&w=1800&auto=format&fit=crop',
     hero:
       'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?q=80&w=1800&auto=format&fit=crop',
+    visual: `${SERVICE_IMAGE_BASE}/portable-tracking-device.png`,
     intro:
       'Use compact portable GPS tracking devices for temporary vehicles, assets, containers, personal safety and flexible tracking needs.',
     description:
@@ -308,6 +318,7 @@ const SERVICES = {
       'https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?q=80&w=1800&auto=format&fit=crop',
     hero:
       'https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?q=80&w=1800&auto=format&fit=crop',
+    visual: `${SERVICE_IMAGE_BASE}/auto-conductor.png`,
     intro:
       'Digitize passenger transport operations with smart route visibility, trip monitoring, passenger flow and fleet accountability.',
     description:
@@ -557,7 +568,7 @@ const ServiceDetailPage = () => {
           <div className="sd-container sd-dashboard-grid">
             <Reveal>
               <div className="sd-copy">
-                <div className="sd-eyebrow dark">Dashboard Experience</div>
+                <div className="sd-eyebrow dark">Service Experience</div>
                 <h2>Everything visible from one command center.</h2>
                 <p>
                   Monitor live movement, check alerts, view activity reports and
@@ -584,48 +595,23 @@ const ServiceDetailPage = () => {
             </Reveal>
 
             <Reveal delay={0.12}>
-              <div className="sd-dashboard">
-                <div className="sd-dashboard-top">
-                  <span>Fleet Dashboard</span>
-                  <i />
-                  <i />
-                  <i />
+              <div className="sd-service-visual-card">
+                <img src={service.visual} alt={service.title} />
+
+                <div className="sd-service-visual-overlay">
+                  <span>{service.eyebrow}</span>
+                  <h3>{service.title}</h3>
+                  <p>{service.intro}</p>
                 </div>
 
-                <div className="sd-dashboard-body">
-                  <div className="sd-sidebar">
-                    <span />
-                    <span />
-                    <span />
-                    <span />
-                  </div>
+                <div className="sd-service-floating-box box-one">
+                  <strong>Live Status</strong>
+                  <span>Monitoring Active</span>
+                </div>
 
-                  <div className="sd-map">
-                    <div className="sd-route" />
-                    <div className="sd-pin pin-1" />
-                    <div className="sd-pin pin-2" />
-                    <div className="sd-pin pin-3" />
-
-                    <div className="sd-widget widget-1">
-                      <strong>Fleet Status</strong>
-                      <div className="sd-donut" />
-                    </div>
-
-                    <div className="sd-widget widget-2">
-                      <strong>Driver Alerts</strong>
-                      <div className="sd-bars">
-                        <span />
-                        <span />
-                        <span />
-                        <span />
-                      </div>
-                    </div>
-
-                    <div className="sd-widget widget-3">
-                      <strong>Live Reports</strong>
-                      <p>Trip activity, stops, routes and exceptions.</p>
-                    </div>
-                  </div>
+                <div className="sd-service-floating-box box-two">
+                  <strong>Smart Alerts</strong>
+                  <span>Instant Notifications</span>
                 </div>
               </div>
             </Reveal>
@@ -1120,162 +1106,6 @@ const ServiceDetailPage = () => {
           background: ${RED};
         }
 
-        .sd-dashboard {
-          overflow: hidden;
-          border-radius: 20px;
-          background: #fff;
-          border: 1px solid #e5e7eb;
-          box-shadow: 0 24px 70px rgba(8,20,46,0.14);
-        }
-
-        .sd-dashboard-top {
-          height: 58px;
-          padding: 0 22px;
-          display: flex;
-          align-items: center;
-          gap: 8px;
-          background: ${NAVY};
-          color: #fff;
-          font-weight: 900;
-        }
-
-        .sd-dashboard-top span {
-          margin-right: auto;
-        }
-
-        .sd-dashboard-top i {
-          width: 10px;
-          height: 10px;
-          border-radius: 50%;
-          background: rgba(255,255,255,0.7);
-        }
-
-        .sd-dashboard-body {
-          display: grid;
-          grid-template-columns: 70px 1fr;
-          min-height: 430px;
-        }
-
-        .sd-sidebar {
-          background: #061026;
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-          gap: 24px;
-          padding-top: 32px;
-        }
-
-        .sd-sidebar span {
-          width: 24px;
-          height: 24px;
-          border-radius: 8px;
-          background: rgba(255,255,255,0.18);
-        }
-
-        .sd-map {
-          position: relative;
-          overflow: hidden;
-          background:
-            linear-gradient(rgba(8,20,46,0.045) 1px, transparent 1px),
-            linear-gradient(90deg, rgba(8,20,46,0.045) 1px, transparent 1px),
-            #f7fbff;
-          background-size: 42px 42px;
-        }
-
-        .sd-route {
-          position: absolute;
-          left: 11%;
-          top: 48%;
-          width: 72%;
-          height: 7px;
-          border-radius: 999px;
-          background: linear-gradient(90deg, ${RED}, ${NAVY});
-          transform: rotate(-9deg);
-          box-shadow: 0 0 24px rgba(232,49,42,0.28);
-        }
-
-        .sd-pin {
-          position: absolute;
-          width: 18px;
-          height: 18px;
-          border-radius: 50%;
-          background: ${RED};
-          box-shadow: 0 0 0 10px rgba(232,49,42,0.12);
-          animation: sdPulse 1.8s infinite;
-        }
-
-        .pin-1 { left: 20%; top: 50%; }
-        .pin-2 { left: 52%; top: 41%; animation-delay: .5s; }
-        .pin-3 { right: 15%; top: 34%; animation-delay: 1s; }
-
-        .sd-widget {
-          position: absolute;
-          padding: 18px;
-          border-radius: 16px;
-          background: rgba(255,255,255,0.92);
-          border: 1px solid #e5e7eb;
-          box-shadow: 0 18px 45px rgba(8,20,46,0.12);
-          backdrop-filter: blur(10px);
-        }
-
-        .sd-widget strong {
-          display: block;
-          color: ${NAVY};
-          font-size: 13px;
-          margin-bottom: 12px;
-        }
-
-        .widget-1 {
-          left: 6%;
-          top: 12%;
-          width: 210px;
-        }
-
-        .widget-2 {
-          right: 8%;
-          top: 13%;
-          width: 230px;
-        }
-
-        .widget-3 {
-          right: 12%;
-          bottom: 12%;
-          width: 260px;
-        }
-
-        .sd-donut {
-          width: 95px;
-          height: 95px;
-          border-radius: 50%;
-          margin: 0 auto;
-          background: conic-gradient(${RED} 0 45%, #f59e0b 45% 68%, #22c55e 68% 100%);
-        }
-
-        .sd-bars {
-          height: 80px;
-          display: flex;
-          align-items: end;
-          gap: 10px;
-        }
-
-        .sd-bars span {
-          flex: 1;
-          border-radius: 8px 8px 0 0;
-          background: ${NAVY};
-        }
-
-        .sd-bars span:nth-child(1) { height: 42%; }
-        .sd-bars span:nth-child(2) { height: 74%; }
-        .sd-bars span:nth-child(3) { height: 54%; }
-        .sd-bars span:nth-child(4) { height: 88%; background: ${RED}; }
-
-        .sd-widget p {
-          margin: 0;
-          color: ${TEXT};
-          font-size: 13px;
-          line-height: 1.65;
-        }
-
         .sd-dashboard-points {
           display: grid;
           gap: 14px;
@@ -1293,6 +1123,108 @@ const ServiceDetailPage = () => {
 
         .sd-dashboard-points svg {
           color: ${RED};
+        }
+
+        .sd-service-visual-card {
+          position: relative;
+          min-height: 430px;
+          border-radius: 22px;
+          overflow: hidden;
+          background: ${NAVY};
+          box-shadow: 0 24px 70px rgba(8,20,46,0.16);
+        }
+
+        .sd-service-visual-card img {
+          width: 100%;
+          height: 430px;
+          object-fit: cover;
+          display: block;
+          transition: 0.55s ease;
+        }
+
+        .sd-service-visual-card:hover img {
+          transform: scale(1.05);
+        }
+
+        .sd-service-visual-card::after {
+          content: '';
+          position: absolute;
+          inset: 0;
+          background:
+            linear-gradient(90deg, rgba(8,20,46,0.88) 0%, rgba(8,20,46,0.45) 55%, rgba(8,20,46,0.18) 100%),
+            radial-gradient(circle at 20% 20%, rgba(232,49,42,0.28), transparent 34%);
+          z-index: 1;
+        }
+
+        .sd-service-visual-overlay {
+          position: absolute;
+          left: 34px;
+          bottom: 34px;
+          right: 34px;
+          z-index: 2;
+        }
+
+        .sd-service-visual-overlay span {
+          display: block;
+          color: ${RED};
+          font-size: 11px;
+          font-weight: 900;
+          letter-spacing: 2.8px;
+          text-transform: uppercase;
+          margin-bottom: 10px;
+        }
+
+        .sd-service-visual-overlay h3 {
+          margin: 0 0 10px;
+          color: #ffffff;
+          font-size: 34px;
+          line-height: 1.12;
+          font-weight: 900;
+          letter-spacing: -0.8px;
+        }
+
+        .sd-service-visual-overlay p {
+          max-width: 520px;
+          margin: 0;
+          color: rgba(255,255,255,0.82);
+          font-size: 14px;
+          line-height: 1.75;
+        }
+
+        .sd-service-floating-box {
+          position: absolute;
+          z-index: 3;
+          width: 190px;
+          padding: 16px 18px;
+          border-radius: 14px;
+          background: rgba(255,255,255,0.94);
+          box-shadow: 0 18px 45px rgba(8,20,46,0.20);
+          backdrop-filter: blur(10px);
+        }
+
+        .sd-service-floating-box strong {
+          display: block;
+          color: ${NAVY};
+          font-size: 13.5px;
+          font-weight: 900;
+          margin-bottom: 5px;
+        }
+
+        .sd-service-floating-box span {
+          display: block;
+          color: ${TEXT};
+          font-size: 12px;
+          font-weight: 700;
+        }
+
+        .sd-service-floating-box.box-one {
+          top: 26px;
+          right: 26px;
+        }
+
+        .sd-service-floating-box.box-two {
+          right: 26px;
+          bottom: 26px;
         }
 
         .sd-benefits-grid {
@@ -1471,16 +1403,6 @@ const ServiceDetailPage = () => {
           transform: translateY(0);
         }
 
-        @keyframes sdPulse {
-          0% {
-            box-shadow: 0 0 0 0 rgba(232,49,42,0.32);
-          }
-
-          100% {
-            box-shadow: 0 0 0 24px rgba(232,49,42,0);
-          }
-        }
-
         @media (max-width: 980px) {
           .sd-overview-grid,
           .sd-dashboard-grid,
@@ -1500,7 +1422,7 @@ const ServiceDetailPage = () => {
 
         @media (max-width: 720px) {
           .sd-main {
-            padding-top: 110px;
+            padding-top: 74px;
           }
 
           .sd-hero {
@@ -1548,20 +1470,32 @@ const ServiceDetailPage = () => {
             font-size: 24px;
           }
 
-          .sd-dashboard-body {
-            grid-template-columns: 56px 1fr;
-            min-height: 620px;
+          .sd-service-visual-card {
+            min-height: 330px;
+            border-radius: 18px;
           }
 
-          .sd-widget {
-            left: 74px !important;
-            right: 16px !important;
-            width: auto !important;
+          .sd-service-visual-card img {
+            height: 330px;
           }
 
-          .widget-1 { top: 34px; }
-          .widget-2 { top: 235px; }
-          .widget-3 { bottom: 34px; }
+          .sd-service-visual-overlay {
+            left: 22px;
+            right: 22px;
+            bottom: 24px;
+          }
+
+          .sd-service-visual-overlay h3 {
+            font-size: 26px;
+          }
+
+          .sd-service-visual-overlay p {
+            font-size: 13px;
+          }
+
+          .sd-service-floating-box {
+            display: none;
+          }
 
           .sd-dark-card,
           .sd-process-card {

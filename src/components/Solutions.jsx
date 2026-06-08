@@ -182,18 +182,33 @@ const Solutions = () => {
           overflow: 'hidden',
           padding: '90px 24px',
           color: '#fff',
-          background:
-            'linear-gradient(rgba(3,7,18,0.54), rgba(3,7,18,0.74)), url("https://images.unsplash.com/photo-1601584115197-04ecc0da31d7?q=80&w=1800&auto=format&fit=crop")',
+          backgroundImage: `
+            linear-gradient(90deg, rgba(8,20,46,0.94) 0%, rgba(8,20,46,0.82) 45%, rgba(8,20,46,0.55) 100%),
+            url("https://images.unsplash.com/photo-1601584115197-04ecc0da31d7?q=80&w=1800&auto=format&fit=crop")
+          `,
           backgroundSize: 'cover',
           backgroundPosition: 'center',
+          backgroundRepeat: 'no-repeat',
         }}
       >
         <div
           style={{
             position: 'absolute',
+            left: 0,
+            top: 0,
+            bottom: 0,
+            width: '6px',
+            background: RED,
+            zIndex: 3,
+          }}
+        />
+
+        <div
+          style={{
+            position: 'absolute',
             inset: 0,
             background:
-              'linear-gradient(90deg, rgba(8,20,46,0.82) 0%, rgba(8,20,46,0.50) 52%, rgba(3,7,18,0.75) 100%)',
+              'radial-gradient(circle at 20% 32%, rgba(232,49,42,0.30), transparent 34%)',
             zIndex: 1,
           }}
         />
@@ -202,7 +217,8 @@ const Solutions = () => {
           style={{
             position: 'relative',
             zIndex: 2,
-            maxWidth: '1000px',
+            maxWidth: '1180px',
+            width: '100%',
             textAlign: 'center',
             margin: '0 auto',
           }}
@@ -212,29 +228,33 @@ const Solutions = () => {
               display: 'inline-flex',
               alignItems: 'center',
               justifyContent: 'center',
-              background: 'rgba(232,49,42,0.20)',
-              color: '#fff',
+              gap: '10px',
+              padding: '8px 14px',
               borderRadius: '999px',
-              padding: '8px 22px',
+              background: 'rgba(255,255,255,0.10)',
+              border: '1px solid rgba(255,255,255,0.18)',
+              backdropFilter: 'blur(8px)',
               marginBottom: '24px',
               fontSize: '11px',
-              fontWeight: 900,
-              letterSpacing: '3px',
+              fontWeight: 800,
+              letterSpacing: '2px',
               textTransform: 'uppercase',
-              border: '1px solid rgba(232,49,42,0.28)',
-              backdropFilter: 'blur(4px)',
+              color: 'rgba(255,255,255,0.82)',
             }}
           >
+            <span style={{ width: '28px', height: '2px', background: RED }} />
             Fleet Services
           </div>
 
           <h1
             style={{
-              margin: 0,
-              fontSize: 'clamp(40px, 5vw, 68px)',
-              lineHeight: 1.12,
-              letterSpacing: '-1.6px',
+              maxWidth: '980px',
+              margin: '0 auto',
+              fontSize: 'clamp(44px, 5vw, 76px)',
+              lineHeight: 1.05,
+              letterSpacing: '-2px',
               fontWeight: 900,
+              color: '#fff',
             }}
           >
             Smart Telematics Services for{' '}
@@ -244,10 +264,10 @@ const Solutions = () => {
           <p
             style={{
               margin: '24px auto 0',
-              maxWidth: '780px',
-              color: 'rgba(255,255,255,0.84)',
+              maxWidth: '790px',
+              color: 'rgba(255,255,255,0.78)',
               fontSize: '17px',
-              lineHeight: 1.8,
+              lineHeight: 1.85,
             }}
           >
             Timeline Telematics delivers GPS tracking, fuel monitoring, asset visibility,
@@ -269,7 +289,7 @@ const Solutions = () => {
               style={{
                 height: '52px',
                 padding: '0 30px',
-                borderRadius: '8px',
+                borderRadius: '10px',
                 background: RED,
                 color: '#fff',
                 display: 'inline-flex',
@@ -278,7 +298,7 @@ const Solutions = () => {
                 textDecoration: 'none',
                 fontSize: '14px',
                 fontWeight: 900,
-                boxShadow: '0 18px 42px rgba(232,49,42,0.30)',
+                boxShadow: '0 18px 42px rgba(232,49,42,0.35)',
               }}
             >
               Book a Demo
@@ -289,7 +309,7 @@ const Solutions = () => {
               style={{
                 height: '52px',
                 padding: '0 28px',
-                borderRadius: '8px',
+                borderRadius: '10px',
                 color: '#fff',
                 display: 'inline-flex',
                 alignItems: 'center',
@@ -299,10 +319,42 @@ const Solutions = () => {
                 fontWeight: 900,
                 border: '1px solid rgba(255,255,255,0.24)',
                 background: 'rgba(255,255,255,0.08)',
+                backdropFilter: 'blur(8px)',
               }}
             >
               Explore Services
             </a>
+          </div>
+
+          <div
+            style={{
+              display: 'flex',
+              justifyContent: 'center',
+              flexWrap: 'wrap',
+              gap: '14px',
+              marginTop: '38px',
+            }}
+          >
+            {['GPS Tracking', 'Fuel Monitoring', 'Temperature', 'Asset Visibility'].map((item) => (
+              <div
+                key={item}
+                style={{
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: '8px',
+                  padding: '10px 16px',
+                  borderRadius: '999px',
+                  background: 'rgba(255,255,255,0.10)',
+                  border: '1px solid rgba(255,255,255,0.16)',
+                  color: 'rgba(255,255,255,0.82)',
+                  fontSize: '12px',
+                  fontWeight: 800,
+                }}
+              >
+                <span style={{ color: RED }}>▣</span>
+                {item}
+              </div>
+            ))}
           </div>
         </div>
       </div>
@@ -483,7 +535,14 @@ const Solutions = () => {
                     {service.desc}
                   </p>
 
-                  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '12px' }} className="service-feature-grid">
+                  <div
+                    style={{
+                      display: 'grid',
+                      gridTemplateColumns: 'repeat(2, 1fr)',
+                      gap: '12px',
+                    }}
+                    className="service-feature-grid"
+                  >
                     {service.features.map((feature) => (
                       <div
                         key={feature}
