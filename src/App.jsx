@@ -13,6 +13,7 @@ import ProductsPage from './pages/ProductsPage';
 import ProductDetail from './pages/ProductDetail';
 import ServiceDetailPage from './pages/ServiceDetailPage';
 import AccessoriesPage from './pages/AccessoriesPage';
+import './responsive.css';
 
 const ScrollToTop = () => {
   const { pathname } = useLocation();

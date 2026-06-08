@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 
-const MenuIcon = () => <span style={{ fontSize: '24px' }}>☰</span>;
-const CloseIcon = () => <span style={{ fontSize: '24px' }}>✕</span>;
+const MenuIcon = () => <span style={{ fontSize: '24px', lineHeight: 1 }}>☰</span>;
+const CloseIcon = () => <span style={{ fontSize: '24px', lineHeight: 1 }}>✕</span>;
 const ChevronDown = () => <span style={{ fontSize: '12px', marginLeft: '4px' }}>▼</span>;
 
 const DEVICES = [
@@ -32,9 +32,7 @@ const DEVICES = [
   },
   {
     category: 'CAN & OBD',
-    items: [
-      { label: 'VL502', desc: 'Fleet CAN Tracker', to: '/products/vl502' },
-    ],
+    items: [{ label: 'VL502', desc: 'Fleet CAN Tracker', to: '/products/vl502' }],
   },
   {
     category: 'Asset Trackers',
@@ -45,21 +43,15 @@ const DEVICES = [
   },
   {
     category: 'Personal Trackers',
-    items: [
-      { label: 'PL200', desc: 'Silent Guardian', to: '/products/pl200' },
-    ],
+    items: [{ label: 'PL200', desc: 'Silent Guardian', to: '/products/pl200' }],
   },
   {
     category: 'Non-AI Dashcams',
-    items: [
-      { label: 'JC181', desc: 'Basic Dashcam', to: '/products/jc181' },
-    ],
+    items: [{ label: 'JC181', desc: 'Basic Dashcam', to: '/products/jc181' }],
   },
   {
     category: 'Accessories',
-    items: [
-      { label: 'All Accessories', desc: 'Cables, Cameras & Sensors', to: '/accessories' },
-    ],
+    items: [{ label: 'All Accessories', desc: 'Cables, Cameras & Sensors', to: '/accessories' }],
   },
 ];
 
@@ -240,6 +232,7 @@ const Navbar = () => {
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 20);
     window.addEventListener('scroll', onScroll);
+
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
@@ -309,6 +302,7 @@ const Navbar = () => {
   return (
     <>
       <nav
+        className="site-navbar"
         style={{
           background: '#fff',
           borderBottom: '1px solid #e5e7eb',
@@ -322,6 +316,7 @@ const Navbar = () => {
         }}
       >
         <div
+          className="navbar-inner"
           style={{
             maxWidth: '1280px',
             margin: '0 auto',
@@ -332,15 +327,32 @@ const Navbar = () => {
             height: '72px',
           }}
         >
-          <Link to="/" style={{ display: 'flex', alignItems: 'center', textDecoration: 'none' }}>
+          <Link
+            to="/"
+            className="navbar-logo-link"
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              textDecoration: 'none',
+              height: '72px',
+              flexShrink: 0,
+              padding: 0,
+              margin: 0,
+            }}
+          >
             <img
               src="/TimelineLogo.png"
               alt="Timeline Telematics"
+              className="navbar-logo-img"
               style={{
-                height: '120px',
-                width: '300px',
-                paddingBottom: '15px',
+                width: '245px',
+                height: 'auto',
+                maxHeight: '58px',
+                display: 'block',
                 objectFit: 'contain',
+                margin: 0,
+                padding: 0,
               }}
             />
           </Link>
@@ -643,9 +655,10 @@ const Navbar = () => {
             </Link>
           </div>
 
-          <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+          <div className="navbar-actions" style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
             <Link
               to="/contact"
+              className="navbar-demo-btn"
               style={{
                 background: '#E8312A',
                 color: '#fff',
@@ -673,6 +686,8 @@ const Navbar = () => {
             <button
               onClick={() => setMobileOpen(!mobileOpen)}
               className="mob-btn"
+              type="button"
+              aria-label="Toggle menu"
               style={{
                 display: 'none',
                 background: 'none',
@@ -687,7 +702,7 @@ const Navbar = () => {
         </div>
 
         {mobileOpen && (
-          <div style={{ background: '#fff', borderTop: '1px solid #f3f4f6', padding: '12px 24px 20px' }}>
+          <div className="mobile-menu" style={{ background: '#fff', borderTop: '1px solid #f3f4f6', padding: '12px 24px 20px' }}>
             <Link to="/" style={mobileMainLinkStyle('/')}>
               Home
             </Link>
@@ -940,13 +955,100 @@ const Navbar = () => {
 
         <style>{`
           @media(max-width: 900px) {
-            .desktop-nav { display: none !important; }
-            .mob-btn { display: flex !important; }
+            .site-navbar {
+              top: 0 !important;
+            }
+
+            .navbar-inner {
+              height: 74px !important;
+              min-height: 74px !important;
+              padding: 0 18px !important;
+              display: flex !important;
+              align-items: center !important;
+            }
+
+            .desktop-nav {
+              display: none !important;
+            }
+
+            .navbar-logo-link {
+              height: 74px !important;
+              display: flex !important;
+              align-items: center !important;
+              justify-content: center !important;
+              padding: 0 !important;
+              margin: 0 !important;
+            }
+
+            .navbar-logo-img {
+              width: 175px !important;
+              max-width: 175px !important;
+              max-height: 52px !important;
+              height: auto !important;
+              display: block !important;
+              object-fit: contain !important;
+              margin: 0 !important;
+              padding: 0 !important;
+              transform: translateY(0) !important;
+            }
+
+            .navbar-demo-btn {
+              display: none !important;
+            }
+
+            .mob-btn {
+              display: flex !important;
+              align-items: center !important;
+              justify-content: center !important;
+              width: 46px !important;
+              height: 46px !important;
+              padding: 0 !important;
+              margin: 0 !important;
+              border-radius: 12px !important;
+              background: #f9fafb !important;
+              border: 1px solid #e5e7eb !important;
+              flex-shrink: 0 !important;
+            }
+
+            .mobile-menu {
+              max-height: calc(100vh - 74px) !important;
+              overflow-y: auto !important;
+              padding: 12px 20px 22px !important;
+            }
+          }
+
+          @media(max-width: 420px) {
+            .navbar-inner {
+              height: 72px !important;
+              min-height: 72px !important;
+              padding: 0 16px !important;
+            }
+
+            .navbar-logo-link {
+              height: 72px !important;
+            }
+
+            .navbar-logo-img {
+              width: 165px !important;
+              max-width: 165px !important;
+              max-height: 50px !important;
+            }
+
+            .mobile-menu {
+              max-height: calc(100vh - 72px) !important;
+            }
           }
 
           @keyframes fadeDown {
-            from { opacity: 0; transform: translateX(-50%) translateY(-6px); }
-            to   { opacity: 1; transform: translateX(-50%) translateY(0); }
+            from {
+              opacity: 0;
+              transform: translateX(-50%) translateY(-6px);
+            }
+
+            to {
+              opacity: 1;
+              transform: translateX(-50%) translateY(0);
+            }
           }
         `}</style>
       </nav>

@@ -1,0 +1,632 @@
+/* src/responsive.css */
+
+/* =========================
+   GLOBAL MOBILE RESET
+========================= */
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+img,
+video,
+canvas,
+svg {
+  max-width: 100%;
+}
+
+a,
+button {
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* =========================
+   NAVBAR MOBILE FIX
+========================= */
+@media (max-width: 900px) {
+  nav {
+    top: 0 !important;
+  }
+
+  nav > div:first-child {
+    height: 76px !important;
+    padding: 0 16px !important;
+    gap: 12px !important;
+  }
+
+  nav img {
+    max-width: 150px !important;
+    height: auto !important;
+  }
+
+  .desktop-nav {
+    display: none !important;
+  }
+
+  .mob-btn {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 42px !important;
+    height: 42px !important;
+    border-radius: 10px !important;
+    background: #f9fafb !important;
+    border: 1px solid #e5e7eb !important;
+  }
+
+  nav a[href="/contact"] {
+    padding: 8px 12px !important;
+    font-size: 12px !important;
+    border-radius: 7px !important;
+  }
+
+  nav > div:nth-child(2) {
+    max-height: calc(100vh - 76px) !important;
+    overflow-y: auto !important;
+    padding: 12px 18px 22px !important;
+    box-shadow: 0 22px 45px rgba(0, 0, 0, 0.12) !important;
+  }
+}
+
+@media (max-width: 480px) {
+  nav img {
+    max-width: 130px !important;
+  }
+
+  nav a[href="/contact"] {
+    display: none !important;
+  }
+}
+
+/* =========================
+   HOME HERO FIX
+========================= */
+@media (max-width: 768px) {
+  .global-hero {
+    margin-top: 76px !important;
+    min-height: calc(100vh - 76px) !important;
+    padding: 72px 18px 52px !important;
+  }
+
+  .global-hero-title {
+    font-size: clamp(31px, 9vw, 44px) !important;
+    line-height: 1.15 !important;
+    letter-spacing: -0.8px !important;
+  }
+
+  .global-hero-desc {
+    font-size: 14px !important;
+    line-height: 1.7 !important;
+  }
+
+  .global-hero-actions {
+    flex-direction: column !important;
+    gap: 15px !important;
+  }
+
+  .global-hero-btn {
+    width: 100% !important;
+    max-width: 280px !important;
+  }
+
+  .global-hero-dots {
+    margin-top: 26px !important;
+  }
+}
+
+/* =========================
+   PAGE MAIN OFFSET FIX
+========================= */
+@media (max-width: 900px) {
+  main {
+    padding-top: 76px !important;
+  }
+
+  .products-hero {
+    padding-top: 90px !important;
+  }
+
+  .products-hero-title {
+    padding-top: 30px !important;
+  }
+
+  .sd-main,
+  .svc-main,
+  .pdp-wrapper main {
+    padding-top: 76px !important;
+  }
+}
+
+/* =========================
+   GENERIC SECTION FIX
+========================= */
+@media (max-width: 768px) {
+  section {
+    padding-left: 16px !important;
+    padding-right: 16px !important;
+  }
+
+  section h1,
+  section h2 {
+    word-break: normal !important;
+    overflow-wrap: normal !important;
+  }
+
+  h1 {
+    font-size: clamp(32px, 9vw, 44px) !important;
+    line-height: 1.15 !important;
+  }
+
+  h2 {
+    font-size: clamp(27px, 8vw, 38px) !important;
+    line-height: 1.18 !important;
+  }
+
+  h3 {
+    line-height: 1.25 !important;
+  }
+
+  p {
+    font-size: 14px !important;
+  }
+}
+
+/* =========================
+   GRID FIX FOR INLINE GRIDS
+========================= */
+@media (max-width: 1024px) {
+  div[style*="grid-template-columns: repeat(4"],
+  div[style*="gridTemplateColumns: repeat(4"],
+  div[style*="grid-template-columns: repeat(5"],
+  div[style*="gridTemplateColumns: repeat(5"] {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+}
+
+@media (max-width: 768px) {
+  div[style*="grid-template-columns"],
+  div[style*="gridTemplateColumns"] {
+    grid-template-columns: 1fr !important;
+  }
+
+  div[style*="display: grid"],
+  div[style*="display:grid"] {
+    gap: 22px !important;
+  }
+
+  div[style*="max-width: 1280px"],
+  div[style*="maxWidth: 1280px"],
+  div[style*="max-width: 1180px"],
+  div[style*="maxWidth: 1180px"],
+  div[style*="max-width: 1100px"],
+  div[style*="maxWidth: 1100px"] {
+    padding-left: 18px !important;
+    padding-right: 18px !important;
+  }
+}
+
+/* =========================
+   SOLUTIONS / SERVICES CARDS
+========================= */
+@media (max-width: 768px) {
+  .svc-section,
+  .sd-section {
+    padding: 62px 0 !important;
+  }
+
+  .svc-container,
+  .sd-container {
+    padding-left: 18px !important;
+    padding-right: 18px !important;
+  }
+
+  .svc-overview-grid,
+  .svc-dashboard-grid,
+  .svc-feature-slider-grid,
+  .svc-faq-grid,
+  .sd-overview-grid,
+  .sd-dashboard-grid,
+  .sd-two-grid,
+  .sd-faq-grid {
+    grid-template-columns: 1fr !important;
+    gap: 32px !important;
+  }
+
+  .svc-hero,
+  .sd-hero {
+    min-height: 500px !important;
+    padding: 72px 0 !important;
+  }
+
+  .svc-hero h1,
+  .sd-hero h1 {
+    font-size: 36px !important;
+  }
+
+  .svc-hero p,
+  .sd-hero p {
+    font-size: 14px !important;
+    line-height: 1.7 !important;
+  }
+
+  .svc-features-grid,
+  .svc-industries-grid,
+  .svc-stat-grid,
+  .sd-benefits-grid,
+  .sd-features-grid,
+  .sd-industries-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  .svc-image-card,
+  .sd-image-card {
+    min-height: 300px !important;
+    border-radius: 18px !important;
+  }
+
+  .svc-image-card img,
+  .sd-image-card img {
+    height: 300px !important;
+  }
+
+  .svc-slider,
+  .sd-slider {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
+
+  .svc-slider-btn,
+  .sd-slider-btn {
+    display: none !important;
+  }
+
+  .svc-slide,
+  .sd-slide {
+    padding: 28px 22px !important;
+  }
+
+  .svc-slider-stage,
+  .sd-slider-stage {
+    min-height: 350px !important;
+  }
+
+  .svc-dashboard-body,
+  .sd-dashboard-body {
+    grid-template-columns: 54px 1fr !important;
+    min-height: 620px !important;
+  }
+
+  .svc-widget,
+  .sd-widget {
+    left: 68px !important;
+    right: 14px !important;
+    width: auto !important;
+  }
+}
+
+/* =========================
+   PRODUCTS PAGE FIX
+========================= */
+@media (max-width: 768px) {
+  .products-page {
+    overflow-x: hidden !important;
+  }
+
+  .products-hero {
+    padding: 105px 18px 54px !important;
+    min-height: auto !important;
+  }
+
+  .products-hero-title {
+    font-size: 34px !important;
+    line-height: 1.15 !important;
+    padding-top: 0 !important;
+  }
+
+  .products-hero-subtitle {
+    font-size: 15px !important;
+  }
+
+  .products-hero-desc {
+    font-size: 14px !important;
+  }
+
+  .products-filter-bar {
+    top: 76px !important;
+    overflow-x: auto !important;
+  }
+
+  .filter-bar-inner {
+    align-items: flex-start !important;
+  }
+
+  .filter-bar-pills {
+    flex-wrap: nowrap !important;
+    overflow-x: auto !important;
+    width: 100% !important;
+    padding-bottom: 4px !important;
+  }
+
+  .filter-pill {
+    white-space: nowrap !important;
+    flex-shrink: 0 !important;
+  }
+
+  .products-main {
+    padding: 42px 0 64px !important;
+  }
+
+  .products-category-header {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 10px !important;
+  }
+
+  .products-grid {
+    grid-template-columns: 1fr !important;
+    gap: 18px !important;
+  }
+
+  .product-card {
+    min-height: auto !important;
+  }
+
+  .product-image-wrapper {
+    min-height: 220px !important;
+  }
+}
+
+/* =========================
+   PRODUCT DETAIL FIX
+========================= */
+@media (max-width: 768px) {
+  .pdp-container {
+    padding-left: 18px !important;
+    padding-right: 18px !important;
+  }
+
+  .pdp-hero-grid {
+    grid-template-columns: 1fr !important;
+    gap: 30px !important;
+  }
+
+  .pdp-model-title {
+    font-size: 40px !important;
+  }
+
+  .pdp-model-subtitle {
+    font-size: 22px !important;
+  }
+
+  .pdp-hero-actions {
+    flex-direction: column !important;
+  }
+
+  .pdp-btn-primary,
+  .pdp-btn-secondary {
+    width: 100% !important;
+    text-align: center !important;
+  }
+
+  .pdp-image-main {
+    min-height: 260px !important;
+    padding: 24px !important;
+  }
+
+  .pdp-product-img {
+    max-height: 220px !important;
+  }
+}
+
+/* =========================
+   INDUSTRIES FIX
+========================= */
+@media (max-width: 768px) {
+  div[style*="height: 560px"],
+  div[style*="height:560px"] {
+    height: auto !important;
+    min-height: 420px !important;
+  }
+
+  div[style*="grid-template-columns: 1.1fr 0.9fr"],
+  div[style*="gridTemplateColumns: 1.1fr 0.9fr"] {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+/* =========================
+   CONTACT / CASE STUDIES FIX
+========================= */
+@media (max-width: 768px) {
+  input,
+  select,
+  textarea {
+    font-size: 14px !important;
+  }
+
+  form {
+    width: 100% !important;
+  }
+
+  button,
+  a {
+    max-width: 100%;
+  }
+
+  div[style*="minWidth: 280"],
+  div[style*="min-width: 280"] {
+    min-width: 0 !important;
+  }
+}
+
+/* =========================
+   FOOTER FIX
+========================= */
+@media (max-width: 768px) {
+  footer > div {
+    padding-left: 22px !important;
+    padding-right: 22px !important;
+  }
+
+  .footer-grid {
+    grid-template-columns: 1fr !important;
+    gap: 34px !important;
+  }
+
+  footer img {
+    max-width: 170px !important;
+  }
+
+  footer div[style*="justify-content: space-between"] {
+    align-items: flex-start !important;
+  }
+}
+
+/* =========================
+   WHATSAPP BUTTON FIX
+========================= */
+@media (max-width: 560px) {
+  a[href*="wa.me"] {
+    width: 50px !important;
+    height: 50px !important;
+    bottom: 18px !important;
+    right: 18px !important;
+  }
+}
+
+
+/* =========================
+   HOMEPAGE MOBILE GAP FIX
+========================= */
+@media (max-width: 900px) {
+  .global-hero {
+    margin-top: 0 !important;
+    min-height: calc(100vh - 76px) !important;
+    padding-top: 76px !important;
+  }
+
+  .global-hero-content {
+    padding-top: 0 !important;
+  }
+
+  nav {
+    top: 0 !important;
+  }
+}
+
+@media (max-width: 560px) {
+  .global-hero {
+    min-height: calc(100vh - 76px) !important;
+    padding: 76px 18px 52px !important;
+  }
+
+  .global-hero-title {
+    font-size: 38px !important;
+    line-height: 1.18 !important;
+  }
+
+  .global-hero-desc {
+    font-size: 15px !important;
+    line-height: 1.75 !important;
+  }
+
+  .global-hero-actions {
+    gap: 16px !important;
+  }
+
+  .global-hero-btn,
+  .global-hero-link {
+    width: 100% !important;
+    max-width: 560px !important;
+  }
+}
+
+
+
+/* =========================
+   MOBILE LOGO SIZE FIX
+========================= */
+@media (max-width: 900px) {
+  nav img {
+    max-width: 160px !important;
+    width: 160px !important;
+    height: auto !important;
+  }
+
+  nav > div:first-child {
+    height: 82px !important;
+  }
+
+  .global-hero {
+    padding-top: 82px !important;
+  }
+}
+
+@media (max-width: 480px) {
+  nav img {
+    max-width: 175px !important;
+    width: 175px !important;
+  }
+}
+
+/* =========================
+   MOBILE NAVBAR LOGO ALIGN FIX
+========================= */
+@media (max-width: 900px) {
+  nav > div:first-child {
+    height: 76px !important;
+    min-height: 76px !important;
+    padding: 0 18px !important;
+    display: flex !important;
+    align-items: center !important;
+  }
+
+  nav a[href="/"] {
+    display: flex !important;
+    align-items: center !important;
+    height: 76px !important;
+    padding: 0 !important;
+  }
+
+  nav a[href="/"] img,
+  nav img {
+    width: 180px !important;
+    max-width: 180px !important;
+    height: auto !important;
+    display: block !important;
+    margin: 0 !important;
+    object-fit: contain !important;
+  }
+
+  .mob-btn {
+    margin: 0 !important;
+    align-self: center !important;
+  }
+
+  .global-hero {
+    padding-top: 76px !important;
+  }
+}
+
+@media (max-width: 480px) {
+  nav > div:first-child,
+  nav a[href="/"] {
+    height: 74px !important;
+    min-height: 74px !important;
+  }
+
+  nav a[href="/"] img,
+  nav img {
+    width: 170px !important;
+    max-width: 170px !important;
+  }
+
+  .global-hero {
+    padding-top: 74px !important;
+  }
+}
