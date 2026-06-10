@@ -56,99 +56,27 @@ const DEVICES = [
 ];
 
 const SERVICES = [
-  {
-    label: 'Vehicle Tracking',
-    desc: 'Real-time GPS tracking for cars, trucks and fleets',
-    to: '/services/vehicle-tracking',
-  },
-  {
-    label: 'Asset Tracking Software',
-    desc: 'Track trailers, containers, equipment and field assets',
-    to: '/services/asset-tracking-software',
-  },
-  {
-    label: 'Fuel Monitoring',
-    desc: 'Fuel level visibility, theft alerts and usage reports',
-    to: '/services/fuel-monitoring',
-  },
-  {
-    label: 'Temperature Monitoring',
-    desc: 'Cold chain monitoring for food, pharma and healthcare',
-    to: '/services/temperature-monitoring',
-  },
-  {
-    label: 'Container Tracking',
-    desc: 'Visibility for containers, cargo and logistics movement',
-    to: '/services/container-tracking',
-  },
-  {
-    label: 'Tire Management System',
-    desc: 'Improve safety with tire pressure and health monitoring',
-    to: '/services/tire-management-system',
-  },
-  {
-    label: 'Personal Tracking Software',
-    desc: 'Safety and location visibility for staff and field teams',
-    to: '/services/personal-tracking-software',
-  },
-  {
-    label: 'Portable Tracking Device',
-    desc: 'Compact tracking for temporary assets and mobile use',
-    to: '/services/portable-tracking-device',
-  },
-  {
-    label: 'Auto Conductor',
-    desc: 'Smart automation and control for vehicle operations',
-    to: '/services/auto-conductor',
-  },
+  { label: 'Vehicle Tracking', desc: 'Real-time GPS tracking for cars, trucks and fleets', to: '/services/vehicle-tracking' },
+  { label: 'Asset Tracking Software', desc: 'Track trailers, containers, equipment and field assets', to: '/services/asset-tracking-software' },
+  { label: 'Fuel Monitoring', desc: 'Fuel level visibility, theft alerts and usage reports', to: '/services/fuel-monitoring' },
+  { label: 'Temperature Monitoring', desc: 'Cold chain monitoring for food, pharma and healthcare', to: '/services/temperature-monitoring' },
+  { label: 'Container Tracking', desc: 'Visibility for containers, cargo and logistics movement', to: '/services/container-tracking' },
+  { label: 'Tire Management System', desc: 'Improve safety with tire pressure and health monitoring', to: '/services/tire-management-system' },
+  { label: 'Personal Tracking Software', desc: 'Safety and location visibility for staff and field teams', to: '/services/personal-tracking-software' },
+  { label: 'Portable Tracking Device', desc: 'Compact tracking for temporary assets and mobile use', to: '/services/portable-tracking-device' },
+  { label: 'Auto Conductor', desc: 'Smart automation and control for vehicle operations', to: '/services/auto-conductor' },
 ];
 
 const INDUSTRIES = [
-  {
-    label: 'Logistics & Delivery',
-    desc: 'Fleet visibility for delivery and transport companies',
-    slug: 'logistics',
-  },
-  {
-    label: 'Public Transport',
-    desc: 'Smart mobility for buses and passenger fleets',
-    slug: 'public-transport',
-  },
-  {
-    label: 'Oil & Gas Fleets',
-    desc: 'High-security monitoring for field operations',
-    slug: 'oil-gas',
-  },
-  {
-    label: 'Construction Fleets',
-    desc: 'Equipment, vehicle and site tracking',
-    slug: 'construction',
-  },
-  {
-    label: 'Cold Chain & Healthcare',
-    desc: 'Temperature visibility for critical deliveries',
-    slug: 'healthcare',
-  },
-  {
-    label: 'Government Fleets',
-    desc: 'Accountable operations and fleet control',
-    slug: 'government',
-  },
-  {
-    label: 'Agriculture & Field Assets',
-    desc: 'Track field teams, machinery and assets',
-    slug: 'agriculture',
-  },
-  {
-    label: 'Rental & Leasing',
-    desc: 'Vehicle control for rental and leasing fleets',
-    slug: 'rental-leasing',
-  },
-  {
-    label: 'Waste Management',
-    desc: 'Route visibility for waste collection fleets',
-    slug: 'waste-management',
-  },
+  { label: 'Logistics & Delivery', desc: 'Fleet visibility for delivery and transport companies', slug: 'logistics' },
+  { label: 'Public Transport', desc: 'Smart mobility for buses and passenger fleets', slug: 'public-transport' },
+  { label: 'Oil & Gas Fleets', desc: 'High-security monitoring for field operations', slug: 'oil-gas' },
+  { label: 'Construction Fleets', desc: 'Equipment, vehicle and site tracking', slug: 'construction' },
+  { label: 'Cold Chain & Healthcare', desc: 'Temperature visibility for critical deliveries', slug: 'healthcare' },
+  { label: 'Government Fleets', desc: 'Accountable operations and fleet control', slug: 'government' },
+  { label: 'Agriculture & Field Assets', desc: 'Track field teams, machinery and assets', slug: 'agriculture' },
+  { label: 'Rental & Leasing', desc: 'Vehicle control for rental and leasing fleets', slug: 'rental-leasing' },
+  { label: 'Waste Management', desc: 'Route visibility for waste collection fleets', slug: 'waste-management' },
 ];
 
 const HoverDropdown = ({ label, to, active, children }) => {
@@ -333,12 +261,14 @@ const Navbar = () => {
             style={{
               display: 'flex',
               alignItems: 'center',
-              justifyContent: 'center',
+              justifyContent: 'flex-start',
               textDecoration: 'none',
               height: '72px',
+              width: '245px',
               flexShrink: 0,
               padding: 0,
               margin: 0,
+              overflow: 'visible',
             }}
           >
             <img
@@ -353,85 +283,40 @@ const Navbar = () => {
                 objectFit: 'contain',
                 margin: 0,
                 padding: 0,
+                transform: 'scale(1.45)',
+                transformOrigin: 'left center',
               }}
             />
           </Link>
 
-          <div
-            className="desktop-nav"
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              gap: '2px',
-            }}
-          >
-            <Link
-              to="/"
-              style={linkStyle('/')}
-              onMouseEnter={(e) => {
-                if (!isActive('/')) e.currentTarget.style.color = '#E8312A';
-              }}
-              onMouseLeave={(e) => {
-                if (!isActive('/')) e.currentTarget.style.color = '#374151';
-              }}
-            >
-              Home
-            </Link>
+          <div className="desktop-nav" style={{ display: 'flex', alignItems: 'center', gap: '2px' }}>
+            <Link to="/" style={linkStyle('/')}>Home</Link>
 
-            <HoverDropdown
-              label="Services"
-              to="/solutions"
-              active={isActive('/solutions') || isPrefixActive('/services')}
-            >
+            <HoverDropdown label="Services" to="/solutions" active={isActive('/solutions') || isPrefixActive('/services')}>
               <div style={{ padding: '14px 18px', width: 560, maxWidth: '92vw' }}>
-                <div
-                  style={{
-                    fontSize: '10.5px',
-                    fontWeight: 800,
-                    letterSpacing: '0.08em',
-                    color: '#9ca3af',
-                    fontFamily: 'Poppins, sans-serif',
-                    textTransform: 'uppercase',
-                    paddingBottom: 8,
-                    marginBottom: 10,
-                    borderBottom: '1px solid #f3f4f6',
-                    display: 'flex',
-                    justifyContent: 'space-between',
-                    alignItems: 'center',
-                  }}
-                >
+                <div style={{
+                  fontSize: '10.5px',
+                  fontWeight: 800,
+                  letterSpacing: '0.08em',
+                  color: '#9ca3af',
+                  fontFamily: 'Poppins, sans-serif',
+                  textTransform: 'uppercase',
+                  paddingBottom: 8,
+                  marginBottom: 10,
+                  borderBottom: '1px solid #f3f4f6',
+                  display: 'flex',
+                  justifyContent: 'space-between',
+                  alignItems: 'center',
+                }}>
                   <span>Fleet Tracking Services</span>
-
-                  <Link
-                    to="/solutions"
-                    style={{
-                      fontSize: '12.5px',
-                      fontWeight: 800,
-                      color: '#E8312A',
-                      textDecoration: 'none',
-                      textTransform: 'none',
-                      letterSpacing: 0,
-                    }}
-                  >
+                  <Link to="/solutions" style={{ fontSize: '12.5px', fontWeight: 800, color: '#E8312A', textDecoration: 'none', textTransform: 'none', letterSpacing: 0 }}>
                     View All →
                   </Link>
                 </div>
 
-                <div
-                  style={{
-                    display: 'grid',
-                    gridTemplateColumns: 'repeat(2, minmax(0, 1fr))',
-                    gap: '6px 12px',
-                  }}
-                >
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, minmax(0, 1fr))', gap: '6px 12px' }}>
                   {SERVICES.map((item) => (
-                    <Link
-                      key={item.label}
-                      to={item.to}
-                      style={dropdownItemStyle}
-                      onMouseEnter={onItemEnter}
-                      onMouseLeave={onItemLeave}
-                    >
+                    <Link key={item.label} to={item.to} style={dropdownItemStyle} onMouseEnter={onItemEnter} onMouseLeave={onItemLeave}>
                       <div style={itemTitleStyle}>{item.label}</div>
                       <div style={itemDescStyle}>{item.desc}</div>
                     </Link>
@@ -440,60 +325,31 @@ const Navbar = () => {
               </div>
             </HoverDropdown>
 
-            <HoverDropdown
-              label="Industries"
-              to="/industries"
-              active={isPrefixActive('/industries')}
-            >
+            <HoverDropdown label="Industries" to="/industries" active={isPrefixActive('/industries')}>
               <div style={{ padding: '14px 18px', width: 560, maxWidth: '92vw' }}>
-                <div
-                  style={{
-                    fontSize: '10.5px',
-                    fontWeight: 800,
-                    letterSpacing: '0.08em',
-                    color: '#9ca3af',
-                    fontFamily: 'Poppins, sans-serif',
-                    textTransform: 'uppercase',
-                    paddingBottom: 8,
-                    marginBottom: 10,
-                    borderBottom: '1px solid #f3f4f6',
-                    display: 'flex',
-                    justifyContent: 'space-between',
-                    alignItems: 'center',
-                  }}
-                >
+                <div style={{
+                  fontSize: '10.5px',
+                  fontWeight: 800,
+                  letterSpacing: '0.08em',
+                  color: '#9ca3af',
+                  fontFamily: 'Poppins, sans-serif',
+                  textTransform: 'uppercase',
+                  paddingBottom: 8,
+                  marginBottom: 10,
+                  borderBottom: '1px solid #f3f4f6',
+                  display: 'flex',
+                  justifyContent: 'space-between',
+                  alignItems: 'center',
+                }}>
                   <span>Industries We Serve</span>
-
-                  <Link
-                    to="/industries"
-                    style={{
-                      fontSize: '12.5px',
-                      fontWeight: 800,
-                      color: '#E8312A',
-                      textDecoration: 'none',
-                      textTransform: 'none',
-                      letterSpacing: 0,
-                    }}
-                  >
+                  <Link to="/industries" style={{ fontSize: '12.5px', fontWeight: 800, color: '#E8312A', textDecoration: 'none', textTransform: 'none', letterSpacing: 0 }}>
                     View All →
                   </Link>
                 </div>
 
-                <div
-                  style={{
-                    display: 'grid',
-                    gridTemplateColumns: 'repeat(2, minmax(0, 1fr))',
-                    gap: '6px 12px',
-                  }}
-                >
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, minmax(0, 1fr))', gap: '6px 12px' }}>
                   {INDUSTRIES.map((ind) => (
-                    <Link
-                      key={ind.slug}
-                      to={`/industries/${ind.slug}`}
-                      style={dropdownItemStyle}
-                      onMouseEnter={onItemEnter}
-                      onMouseLeave={onItemLeave}
-                    >
+                    <Link key={ind.slug} to={`/industries/${ind.slug}`} style={dropdownItemStyle} onMouseEnter={onItemEnter} onMouseLeave={onItemLeave}>
                       <div style={itemTitleStyle}>{ind.label}</div>
                       <div style={itemDescStyle}>{ind.desc}</div>
                     </Link>
@@ -502,100 +358,47 @@ const Navbar = () => {
               </div>
             </HoverDropdown>
 
-            <Link
-              to="/case-studies"
-              style={linkStyle('/case-studies')}
-              onMouseEnter={(e) => {
-                if (!isActive('/case-studies')) e.currentTarget.style.color = '#E8312A';
-              }}
-              onMouseLeave={(e) => {
-                if (!isActive('/case-studies')) e.currentTarget.style.color = '#374151';
-              }}
-            >
-              Case Studies
-            </Link>
+            <Link to="/case-studies" style={linkStyle('/case-studies')}>Case Studies</Link>
 
-            <HoverDropdown
-              label="Products"
-              to="/products"
-              active={isPrefixActive('/products') || isActive('/accessories')}
-            >
+            <HoverDropdown label="Products" to="/products" active={isPrefixActive('/products') || isActive('/accessories')}>
               <div style={{ padding: '12px 16px', width: 1040, maxWidth: '92vw' }}>
-                <div
-                  style={{
-                    fontSize: '10.5px',
-                    fontWeight: 700,
-                    letterSpacing: '0.08em',
-                    color: '#9ca3af',
-                    fontFamily: 'Poppins, sans-serif',
-                    textTransform: 'uppercase',
-                    paddingBottom: 8,
-                    marginBottom: 10,
-                    borderBottom: '1px solid #f3f4f6',
-                  }}
-                >
+                <div style={{
+                  fontSize: '10.5px',
+                  fontWeight: 700,
+                  letterSpacing: '0.08em',
+                  color: '#9ca3af',
+                  fontFamily: 'Poppins, sans-serif',
+                  textTransform: 'uppercase',
+                  paddingBottom: 8,
+                  marginBottom: 10,
+                  borderBottom: '1px solid #f3f4f6',
+                }}>
                   Fleet Hardware & Accessories
                 </div>
 
-                <div
-                  style={{
-                    display: 'grid',
-                    gridTemplateColumns: 'repeat(7, 1fr)',
-                    gap: '6px 12px',
-                  }}
-                >
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(7, 1fr)', gap: '6px 12px' }}>
                   {DEVICES.map((cat) => (
                     <div key={cat.category}>
-                      <div
-                        style={{
-                          fontSize: '10px',
-                          fontWeight: 700,
-                          color: '#E8312A',
-                          fontFamily: 'Poppins, sans-serif',
-                          textTransform: 'uppercase',
-                          letterSpacing: '0.06em',
-                          marginBottom: 4,
-                          paddingBottom: 4,
-                          borderBottom: '2px solid #fef2f2',
-                        }}
-                      >
+                      <div style={{
+                        fontSize: '10px',
+                        fontWeight: 700,
+                        color: '#E8312A',
+                        fontFamily: 'Poppins, sans-serif',
+                        textTransform: 'uppercase',
+                        letterSpacing: '0.06em',
+                        marginBottom: 4,
+                        paddingBottom: 4,
+                        borderBottom: '2px solid #fef2f2',
+                      }}>
                         {cat.category}
                       </div>
 
                       {cat.items.map((item) => (
-                        <Link
-                          key={item.label}
-                          to={item.to}
-                          style={{
-                            display: 'block',
-                            padding: '3px 5px',
-                            borderRadius: 6,
-                            textDecoration: 'none',
-                            transition: 'background 0.15s',
-                          }}
-                          onMouseEnter={onItemEnter}
-                          onMouseLeave={onItemLeave}
-                        >
-                          <div
-                            style={{
-                              fontSize: '12px',
-                              fontWeight: 600,
-                              color: '#111827',
-                              fontFamily: 'Poppins, sans-serif',
-                              lineHeight: '1.3',
-                            }}
-                          >
+                        <Link key={item.label} to={item.to} style={{ display: 'block', padding: '3px 5px', borderRadius: 6, textDecoration: 'none', transition: 'background 0.15s' }} onMouseEnter={onItemEnter} onMouseLeave={onItemLeave}>
+                          <div style={{ fontSize: '12px', fontWeight: 600, color: '#111827', fontFamily: 'Poppins, sans-serif', lineHeight: '1.3' }}>
                             {item.label}
                           </div>
-
-                          <div
-                            style={{
-                              fontSize: '10.5px',
-                              color: '#9ca3af',
-                              marginTop: 1,
-                              lineHeight: '1.2',
-                            }}
-                          >
+                          <div style={{ fontSize: '10.5px', color: '#9ca3af', marginTop: 1, lineHeight: '1.2' }}>
                             {item.desc}
                           </div>
                         </Link>
@@ -604,55 +407,16 @@ const Navbar = () => {
                   ))}
                 </div>
 
-                <div
-                  style={{
-                    marginTop: 10,
-                    paddingTop: 10,
-                    borderTop: '1px solid #f3f4f6',
-                    textAlign: 'center',
-                  }}
-                >
-                  <Link
-                    to="/products"
-                    style={{
-                      fontSize: '13px',
-                      fontWeight: 700,
-                      color: '#E8312A',
-                      fontFamily: 'Poppins, sans-serif',
-                      textDecoration: 'none',
-                    }}
-                  >
+                <div style={{ marginTop: 10, paddingTop: 10, borderTop: '1px solid #f3f4f6', textAlign: 'center' }}>
+                  <Link to="/products" style={{ fontSize: '13px', fontWeight: 700, color: '#E8312A', fontFamily: 'Poppins, sans-serif', textDecoration: 'none' }}>
                     View All Products →
                   </Link>
                 </div>
               </div>
             </HoverDropdown>
 
-            <Link
-              to="/about"
-              style={linkStyle('/about')}
-              onMouseEnter={(e) => {
-                if (!isActive('/about')) e.currentTarget.style.color = '#E8312A';
-              }}
-              onMouseLeave={(e) => {
-                if (!isActive('/about')) e.currentTarget.style.color = '#374151';
-              }}
-            >
-              About
-            </Link>
-
-            <Link
-              to="/contact"
-              style={linkStyle('/contact')}
-              onMouseEnter={(e) => {
-                if (!isActive('/contact')) e.currentTarget.style.color = '#E8312A';
-              }}
-              onMouseLeave={(e) => {
-                if (!isActive('/contact')) e.currentTarget.style.color = '#374151';
-              }}
-            >
-              Contact
-            </Link>
+            <Link to="/about" style={linkStyle('/about')}>About</Link>
+            <Link to="/contact" style={linkStyle('/contact')}>Contact</Link>
           </div>
 
           <div className="navbar-actions" style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
@@ -670,14 +434,6 @@ const Navbar = () => {
                 textDecoration: 'none',
                 transition: 'all 0.2s',
                 whiteSpace: 'nowrap',
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.background = '#c72a23';
-                e.currentTarget.style.transform = 'translateY(-1px)';
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.background = '#E8312A';
-                e.currentTarget.style.transform = 'translateY(0)';
               }}
             >
               Book a Demo
@@ -703,9 +459,7 @@ const Navbar = () => {
 
         {mobileOpen && (
           <div className="mobile-menu" style={{ background: '#fff', borderTop: '1px solid #f3f4f6', padding: '12px 24px 20px' }}>
-            <Link to="/" style={mobileMainLinkStyle('/')}>
-              Home
-            </Link>
+            <Link to="/" style={mobileMainLinkStyle('/')}>Home</Link>
 
             <div>
               <button
@@ -731,47 +485,13 @@ const Navbar = () => {
 
               {mobileServicesOpen && (
                 <div style={{ paddingLeft: '12px' }}>
-                  <Link
-                    to="/solutions"
-                    onClick={() => {
-                      setMobileOpen(false);
-                      setMobileServicesOpen(false);
-                    }}
-                    style={{
-                      display: 'block',
-                      padding: '10px 0',
-                      fontSize: '13px',
-                      fontWeight: 700,
-                      color: '#E8312A',
-                      textDecoration: 'none',
-                      borderBottom: '1px solid #f9fafb',
-                    }}
-                  >
+                  <Link to="/solutions" style={{ display: 'block', padding: '10px 0', fontSize: '13px', fontWeight: 700, color: '#E8312A', textDecoration: 'none', borderBottom: '1px solid #f9fafb' }}>
                     View All Services →
                   </Link>
-
                   {SERVICES.map((item) => (
-                    <Link
-                      key={item.label}
-                      to={item.to}
-                      onClick={() => {
-                        setMobileOpen(false);
-                        setMobileServicesOpen(false);
-                      }}
-                      style={{
-                        display: 'block',
-                        padding: '9px 0',
-                        fontSize: '13.5px',
-                        fontWeight: 600,
-                        color: '#374151',
-                        borderBottom: '1px solid #f9fafb',
-                        textDecoration: 'none',
-                      }}
-                    >
+                    <Link key={item.label} to={item.to} style={{ display: 'block', padding: '9px 0', fontSize: '13.5px', fontWeight: 600, color: '#374151', borderBottom: '1px solid #f9fafb', textDecoration: 'none' }}>
                       <div>{item.label}</div>
-                      <div style={{ fontSize: '11px', color: '#9ca3af', marginTop: 2 }}>
-                        {item.desc}
-                      </div>
+                      <div style={{ fontSize: '11px', color: '#9ca3af', marginTop: 2 }}>{item.desc}</div>
                     </Link>
                   ))}
                 </div>
@@ -802,56 +522,20 @@ const Navbar = () => {
 
               {mobileIndustriesOpen && (
                 <div style={{ paddingLeft: '12px' }}>
-                  <Link
-                    to="/industries"
-                    onClick={() => {
-                      setMobileOpen(false);
-                      setMobileIndustriesOpen(false);
-                    }}
-                    style={{
-                      display: 'block',
-                      padding: '10px 0',
-                      fontSize: '13px',
-                      fontWeight: 700,
-                      color: '#E8312A',
-                      textDecoration: 'none',
-                      borderBottom: '1px solid #f9fafb',
-                    }}
-                  >
+                  <Link to="/industries" style={{ display: 'block', padding: '10px 0', fontSize: '13px', fontWeight: 700, color: '#E8312A', textDecoration: 'none', borderBottom: '1px solid #f9fafb' }}>
                     View All Industries →
                   </Link>
-
                   {INDUSTRIES.map((ind) => (
-                    <Link
-                      key={ind.slug}
-                      to={`/industries/${ind.slug}`}
-                      onClick={() => {
-                        setMobileOpen(false);
-                        setMobileIndustriesOpen(false);
-                      }}
-                      style={{
-                        display: 'block',
-                        padding: '9px 0',
-                        fontSize: '13.5px',
-                        fontWeight: 600,
-                        color: '#374151',
-                        borderBottom: '1px solid #f9fafb',
-                        textDecoration: 'none',
-                      }}
-                    >
+                    <Link key={ind.slug} to={`/industries/${ind.slug}`} style={{ display: 'block', padding: '9px 0', fontSize: '13.5px', fontWeight: 600, color: '#374151', borderBottom: '1px solid #f9fafb', textDecoration: 'none' }}>
                       <div>{ind.label}</div>
-                      <div style={{ fontSize: '11px', color: '#9ca3af', marginTop: 2 }}>
-                        {ind.desc}
-                      </div>
+                      <div style={{ fontSize: '11px', color: '#9ca3af', marginTop: 2 }}>{ind.desc}</div>
                     </Link>
                   ))}
                 </div>
               )}
             </div>
 
-            <Link to="/case-studies" style={mobileMainLinkStyle('/case-studies')}>
-              Case Studies
-            </Link>
+            <Link to="/case-studies" style={mobileMainLinkStyle('/case-studies')}>Case Studies</Link>
 
             <div>
               <button
@@ -879,77 +563,29 @@ const Navbar = () => {
                 <div style={{ paddingLeft: '12px' }}>
                   {DEVICES.map((cat) => (
                     <div key={cat.category} style={{ marginBottom: 10 }}>
-                      <div
-                        style={{
-                          fontSize: '11px',
-                          fontWeight: 700,
-                          color: '#E8312A',
-                          textTransform: 'uppercase',
-                          letterSpacing: '0.06em',
-                          padding: '8px 0 4px',
-                        }}
-                      >
+                      <div style={{ fontSize: '11px', fontWeight: 700, color: '#E8312A', textTransform: 'uppercase', letterSpacing: '0.06em', padding: '8px 0 4px' }}>
                         {cat.category}
                       </div>
-
                       {cat.items.map((item) => (
-                        <Link
-                          key={item.label}
-                          to={item.to}
-                          onClick={() => {
-                            setMobileOpen(false);
-                            setMobileProdOpen(false);
-                          }}
-                          style={{
-                            display: 'flex',
-                            justifyContent: 'space-between',
-                            alignItems: 'center',
-                            padding: '8px 0',
-                            borderBottom: '1px solid #f9fafb',
-                            textDecoration: 'none',
-                          }}
-                        >
+                        <Link key={item.label} to={item.to} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '8px 0', borderBottom: '1px solid #f9fafb', textDecoration: 'none' }}>
                           <div>
-                            <div style={{ fontSize: '12.5px', fontWeight: 600, color: '#111827' }}>
-                              {item.label}
-                            </div>
-                            <div style={{ fontSize: '11px', color: '#9ca3af' }}>
-                              {item.desc}
-                            </div>
+                            <div style={{ fontSize: '12.5px', fontWeight: 600, color: '#111827' }}>{item.label}</div>
+                            <div style={{ fontSize: '11px', color: '#9ca3af' }}>{item.desc}</div>
                           </div>
                         </Link>
                       ))}
                     </div>
                   ))}
 
-                  <Link
-                    to="/products"
-                    onClick={() => {
-                      setMobileOpen(false);
-                      setMobileProdOpen(false);
-                    }}
-                    style={{
-                      display: 'block',
-                      padding: '10px 0',
-                      fontSize: '13px',
-                      fontWeight: 700,
-                      color: '#E8312A',
-                      textDecoration: 'none',
-                    }}
-                  >
+                  <Link to="/products" style={{ display: 'block', padding: '10px 0', fontSize: '13px', fontWeight: 700, color: '#E8312A', textDecoration: 'none' }}>
                     View All Products →
                   </Link>
                 </div>
               )}
             </div>
 
-            <Link to="/about" style={mobileMainLinkStyle('/about')}>
-              About
-            </Link>
-
-            <Link to="/contact" style={mobileMainLinkStyle('/contact')}>
-              Contact
-            </Link>
+            <Link to="/about" style={mobileMainLinkStyle('/about')}>About</Link>
+            <Link to="/contact" style={mobileMainLinkStyle('/contact')}>Contact</Link>
           </div>
         )}
 
@@ -973,11 +609,13 @@ const Navbar = () => {
 
             .navbar-logo-link {
               height: 74px !important;
+              width: 175px !important;
               display: flex !important;
               align-items: center !important;
-              justify-content: center !important;
+              justify-content: flex-start !important;
               padding: 0 !important;
               margin: 0 !important;
+              overflow: visible !important;
             }
 
             .navbar-logo-img {
@@ -989,7 +627,8 @@ const Navbar = () => {
               object-fit: contain !important;
               margin: 0 !important;
               padding: 0 !important;
-              transform: translateY(0) !important;
+              transform: scale(1.22) !important;
+              transform-origin: left center !important;
             }
 
             .navbar-demo-btn {
@@ -1026,12 +665,15 @@ const Navbar = () => {
 
             .navbar-logo-link {
               height: 72px !important;
+              width: 165px !important;
             }
 
             .navbar-logo-img {
               width: 165px !important;
               max-width: 165px !important;
               max-height: 50px !important;
+              transform: scale(1.18) !important;
+              transform-origin: left center !important;
             }
 
             .mobile-menu {

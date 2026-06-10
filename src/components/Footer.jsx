@@ -201,7 +201,15 @@ const Footer = () => (
       >
         {/* Brand */}
         <div>
-          <Link to="/" style={{ display: 'inline-block', marginBottom: '24px' }}>
+          <Link
+            to="/"
+            style={{
+              display: 'inline-block',
+              marginBottom: '34px',
+              width: '198px',
+              overflow: 'visible',
+            }}
+          >
             <img
               src="/TimelineLogoWhite.png"
               alt="Timeline Telematics"
@@ -209,6 +217,8 @@ const Footer = () => (
                 width: '198px',
                 height: 'auto',
                 display: 'block',
+                transform: 'scale(1.35)',
+                transformOrigin: 'left center',
               }}
             />
           </Link>
