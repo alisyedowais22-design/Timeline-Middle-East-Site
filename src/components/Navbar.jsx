@@ -1,13 +1,15 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { QOHO_PRODUCT_CATEGORIES } from '../data/qohoProductsData';
 
 const MenuIcon = () => <span style={{ fontSize: '24px', lineHeight: 1 }}>☰</span>;
 const CloseIcon = () => <span style={{ fontSize: '24px', lineHeight: 1 }}>✕</span>;
 const ChevronDown = () => <span style={{ fontSize: '12px', marginLeft: '4px' }}>▼</span>;
 
-const DEVICES = [
+const BASE_DEVICES = [
   {
     category: 'Vehicle Trackers',
+    desc: 'GPS tracking devices',
     items: [
       { label: 'VL103D', desc: 'LTE GNSS Terminal', to: '/products/vl103d' },
       { label: 'VL103M', desc: 'LTE GNSS Terminal', to: '/products/vl103m' },
@@ -18,6 +20,7 @@ const DEVICES = [
   },
   {
     category: 'AI Dashcams',
+    desc: 'ADAS & DMS cameras',
     items: [
       { label: 'JC371', desc: 'Multi-Channel AI DashCam', to: '/products/jc371' },
       { label: 'JC450', desc: 'Multi-Channel AI DashCam', to: '/products/jc450' },
@@ -25,6 +28,7 @@ const DEVICES = [
   },
   {
     category: 'Asset Trackers',
+    desc: 'Long-life asset devices',
     items: [
       { label: 'LL303PRO', desc: 'LTE Solar Powered GNSS Tracker', to: '/products/ll303pro' },
       { label: 'LL301', desc: 'Stilled Watcher, Silent Protector', to: '/products/ll301' },
@@ -32,18 +36,32 @@ const DEVICES = [
   },
   {
     category: 'Personal Trackers',
+    desc: 'Personal safety devices',
     items: [
       { label: 'PL200', desc: 'Silent no more, always in focus', to: '/products/pl200' },
     ],
   },
   {
     category: 'Non-AI Dashcams',
+    desc: 'Basic video recording',
     items: [
       { label: 'JC181', desc: 'Compact Dual-Channel DashCam', to: '/products/jc181' },
       { label: 'JC182', desc: '4G Mini DashCam', to: '/products/jc182' },
     ],
   },
 ];
+
+const QOHO_DEVICES = QOHO_PRODUCT_CATEGORIES.map((cat) => ({
+  category: cat.label,
+  desc: cat.desc,
+  items: cat.products.map((product) => ({
+    label: product.model,
+    desc: product.name,
+    to: `/products/${product.id}`,
+  })),
+}));
+
+const DEVICES = [...BASE_DEVICES, ...QOHO_DEVICES];
 
 const VEHICLE_SOLUTIONS = [
   {
@@ -189,6 +207,253 @@ const HoverDropdown = ({ label, to, active, children }) => {
           {children}
         </div>
       )}
+    </div>
+  );
+};
+
+const ProductsDropdownContent = ({ onClose }) => {
+  const [activeIndex, setActiveIndex] = useState(0);
+  const activeCategory = DEVICES[activeIndex];
+
+  return (
+    <div
+      style={{
+        width: 760,
+        maxWidth: '92vw',
+        height: 500,
+        maxHeight: 'calc(100vh - 210px)',
+        overflow: 'hidden',
+      }}
+    >
+      <div
+        style={{
+          padding: '10px 16px',
+          borderBottom: '1px solid #f3f4f6',
+          fontSize: '10.5px',
+          fontWeight: 800,
+          letterSpacing: '0.08em',
+          color: '#9ca3af',
+          fontFamily: 'Poppins, sans-serif',
+          textTransform: 'uppercase',
+          height: 42,
+          display: 'flex',
+          alignItems: 'center',
+        }}
+      >
+        Our Hardware Products
+      </div>
+
+      <div
+        style={{
+          display: 'grid',
+          gridTemplateColumns: '250px 1fr',
+          height: 'calc(100% - 92px)',
+          minHeight: 0,
+        }}
+      >
+        <div
+          className="products-category-scroll"
+          style={{
+            borderRight: '1px solid #f3f4f6',
+            padding: '8px',
+            overflowY: 'auto',
+            background: '#fff',
+            minHeight: 0,
+          }}
+        >
+          {DEVICES.map((cat, index) => {
+            const active = index === activeIndex;
+
+            return (
+              <button
+                key={cat.category}
+                onMouseEnter={() => setActiveIndex(index)}
+                onClick={() => setActiveIndex(index)}
+                type="button"
+                style={{
+                  width: '100%',
+                  textAlign: 'left',
+                  border: 'none',
+                  background: active ? '#fef2f2' : 'transparent',
+                  borderLeft: active ? '3px solid #E8312A' : '3px solid transparent',
+                  padding: '8px 9px',
+                  borderRadius: 8,
+                  cursor: 'pointer',
+                  marginBottom: 3,
+                  transition: 'all 0.15s ease',
+                }}
+              >
+                <div
+                  style={{
+                    fontSize: '11.5px',
+                    fontWeight: 800,
+                    color: active ? '#E8312A' : '#111827',
+                    fontFamily: 'Poppins, sans-serif',
+                    lineHeight: 1.22,
+                  }}
+                >
+                  {cat.category}
+                </div>
+
+                <div
+                  style={{
+                    fontSize: '10px',
+                    color: '#9ca3af',
+                    marginTop: 2,
+                    fontFamily: 'Poppins, sans-serif',
+                    lineHeight: 1.15,
+                  }}
+                >
+                  {cat.desc}
+                </div>
+              </button>
+            );
+          })}
+        </div>
+
+        <div
+          className="products-items-scroll"
+          style={{
+            padding: '12px 16px',
+            overflowY: 'auto',
+            background: '#fff',
+            minHeight: 0,
+          }}
+        >
+          <div
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+              gap: 12,
+              paddingBottom: 9,
+              marginBottom: 8,
+              borderBottom: '1px solid #f3f4f6',
+            }}
+          >
+            <div>
+              <div
+                style={{
+                  fontSize: '12.5px',
+                  fontWeight: 900,
+                  color: '#E8312A',
+                  fontFamily: 'Poppins, sans-serif',
+                  textTransform: 'uppercase',
+                  letterSpacing: '0.04em',
+                }}
+              >
+                {activeCategory.category}
+              </div>
+
+              <div
+                style={{
+                  fontSize: '10.5px',
+                  color: '#9ca3af',
+                  marginTop: 2,
+                  fontFamily: 'Poppins, sans-serif',
+                }}
+              >
+                {activeCategory.items.length} products available
+              </div>
+            </div>
+
+            <Link
+              to="/products"
+              onClick={onClose}
+              style={{
+                fontSize: '12px',
+                fontWeight: 800,
+                color: '#E8312A',
+                textDecoration: 'none',
+                fontFamily: 'Poppins, sans-serif',
+                whiteSpace: 'nowrap',
+              }}
+            >
+              View All →
+            </Link>
+          </div>
+
+          <div
+            style={{
+              display: 'grid',
+              gridTemplateColumns: activeCategory.items.length > 8 ? 'repeat(2, minmax(0, 1fr))' : '1fr',
+              gap: '4px 12px',
+            }}
+          >
+            {activeCategory.items.map((item) => (
+              <Link
+                key={item.to}
+                to={item.to}
+                onClick={onClose}
+                style={{
+                  display: 'block',
+                  padding: '7px 8px',
+                  borderRadius: 8,
+                  textDecoration: 'none',
+                  transition: 'background 0.15s',
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.background = '#fef2f2';
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.background = 'transparent';
+                }}
+              >
+                <div
+                  style={{
+                    fontSize: '12px',
+                    fontWeight: 800,
+                    color: '#111827',
+                    fontFamily: 'Poppins, sans-serif',
+                    lineHeight: 1.25,
+                  }}
+                >
+                  {item.label}
+                </div>
+
+                <div
+                  style={{
+                    fontSize: '10.2px',
+                    color: '#9ca3af',
+                    marginTop: 2,
+                    lineHeight: 1.22,
+                    fontFamily: 'Poppins, sans-serif',
+                  }}
+                >
+                  {item.desc}
+                </div>
+              </Link>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      <div
+        style={{
+          height: 50,
+          padding: '8px 16px',
+          borderTop: '1px solid #f3f4f6',
+          textAlign: 'center',
+          background: '#fff',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+        }}
+      >
+        <Link
+          to="/products"
+          onClick={onClose}
+          style={{
+            fontSize: '13px',
+            fontWeight: 800,
+            color: '#E8312A',
+            fontFamily: 'Poppins, sans-serif',
+            textDecoration: 'none',
+          }}
+        >
+          View All Products →
+        </Link>
+      </div>
     </div>
   );
 };
@@ -444,58 +709,7 @@ const Navbar = () => {
             <Link to="/case-studies" style={linkStyle('/case-studies')}>Case Studies</Link>
 
             <HoverDropdown label="Products" to="/products" active={isPrefixActive('/products') || isActive('/accessories')}>
-              <div style={{ padding: '12px 16px', width: 1040, maxWidth: '92vw' }}>
-                <div style={{
-                  fontSize: '10.5px',
-                  fontWeight: 700,
-                  letterSpacing: '0.08em',
-                  color: '#9ca3af',
-                  fontFamily: 'Poppins, sans-serif',
-                  textTransform: 'uppercase',
-                  paddingBottom: 8,
-                  marginBottom: 10,
-                  borderBottom: '1px solid #f3f4f6',
-                }}>
-                  Fleet Hardware
-                </div>
-
-                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(5, 1fr)', gap: '6px 12px' }}>
-                  {DEVICES.map((cat) => (
-                    <div key={cat.category}>
-                      <div style={{
-                        fontSize: '10px',
-                        fontWeight: 700,
-                        color: '#E8312A',
-                        fontFamily: 'Poppins, sans-serif',
-                        textTransform: 'uppercase',
-                        letterSpacing: '0.06em',
-                        marginBottom: 4,
-                        paddingBottom: 4,
-                        borderBottom: '2px solid #fef2f2',
-                      }}>
-                        {cat.category}
-                      </div>
-
-                      {cat.items.map((item) => (
-                        <Link key={item.label} to={item.to} style={{ display: 'block', padding: '3px 5px', borderRadius: 6, textDecoration: 'none', transition: 'background 0.15s' }} onMouseEnter={onItemEnter} onMouseLeave={onItemLeave}>
-                          <div style={{ fontSize: '12px', fontWeight: 600, color: '#111827', fontFamily: 'Poppins, sans-serif', lineHeight: '1.3' }}>
-                            {item.label}
-                          </div>
-                          <div style={{ fontSize: '10.5px', color: '#9ca3af', marginTop: 1, lineHeight: '1.2' }}>
-                            {item.desc}
-                          </div>
-                        </Link>
-                      ))}
-                    </div>
-                  ))}
-                </div>
-
-                <div style={{ marginTop: 10, paddingTop: 10, borderTop: '1px solid #f3f4f6', textAlign: 'center' }}>
-                  <Link to="/products" style={{ fontSize: '13px', fontWeight: 700, color: '#E8312A', fontFamily: 'Poppins, sans-serif', textDecoration: 'none' }}>
-                    View All Products →
-                  </Link>
-                </div>
-              </div>
+              <ProductsDropdownContent />
             </HoverDropdown>
 
             <Link to="/about" style={linkStyle('/about')}>About</Link>
@@ -799,6 +1013,28 @@ const Navbar = () => {
             .mobile-menu {
               max-height: calc(100vh - 72px) !important;
             }
+          }
+
+          .products-category-scroll::-webkit-scrollbar,
+          .products-items-scroll::-webkit-scrollbar {
+            width: 5px;
+          }
+
+          .products-category-scroll::-webkit-scrollbar-track,
+          .products-items-scroll::-webkit-scrollbar-track {
+            background: #f8fafc;
+            border-radius: 999px;
+          }
+
+          .products-category-scroll::-webkit-scrollbar-thumb,
+          .products-items-scroll::-webkit-scrollbar-thumb {
+            background: #e5e7eb;
+            border-radius: 999px;
+          }
+
+          .products-category-scroll::-webkit-scrollbar-thumb:hover,
+          .products-items-scroll::-webkit-scrollbar-thumb:hover {
+            background: #d1d5db;
           }
 
           @keyframes fadeDown {

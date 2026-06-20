@@ -6,6 +6,7 @@ import { ArrowRight, Package, ShieldCheck } from 'lucide-react';
 import TopBar from '../components/TopBar';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
+import { QOHO_PRODUCT_CATEGORIES } from '../data/qohoProductsData';
 
 const RED = '#E8312A';
 const P = "'Poppins', sans-serif";
@@ -14,7 +15,7 @@ const ProductsPage = () => {
   const navigate = useNavigate();
   const [activeFilters, setActiveFilters] = useState([]);
 
-  const categories = [
+  const baseCategories = [
     {
       id: 'vehicle',
       label: 'Vehicle Trackers',
@@ -63,6 +64,8 @@ const ProductsPage = () => {
       ],
     },
   ];
+
+  const categories = [...baseCategories, ...QOHO_PRODUCT_CATEGORIES];
 
   const toggleFilter = (id) => {
     setActiveFilters((prev) =>
