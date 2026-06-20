@@ -1,720 +1,868 @@
 import React, { useState } from 'react';
-import { useParams, Link, useNavigate } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 import './ProductDetail.css';
 import TopBar from '../components/TopBar';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 
-/* ─────────────────────────────────────────────────────────────
-   SVG ICON LIBRARY
-───────────────────────────────────────────────────────────── */
 const Icons = {
-  gps:      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3"/><circle cx="12" cy="12" r="9" strokeDasharray="4 2"/></svg>,
-  signal:   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M1 6c1.5-1.5 3.5-2.5 6-3M17 3c2.5.5 4.5 1.5 6 3"/><path d="M4 9.5C5.5 8 7.5 7 10 6.5M14 6.5c2.5.5 4.5 1.5 6 3"/><path d="M7 13c1-1.5 2.8-2.5 5-2.5s4 1 5 2.5"/><circle cx="12" cy="17" r="2" fill="currentColor"/></svg>,
-  ignition: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/><path d="M9.5 4.5 12 7l2.5-2.5"/></svg>,
-  power:    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M18.36 6.64a9 9 0 1 1-12.73 0"/><line x1="12" y1="2" x2="12" y2="12"/></svg>,
-  serial:   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="7" width="20" height="10" rx="2"/><path d="M7 7V5a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v2"/><circle cx="8" cy="12" r="1" fill="currentColor"/><circle cx="12" cy="12" r="1" fill="currentColor"/><circle cx="16" cy="12" r="1" fill="currentColor"/></svg>,
-  wire:     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M4 12c0-3.3 2.7-6 6-6h4c3.3 0 6 2.7 6 6s-2.7 6-6 6h-4c-3.3 0-6-2.7-6-6z"/><circle cx="9" cy="12" r="1.5" fill="currentColor"/><circle cx="15" cy="12" r="1.5" fill="currentColor"/></svg>,
-  ble:      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 2v20M12 12l7-7-7 7"/><path d="M5 5l7 7-7 7"/></svg>,
-  antenna:  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="12" y1="12" x2="12" y2="22"/><path d="M5 5l2 2M17 5l-2 2M2 2l3 3M19 2l-3 3"/><circle cx="12" cy="9" r="3"/></svg>,
-  geo:      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 22s-8-4.5-8-11.8A8 8 0 0 1 12 2a8 8 0 0 1 8 8.2c0 7.3-8 11.8-8 11.8z"/><circle cx="12" cy="10" r="3"/></svg>,
-  speed:    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M3 12a9 9 0 1 0 18 0A9 9 0 0 0 3 12z"/><path d="M12 7v5l3 2"/></svg>,
-  cloud:    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z"/></svg>,
-  battery:  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="7" width="16" height="10" rx="2"/><path d="M22 11v2"/><path d="M6 11v2M10 11v2"/></svg>,
-  crash:    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 2 L2 19h20z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>,
-  water:    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 2c0 0-7 9-7 13a7 7 0 0 0 14 0c0-4-7-13-7-13z"/></svg>,
-  fota:     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-.18-4.96"/></svg>,
-  upload:   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="16 16 12 12 8 16"/><line x1="12" y1="12" x2="12" y2="21"/><path d="M20.39 18.39A5 5 0 0 0 18 9h-1.26A8 8 0 1 0 3 16.3"/></svg>,
-  fuel:     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="3" y1="22" x2="15" y2="22"/><line x1="4" y1="9" x2="14" y2="9"/><path d="M14 22V4a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v18"/><path d="M14 13h2a2 2 0 0 1 2 2v2a2 2 0 0 0 2 2"/></svg>,
-  driver:   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg>,
-  camera:   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M23 7 16 12 23 17z"/><rect x="1" y="5" width="15" height="14" rx="2"/></svg>,
-  adas:     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M1 12s3-7 11-7 11 7 11 7-3 7-11 7-11-7-11-7z"/><circle cx="12" cy="12" r="3"/><path d="M12 5v2M12 17v2M5 12H7M17 12h2"/></svg>,
-  motion:   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14"/><path d="M12 5l7 7-7 7"/></svg>,
-  lte:      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M1.5 8.5c5.5-5.5 14.5-5.5 21 0"/><path d="M5 12c3.9-3.9 10.1-3.9 14 0"/><path d="M8.5 15.5c2.2-2.2 5.8-2.2 7 0"/><circle cx="12" cy="19" r="1" fill="currentColor"/></svg>,
-  course:   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>,
-  smalltrk: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="5" y="8" width="14" height="10" rx="2"/><path d="M8 8V6a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>,
-  magnetic: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M6 15V9a6 6 0 0 1 12 0v6"/><path d="M3 15h6M15 15h6"/></svg>,
-  night:    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>,
-  sd:       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M19 2H9L3 8v13a1 1 0 0 0 1 1h16a1 1 0 0 0 1-1V3a1 1 0 0 0-1-1z"/><polyline points="9 2 9 8 3 8"/></svg>,
-  mic:      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg>,
-  temp:     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M14 14.76V3.5a2.5 2.5 0 0 0-5 0v11.26a4.5 4.5 0 1 0 5 0z"/></svg>,
-  sos:      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>,
-  route:    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="6" cy="19" r="3"/><path d="M9 19h8.5a3.5 3.5 0 0 0 0-7h-11a3.5 3.5 0 0 1 0-7H15"/><circle cx="18" cy="5" r="3"/></svg>,
+  gps: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="12" cy="12" r="3" /><path d="M12 2v3M12 19v3M2 12h3M19 12h3" /><circle cx="12" cy="12" r="9" strokeDasharray="4 2" /></svg>,
+  lte: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M1.5 8.5c5.5-5.5 14.5-5.5 21 0" /><path d="M5 12c3.9-3.9 10.1-3.9 14 0" /><path d="M8.5 15.5c2.2-2.2 5.8-2.2 7 0" /><circle cx="12" cy="19" r="1" fill="currentColor" /></svg>,
+  camera: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M23 7 16 12 23 17z" /><rect x="1" y="5" width="15" height="14" rx="2" /></svg>,
+  adas: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M1 12s3-7 11-7 11 7 11 7-3 7-11 7-11-7-11-7z" /><circle cx="12" cy="12" r="3" /></svg>,
+  battery: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><rect x="2" y="7" width="16" height="10" rx="2" /><path d="M22 11v2" /><path d="M6 11v2M10 11v2" /></svg>,
+  ignition: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="12" cy="12" r="9" /><path d="M12 7v5l3 3" /></svg>,
+  geo: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M12 22s-8-4.5-8-11.8A8 8 0 0 1 12 2a8 8 0 0 1 8 8.2c0 7.3-8 11.8-8 11.8z" /><circle cx="12" cy="10" r="3" /></svg>,
+  speed: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M3 12a9 9 0 1 0 18 0A9 9 0 0 0 3 12z" /><path d="M12 7v5l3 2" /></svg>,
+  cloud: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z" /></svg>,
+  water: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M12 2s-7 9-7 13a7 7 0 0 0 14 0c0-4-7-13-7-13z" /></svg>,
+  motion: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M5 12h14" /><path d="M12 5l7 7-7 7" /></svg>,
+  crash: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M12 2 2 19h20z" /><line x1="12" y1="9" x2="12" y2="13" /><line x1="12" y1="17" x2="12.01" y2="17" /></svg>,
+  sd: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M19 2H9L3 8v13a1 1 0 0 0 1 1h16a1 1 0 0 0 1-1V3a1 1 0 0 0-1-1z" /><polyline points="9 2 9 8 3 8" /></svg>,
+  night: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" /></svg>,
+  power: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M18.36 6.64a9 9 0 1 1-12.73 0" /><line x1="12" y1="2" x2="12" y2="12" /></svg>,
+  serial: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><rect x="2" y="7" width="20" height="10" rx="2" /><circle cx="8" cy="12" r="1" /><circle cx="12" cy="12" r="1" /><circle cx="16" cy="12" r="1" /></svg>,
+  fuel: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><line x1="3" y1="22" x2="15" y2="22" /><line x1="4" y1="9" x2="14" y2="9" /><path d="M14 22V4a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v18" /></svg>,
+  sos: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="12" cy="12" r="10" /><line x1="12" y1="8" x2="12" y2="12" /><line x1="12" y1="16" x2="12.01" y2="16" /></svg>,
+  route: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="6" cy="19" r="3" /><path d="M9 19h8.5a3.5 3.5 0 0 0 0-7h-11a3.5 3.5 0 0 1 0-7H15" /><circle cx="18" cy="5" r="3" /></svg>,
 };
 
-/* ─────────────────────────────────────────────────────────────
-   PRODUCT DATABASE
-───────────────────────────────────────────────────────────── */
 const productDetails = {
-  'gt06n-4g': {
-    model: 'GT06N 4G', name: 'Classic, Reimagined in 4G', image: '/products/GT06N 4G.png',
-    category: 'Vehicle Tracker', tagline: 'One device, multiple possibilities.',
-    description: 'The legendary GT06N upgraded to 4G LTE. Best-selling tracker for vehicles and motorcycles with remote fuel cutoff and voice monitoring.',
+  jc181: {
+    model: 'JC181',
+    name: 'Compact Dual-Channel DashCam',
+    image: '/products/jc181.png',
+    category: 'Dashcam',
+    tagline: 'Modest in Form, Mighty in Proof.',
+    description:
+      'Smarter vision for safer roads. JC181 is a compact dual-channel dashcam that fits behind the rearview mirror, keeps the driver view clear, records the road ahead and cabin inside, and provides reliable evidence through live video, playback, real-time tracking, and route review.',
     features: [
-      { icon: 'lte',      label: '4G LTE CAT1 / 2G Connectivity' },
-      { icon: 'gps',      label: 'AGPS 32 Channel High Sensitive GPS' },
-      { icon: 'ignition', label: 'Ignition Input & Starter Block' },
-      { icon: 'antenna',  label: 'Built-in Cellular & GPS Antenna' },
-      { icon: 'wire',     label: '1-Wire Interface for Sensors' },
-      { icon: 'serial',   label: 'Serial Port (UART/RS232)' },
-      { icon: 'course',   label: 'Change Course & Time Upload Modes' },
-      { icon: 'water',    label: 'Water Resistant IP65 Design' },
-      { icon: 'crash',    label: 'Crash Data Recording 10Hz' },
+      { icon: 'camera', label: 'Video Surveillance' },
+      { icon: 'camera', label: 'Dual-Channel Recording' },
+      { icon: 'gps', label: 'Built-in GPS Logger' },
+      { icon: 'camera', label: 'Compact Size' },
+      { icon: 'power', label: 'Remote Vehicle Immobilization' },
     ],
     specs: {
-      general:   { label: 'General',   items: { 'Communication Modes': 'LTE/GPRS and TCP/SMS', 'Location Technology': '32 Channels GPS', 'Operating Voltage': '12 and 24 Volt Vehicle Systems' } },
-      electrical:{ label: 'Electrical',items: { 'Operating Voltage': '9-36V DC', 'Power Consumption': '4mA 12V (Sleep), 25mA 12V (Active Tracking)', 'Backup Battery': 'LI-ON 220mAh, 0 to +45°C charging' } },
-      gps:       { label: 'GPS',       items: { 'Location Technology': '32 Channel GPS + GLONASS', 'Accuracy': 'SBAS 10.0m CEP', 'Tracking Sensitivity': '-162dBm', 'Antenna': 'Patch Internal', 'Assist GPS': 'Supported' } },
-      physical:  { label: 'Physical',  items: { 'Dimensions': '85 x 54 x 24mm', 'Operating Temp': '-20°C to +70°C', 'Protection': 'IP65' } },
-      cellular:  { label: 'Cellular',  items: { 'Data Support': 'SMS, TCP', '4G LTE Bands': 'B1/B2/B3/B4/B5/B7/B8/B20/B28', '2G GSM Bands': '850/900/1800/1900 MHz', 'SIM Card': 'Internal (4FF Nano)' } },
-      io:        { label: 'Input / Output', items: { 'Ignition Sense': 'One Dedicated Wire for Ignition', 'Digital Input': '1 Digital Input', 'Analog Input': '1 Analog Input', '1-Wire': 'Driver ID and Temp. Sensor', 'Serial Port': 'UART/RS232', 'Digital Output': '2 x Open Drain, 300mA max' } },
+      overview: {
+        label: 'Overview',
+        items: {
+          'Product Type': 'Compact Dual-Channel DashCam',
+          Tagline: 'Modest in Form, Mighty in Proof.',
+          'Main Purpose': 'Front and inside vehicle video evidence',
+        },
+      },
+      video: {
+        label: 'Video Surveillance',
+        items: {
+          Monitoring: "Live monitoring of the vehicle's interior and exterior via online platform",
+          Playback: 'Critical video clips support on-demand playback from anywhere, at any time',
+          Evidence: 'Reliable footage for road and cabin incidents',
+        },
+      },
+      recording: {
+        label: 'Recording & GPS',
+        items: {
+          Recording: 'Dual-channel recording',
+          'Camera View': 'Road ahead and cabin inside',
+          'GPS Logger': 'Built-in GPS logger',
+          'Data Stamp': 'Vehicle speed, coordinates, time and more',
+        },
+      },
+      installation: {
+        label: 'Installation & Control',
+        items: {
+          Installation: 'Fits behind the rearview mirror without blocking driver view',
+          Mounting: 'Adjustable and stable on every road',
+          Upgrade: 'Upgrade with Type-C support',
+          Immobilization: 'Fuel / power cut-off under 20km/h via tracking platform',
+        },
+      },
     },
     applications: [
-      { title: 'Small & Midsize Fleets', desc: 'Cost-effective tracking for businesses managing multiple vehicles.' },
-      { title: 'Rental Companies', desc: 'Monitor usage, location, and unauthorized movement in real-time.' },
-      { title: 'Motorcycle Tracking', desc: 'Compact design fits all motorcycle types with minimal wiring.' },
-      { title: 'Logistics & Delivery', desc: 'Route optimization and driver behavior monitoring.' },
+      { title: 'Fleet Safety', desc: 'Capture key moments from the road and cabin to support safer fleet operations.' },
+      { title: 'Incident Evidence', desc: 'Reliable footage stays available even when road conditions are not ideal.' },
+      { title: 'Live Tracking & Playback', desc: 'Stream live footage, replay historical video, track vehicles in real time, and review past routes.' },
     ],
     accessories: [
-      { label: 'Backup Battery Pack',   comment: '/* Add <img> here */' },
-      { label: 'External GPS Antenna',  comment: '/* Add <img> here */' },
-      { label: 'Driver ID Tag (RFID)',   comment: '/* Add <img> here */' },
-      { label: '1-Wire Temp Sensor',    comment: '/* Add <img> here */' },
+      { label: 'Type-C Upgrade Support' },
+      { label: 'Tracking Platform' },
+      { label: 'Online Monitoring Platform' },
     ],
   },
 
-  'vg03': {
-    model: 'VG03', name: 'Discreet Tracking', image: '/products/VG03.png',
-    category: 'Vehicle Tracker', tagline: 'Small size, big intelligence.',
-    description: 'Compact GPS tracker with perfect balance between size and functionality for discreet vehicle monitoring.',
+  jc371: {
+    model: 'JC371',
+    name: 'Multi-Channel AI DashCam',
+    image: '/products/jc371.png',
+    category: 'AI Dashcam',
+    tagline: 'Next-Gen AI for Safety. Reimagined.',
+    description:
+      'JC371 empowers safer fleets with multi-channel 1080P HD recording, optional STARVIS low-light clarity, visual AI algorithms, expanded storage, and multiple interfaces for deeper fleet control.',
     features: [
-      { icon: 'lte',      label: '4G LTE Connectivity' },
-      { icon: 'gps',      label: 'High-Sensitivity 32-Channel GPS' },
-      { icon: 'ignition', label: 'Ignition Detection' },
-      { icon: 'geo',      label: 'Geofence Alerts' },
-      { icon: 'route',    label: 'Route Replay' },
-      { icon: 'battery',  label: 'Power-Saving Modes' },
-      { icon: 'crash',    label: 'Crash Detection' },
-      { icon: 'water',    label: 'Compact Waterproof Design' },
+      { icon: 'camera', label: 'Video Surveillance' },
+      { icon: 'camera', label: '3-Channel 1080P HD Recording' },
+      { icon: 'adas', label: 'Visual AI Algorithms' },
+      { icon: 'crash', label: 'Multiple Alerts' },
+      { icon: 'sd', label: 'Expanded Storage' },
     ],
     specs: {
-      general:  { label: 'General',  items: { 'Communication': 'LTE/GPRS, TCP/UDP/SMS', 'Operating Voltage': '9-36V DC' } },
-      gps:      { label: 'GPS',      items: { 'GPS Accuracy': '5 meters CEP', 'Tracking Sensitivity': '-162dBm', 'Antenna': 'Internal' } },
-      physical: { label: 'Physical', items: { 'Dimensions': '75 x 48 x 20mm', 'Operating Temp': '-20°C to +70°C' } },
-      cellular: { label: 'Cellular', items: { 'Network': '4G LTE CAT1 / 2G', 'GSM': '850/900/1800/1900 MHz', 'SIM Card': '4FF Nano' } },
+      overview: {
+        label: 'Overview',
+        items: {
+          'Product Type': 'Multi-Channel AI DashCam',
+          Tagline: 'Next-Gen AI for Safety. Reimagined.',
+          'Main Purpose': 'AI video safety and fleet monitoring',
+        },
+      },
+      video: {
+        label: 'Video & Camera',
+        items: {
+          'Camera Channels': 'Up to 3 cameras',
+          'Video Quality': '1080P HD',
+          'Low Light': 'STARVIS technology available as optional configuration',
+          Configuration: 'Tamper-resistant cover, cabin-view USB camera, and external cameras supported',
+        },
+      },
+      ai: {
+        label: 'AI Safety Suite',
+        items: {
+          DMS: 'Fatigue, phone use, smoking and risky behavior detection',
+          ADAS: 'Forward collision risk and lane drift alerts',
+          'Seatbelt Detection': 'Checks seatbelt status',
+          'Face Recognition': 'Identifies the driver and alerts on mismatch',
+        },
+      },
+      storage: {
+        label: 'Storage',
+        items: {
+          'Built-in Storage': '128GB eMMC',
+          'Optional eMMC': '64 / 128 / 256GB',
+          'TF Card': 'Up to 512GB for continuous driving footage',
+          Reliability: 'Fast read/write speed, privacy protection, and long lifespan',
+        },
+      },
+      interfaces: {
+        label: 'Interfaces',
+        items: {
+          Ports: 'TTL, INPUT, RELAY',
+          Accessories: 'Supports accessories for customized management',
+          Alerts: 'Customizable events such as speeding and SOS button activation',
+        },
+      },
     },
     applications: [
-      { title: 'Passenger Cars',   desc: 'Discreet installation for personal and business vehicles.' },
-      { title: 'Motorcycles',      desc: 'Ultra-compact size fits perfectly on any motorcycle.' },
-      { title: 'Fleet Management', desc: 'Economical tracking for small to mid-size fleets.' },
-      { title: 'Vehicle Recovery', desc: 'Hidden placement aids in stolen vehicle recovery.' },
+      { title: 'Fleet Safety', desc: 'Use AI video and multi-angle recording to improve driver and road safety.' },
+      { title: 'Driver Compliance', desc: 'Monitor fatigue, phone use, smoking, seatbelt usage, and driver identity.' },
+      { title: 'Evidence & Review', desc: 'Store critical events safely for incident review, analysis, and evidence.' },
     ],
     accessories: [
-      { label: 'Wiring Harness',   comment: '/* Add <img> here */' },
-      { label: 'Mounting Bracket', comment: '/* Add <img> here */' },
+      { label: 'Tamper-Resistant Cover' },
+      { label: 'Cabin-View USB Camera' },
+      { label: 'External Cameras' },
+      { label: 'SOS Button' },
     ],
   },
 
-  'vl103d': {
-    model: 'VL103D', name: 'Tiny Device', image: '/products/VL103D.png',
-    category: 'Vehicle Tracker', tagline: 'Smallest size, biggest performance.',
-    description: 'Miniature GPS tracker delivering professional-grade tracking in the smallest possible form factor.',
+  jc450: {
+    model: 'JC450',
+    name: 'Multi-Channel AI DashCam',
+    image: '/products/jc450.png',
+    category: 'AI Dashcam',
+    tagline: 'Intelligence That Protects.',
+    description:
+      'From capture to sense to safeguard, JC450 enhances safety with full coverage and AI. It does not just record; it interprets, warns, and protects with five-channel coverage, AI safety features, blind spot display, and expanded storage.',
     features: [
-      { icon: 'lte',      label: '4G LTE Connectivity' },
-      { icon: 'gps',      label: 'High-Sensitivity 32-Channel GPS' },
-      { icon: 'ignition', label: 'Ignition Detection' },
-      { icon: 'geo',      label: 'Geofence Protection' },
-      { icon: 'battery',  label: 'Ultra-Low Power Mode' },
-      { icon: 'water',    label: 'Waterproof Design' },
-      { icon: 'antenna',  label: 'Built-in Antenna' },
-      { icon: 'course',   label: 'Configurable Upload Modes' },
+      { icon: 'camera', label: 'Video Surveillance' },
+      { icon: 'camera', label: 'Multi-Channel Recording' },
+      { icon: 'adas', label: 'Visual AI Algorithms' },
+      { icon: 'gps', label: 'Dual Mode Positioning' },
+      { icon: 'crash', label: 'Multiple Alerts' },
+      { icon: 'power', label: 'Vehicle Immobilization' },
+      { icon: 'serial', label: 'Extension Interface' },
+      { icon: 'sd', label: 'Expanded Storage' },
     ],
     specs: {
-      general:  { label: 'General',  items: { 'Communication': 'LTE/GPRS, TCP/UDP/SMS', 'Operating Voltage': '9-36V DC' } },
-      gps:      { label: 'GPS',      items: { 'GPS Accuracy': '5 meters', 'Channels': '32 Channel GPS + GLONASS', 'Antenna': 'Internal Patch' } },
-      physical: { label: 'Physical', items: { 'Dimensions': '50 x 35 x 15mm', 'Operating Temp': '-20°C to +70°C' } },
-      cellular: { label: 'Cellular', items: { 'Network': '4G LTE CAT1 / 2G Fallback', 'GSM': '850/900/1800/1900 MHz', 'SIM Card': '4FF Nano' } },
-      io:       { label: 'Input / Output', items: { 'Ignition Sense': 'Dedicated Input', 'Digital Input': '1', 'Digital Output': '1' } },
+      overview: {
+        label: 'Overview',
+        items: {
+          'Product Type': 'Multi-Channel AI DashCam',
+          Tagline: 'Intelligence That Protects',
+          'Main Purpose': 'Full-coverage AI fleet video safety',
+        },
+      },
+      video: {
+        label: 'Video & Display',
+        items: {
+          'Camera Channels': '5 channels',
+          Coverage: 'Front, rear, sides, and cabin',
+          'Blind Spot Display': 'External monitor displays live footage',
+          'Auto View Switching': 'View switches automatically as the vehicle turns',
+        },
+      },
+      ai: {
+        label: 'AI Safety Suite',
+        items: {
+          ADAS: 'Forward collision risk and lane drift alerts',
+          DMS: 'Optional fatigue, phone use, smoking, and risky behavior detection',
+          'Seatbelt Detection': 'Optional seatbelt status checking',
+          'Face Recognition': 'Optional driver identification and mismatch alert',
+        },
+      },
+      storage: {
+        label: 'Storage',
+        items: {
+          'Storage Type': 'Dual TF card slots',
+          'Maximum Capacity': '512GB total',
+          'Recording Duration': 'Up to 7 days with 5 cameras simultaneously',
+        },
+      },
+      interfaces: {
+        label: 'Interfaces',
+        items: {
+          Ports: 'TTL, RS232, INPUT, RELAY',
+          'Optional Sensors': 'Temperature, fuel, and driver authentication accessories',
+          Positioning: 'GPS and BDS dual mode positioning',
+          Immobilization: 'Fuel / power cut-off under 20km/h via tracking platform',
+        },
+      },
     },
     applications: [
-      { title: 'Motorcycles',       desc: 'Ultra-small footprint fits anywhere on a motorcycle frame.' },
-      { title: 'Passenger Cars',    desc: 'Hidden installation for covert vehicle tracking.' },
-      { title: 'Light Vehicles',    desc: 'Ideal for taxis and small fleet operators.' },
-      { title: 'Asset Protection',  desc: 'Concealed placement for high-value vehicle security.' },
+      { title: 'Full Vehicle Coverage', desc: 'Capture front, rear, side, and cabin views for one clear story.' },
+      { title: 'Blind Spot Safety', desc: 'Display live camera views on an external monitor and switch views automatically while turning.' },
+      { title: 'Fleet Control Hub', desc: 'Connect fuel, temperature, and driver authentication accessories for deeper operational insight.' },
     ],
     accessories: [
-      { label: 'Mini Wiring Harness', comment: '/* Add <img> here */' },
-      { label: 'Adhesive Mount Kit',  comment: '/* Add <img> here */' },
+      { label: 'External Monitor' },
+      { label: 'Fuel Sensor' },
+      { label: 'Temperature Sensor' },
+      { label: 'Driver Authentication Accessory' },
     ],
   },
 
-  'vl103m': {
-    model: 'VL103M', name: 'Minimal Form', image: '/products/VL103M.png',
-    category: 'Vehicle Tracker', tagline: 'Slim profile, full power.',
-    description: 'Minimalist design with maximum functionality for modern vehicles. Slim form factor with complete fleet management features.',
+  jc182: {
+    model: 'JC182',
+    name: '4G Mini DashCam',
+    image: '/products/jc182.png',
+    category: 'Dashcam',
+    tagline: 'Tiny but Mighty. Made for Every Journey.',
+    description:
+      'JC182 is a 4G mini dashcam built for smart protection from parked to driving. It offers 2K Quad HD clarity, OBD plug-and-play installation, parking monitoring, snapshot capture, and reliable protection for different vehicle types.',
     features: [
-      { icon: 'lte',      label: '4G LTE Connectivity' },
-      { icon: 'gps',      label: 'Real-Time GPS Tracking' },
-      { icon: 'ignition', label: 'Ignition Detection' },
-      { icon: 'geo',      label: 'Geofence & Multiple Alerts' },
-      { icon: 'route',    label: 'Route History Replay' },
-      { icon: 'serial',   label: 'Serial Port Interface' },
-      { icon: 'battery',  label: 'Low Power Consumption' },
-      { icon: 'antenna',  label: 'Built-in Antennas' },
+      { icon: 'camera', label: '2K Quad HD Camera' },
+      { icon: 'battery', label: 'Built-in SuperCapacitor' },
+      { icon: 'camera', label: 'Time Lapse Recording' },
+      { icon: 'crash', label: 'Collision Alert' },
+      { icon: 'power', label: 'Compatible with Various Vehicle Types' },
     ],
     specs: {
-      general:  { label: 'General',  items: { 'Communication': 'LTE/GPRS, TCP/UDP/SMS', 'Operating Voltage': '9-36V DC' } },
-      gps:      { label: 'GPS',      items: { 'GPS Accuracy': '5 meters', 'Channels': '32 Channel GPS + GLONASS', 'Antenna': 'Internal' } },
-      physical: { label: 'Physical', items: { 'Dimensions': '60 x 40 x 16mm', 'Operating Temp': '-20°C to +70°C' } },
-      cellular: { label: 'Cellular', items: { 'Network': '4G LTE CAT1 / 2G', 'SIM Card': '4FF Nano' } },
+      overview: {
+        label: 'Overview',
+        items: {
+          'Product Type': '4G Mini DashCam',
+          Tagline: 'Tiny but Mighty. Made for Every Journey.',
+          'Main Purpose': 'Smart protection from parked to driving',
+        },
+      },
+      video: {
+        label: 'Video',
+        items: {
+          Camera: '2K Quad HD camera',
+          Clarity: 'Sharp and vibrant video on the road or while parked',
+          'Recording Mode': 'Time lapse recording supported',
+          Snapshot: 'Snapshot button for important moments',
+        },
+      },
+      installation: {
+        label: 'Installation & Power',
+        items: {
+          Installation: 'OBD plug-and-play',
+          'Backup Power': 'Built-in SuperCapacitor',
+          'Power Loss': 'Alarm triggering and recording after power loss',
+        },
+      },
+      safety: {
+        label: 'Safety',
+        items: {
+          'Parking Protection': 'Monitoring while parked and unattended',
+          'Collision Alert': '5 seconds pre-recording and 5 seconds post-recording',
+          'Vehicle Compatibility': 'Fuel-powered and new energy vehicles',
+        },
+      },
     },
     applications: [
-      { title: 'Sedans & SUVs',     desc: 'Sleek design blends into modern vehicle interiors.' },
-      { title: 'Small Fleets',      desc: 'Affordable tracking for small business fleets.' },
-      { title: 'Rental Cars',       desc: 'Monitor rental vehicle usage and location.' },
-      { title: 'Driver Monitoring', desc: 'Track driver behavior and route compliance.' },
+      { title: 'Parked Vehicle Protection', desc: 'Monitor the vehicle even when parked and unattended.' },
+      { title: 'Driving Evidence', desc: 'Capture road moments in 2K Quad HD clarity.' },
+      { title: 'Fast Deployment', desc: 'OBD plug-and-play installation makes setup quick and simple.' },
     ],
     accessories: [
-      { label: 'OBD Power Cable', comment: '/* Add <img> here */' },
-      { label: 'Mounting Clip',   comment: '/* Add <img> here */' },
+      { label: 'OBD Plug-and-Play Connection' },
+      { label: 'Snapshot Button' },
+      { label: 'Software Platform Experience' },
     ],
   },
 
-  'vl110c': {
-    model: 'VL110C', name: 'Any Vehicle', image: '/products/VL110C.png',
-    category: 'Vehicle Tracker', tagline: 'One tracker for every vehicle type.',
-    description: 'Universal tracker compatible with all vehicle types from motorcycles to heavy trucks with wide 9-90V voltage range.',
+  ll303pro: {
+    model: 'LL303PRO',
+    name: 'LTE Solar Powered GNSS Tracker',
+    image: '/products/LL303PRO.png',
+    category: 'Asset Tracker',
+    tagline: 'Smart asset Tracking starts now.',
+    description:
+      'LL303PRO is an LTE solar powered GNSS tracker designed for smart, self-sustaining asset tracking. It supports LTE and GSM communication, GPS/BDS/LBS positioning, solar and magnetic charging, IP67 durability, working modes, Bluetooth accessories, and optional RFID broadcast.',
     features: [
-      { icon: 'lte',      label: '4G LTE CAT1 Connectivity' },
-      { icon: 'gps',      label: '32-Channel High-Sensitivity GPS' },
-      { icon: 'power',    label: 'Wide Voltage 9-90V DC (Auto-Adaptive)' },
-      { icon: 'ignition', label: 'Ignition Input & Relay Output' },
-      { icon: 'fuel',     label: 'Fuel Monitoring Support' },
-      { icon: 'serial',   label: 'RS232 / RS485 Serial Port' },
-      { icon: 'wire',     label: '1-Wire Interface' },
-      { icon: 'water',    label: 'Waterproof IP67' },
+      { icon: 'lte', label: 'LTE & GSM Network' },
+      { icon: 'gps', label: 'GPS & BDS & LBS Positioning' },
+      { icon: 'battery', label: 'Solar & Magnetic Charging' },
+      { icon: 'water', label: 'IP67 Dust & Water Resistance' },
+      { icon: 'crash', label: 'Multiple Alerts' },
+      { icon: 'cloud', label: 'Multiple Working Modes' },
+      { icon: 'lte', label: 'Bluetooth Accessory Compatibility (Optional)' },
+      { icon: 'lte', label: 'RFID Broadcast (Optional)' },
     ],
     specs: {
-      general:   { label: 'General',   items: { 'Communication': 'LTE/GPRS, TCP/UDP/SMS', 'Vehicle Support': 'Motorcycles, Cars, Trucks, Buses, Heavy Equipment' } },
-      electrical:{ label: 'Electrical',items: { 'Operating Voltage': '9-90V DC', 'Power Consumption': 'Low Power Sleep Mode', 'Backup Battery': 'Internal' } },
-      gps:       { label: 'GPS',       items: { 'GPS Accuracy': '3 meters', 'Channels': '32 Channel GPS + GLONASS + BeiDou', 'Antenna': 'Internal' } },
-      physical:  { label: 'Physical',  items: { 'Dimensions': '95 x 65 x 26mm', 'Operating Temp': '-30°C to +80°C', 'Protection': 'IP67' } },
-      cellular:  { label: 'Cellular',  items: { 'Network': '4G LTE CAT1 / 2G Fallback', 'SIM Card': '4FF Nano' } },
-      io:        { label: 'Input / Output', items: { 'Digital Inputs': '2', 'Digital Outputs': '2 (Relay / Fuel Cutoff)', 'Analog Inputs': '1', 'Serial Port': 'RS232 / RS485' } },
+      overview: {
+        label: 'Overview',
+        items: {
+          'Product Type': 'LTE Solar Powered GNSS Tracker',
+          Purpose: 'Self-sustaining asset tracking',
+          Charging: 'Solar and magnetic charging',
+        },
+      },
+      network: {
+        label: 'Network & Positioning',
+        items: {
+          Network: '4G LTE with 2G GSM fallback',
+          Positioning: 'GPS, BDS, and LBS',
+          Platform: 'Cloud platform location display',
+        },
+      },
+      durability: {
+        label: 'Durability & Alerts',
+        items: {
+          Protection: 'IP67 dust and water resistance',
+          Alerts: 'Device removal, abnormal vibration, abnormal temperature and humidity',
+          Modes: 'Multiple configurable working modes',
+        },
+      },
+      expansion: {
+        label: 'Expansion',
+        items: {
+          'Bluetooth Accessories': 'Optional environmental sensor and other Bluetooth accessories',
+          Monitoring: 'Temperature, humidity, doors, light, fuel consumption, door status',
+          RFID: 'Optional active RFID broadcast',
+        },
+      },
     },
     applications: [
-      { title: 'Heavy Trucks',          desc: 'Wide voltage range supports 24V heavy truck systems.' },
-      { title: 'Construction Equipment',desc: 'Track machinery across job sites reliably.' },
-      { title: 'Buses & Transit',       desc: 'Fleet management for public transport operators.' },
-      { title: 'Agricultural Vehicles', desc: 'Monitor tractors and farm equipment in remote areas.' },
+      { title: 'Asset Tracking', desc: 'Track assets with self-sustaining power and durable installation.' },
+      { title: 'Environmental Monitoring', desc: 'Pair with Bluetooth sensors to monitor temperature, humidity, doors, and light.' },
+      { title: 'Logistics & Inventory', desc: 'Optional RFID broadcast supports smoother logistics, warehouse flow, and inventory management.' },
     ],
     accessories: [
-      { label: 'External Power Relay',    comment: '/* Add <img> here */' },
-      { label: 'Fuel Sensor Adapter',     comment: '/* Add <img> here */' },
-      { label: 'RS485 Temperature Probe', comment: '/* Add <img> here */' },
+      { label: 'Magnetic Charger' },
+      { label: 'Environmental Sensor' },
+      { label: 'Bluetooth Accessories' },
+      { label: 'Active RFID Reader' },
     ],
   },
 
-  'vl802': {
-    model: 'VL802', name: 'More Visibility', image: '/products/VL802.png',
-    category: 'Vehicle Tracker', tagline: 'Total fleet visibility, total control.',
-    description: 'Advanced fleet tracker with enhanced visibility, driver behavior scoring, fuel analytics, and comprehensive reporting.',
+  vl103d: {
+    model: 'VL103D',
+    name: 'LTE GNSS Terminal',
+    image: '/products/VL103D.png',
+    category: 'Vehicle Tracker',
+    tagline: 'Tiny Device. Expanded Control.',
+    description:
+      'VL103D is an LTE GNSS terminal that unlocks fleet intelligence through 4G LTE with 2G fallback, configurable input/output, RS485 expansion, IP66 durability, jamming alerts, driving behavior analysis, and vehicle battery protection.',
     features: [
-      { icon: 'lte',     label: '4G LTE CAT1 Connectivity' },
-      { icon: 'gps',     label: 'High-Accuracy GPS (2.5m)' },
-      { icon: 'driver',  label: 'Driver Behavior Scoring' },
-      { icon: 'fuel',    label: 'Fuel Efficiency Monitoring' },
-      { icon: 'course',  label: 'Route Optimization & Replay' },
-      { icon: 'serial',  label: 'RS232 / RS485 Multi-Interface' },
-      { icon: 'fota',    label: 'FOTA Firmware Update OTA' },
-      { icon: 'cloud',   label: 'Fleet Analytics Platform' },
+      { icon: 'lte', label: 'LTE & GSM Network' },
+      { icon: 'serial', label: 'Configurable Input/Output' },
+      { icon: 'battery', label: 'Car Battery Protection' },
+      { icon: 'water', label: 'IP66 Dust & Water Resistance' },
+      { icon: 'serial', label: 'RS485 Interface' },
+      { icon: 'speed', label: 'Driving Behavior Analysis (Basic)' },
     ],
     specs: {
-      general:  { label: 'General',  items: { 'Communication': 'LTE/GPRS, TCP/UDP/SMS', 'Operating Voltage': '9-36V DC' } },
-      gps:      { label: 'GPS',      items: { 'GPS Accuracy': '2.5 meters', 'Channels': '56 Channel Multi-GNSS', 'Antenna': 'Internal' } },
-      physical: { label: 'Physical', items: { 'Dimensions': '100 x 68 x 27mm', 'Operating Temp': '-30°C to +75°C' } },
-      cellular: { label: 'Cellular', items: { 'Network': '4G LTE CAT1 / 2G', 'SIM Card': '4FF Nano' } },
-      io:       { label: 'Input / Output', items: { 'Digital Inputs': '3', 'Digital Outputs': '2', 'Analog Inputs': '2', 'Serial': 'RS232 + RS485', '1-Wire': 'Temp / Driver ID' } },
+      overview: {
+        label: 'Overview',
+        items: {
+          'Product Type': 'LTE GNSS Terminal',
+          Tagline: 'Tiny Device. Expanded Control.',
+          Purpose: 'Fleet intelligence and vehicle protection',
+        },
+      },
+      network: {
+        label: 'Network & Expansion',
+        items: {
+          Network: '4G LTE with 2G GSM fallback',
+          Expansion: 'RS485 and Bluetooth support',
+          Accessories: 'Fuel sensors, temperature sensors, RFID reader, remote control',
+        },
+      },
+      safety: {
+        label: 'Safety & Alerts',
+        items: {
+          'Jamming Detection': 'GNSS / LTE jamming alerts',
+          'Remote Cut-Off': 'Fuel or power cutoff support',
+          Alerts: 'Vibration, speeding, impounding, and more',
+        },
+      },
+      essentials: {
+        label: 'Essentials',
+        items: {
+          'Ignition Detection': 'Supported',
+          'Geo-Fence': 'Entry / exit notifications',
+          'Battery Protection': 'Switch to internal power when vehicle battery dips',
+          'Driving Behavior': 'Harsh acceleration, sharp braking, sudden turns, collisions',
+        },
+      },
     },
     applications: [
-      { title: 'Mid-Size Fleets',    desc: 'Comprehensive analytics for growing fleet operations.' },
-      { title: 'Logistics Companies',desc: 'Route and fuel optimization for delivery fleets.' },
-      { title: 'Corporate Fleets',   desc: 'Driver scoring and compliance reporting.' },
-      { title: 'Transport Operators',desc: 'Full visibility across all vehicles and routes.' },
+      { title: 'Fleet Tracking', desc: 'Track, protect, and manage vehicles with real-time visibility.' },
+      { title: 'Cold Chain & Fuel Insight', desc: 'Use RS485 and Bluetooth accessories for temperature and fuel monitoring.' },
+      { title: 'Theft Protection', desc: 'Detect GNSS/LTE jamming and use remote fuel or power cutoff.' },
     ],
     accessories: [
-      { label: 'Fuel Level Sensor',  comment: '/* Add <img> here */' },
-      { label: 'Driver ID Reader',   comment: '/* Add <img> here */' },
-      { label: 'Temperature Probe',  comment: '/* Add <img> here */' },
+      { label: 'Fuel Sensor' },
+      { label: 'Temperature Sensor' },
+      { label: 'RFID Reader' },
+      { label: 'Remote Control' },
     ],
   },
 
-  'vl808': {
-    model: 'VL808', name: 'Intelligent Tracking', image: '/products/VL808.png',
-    category: 'Vehicle Tracker', tagline: 'Intelligence that drives smarter decisions.',
-    description: 'AI-powered tracker with predictive analytics, smart power management, and cloud-based intelligence for enterprise fleets.',
+  vl103m: {
+    model: 'VL103M',
+    name: 'LTE GNSS Terminal',
+    image: '/products/VL103M.png',
+    category: 'Vehicle Tracker',
+    tagline: 'Minimal Form. Complete Control.',
+    description:
+      'VL103M is an LTE GNSS terminal designed to manage smarter and protect stronger. It supports GPS/BDS/LBS positioning, Bluetooth accessories, external buzzer/horn, remote listen-in, low voltage alerts, multiple alerts, and IP66 durability.',
     features: [
-      { icon: 'lte',     label: '4G LTE CAT-1 Connectivity' },
-      { icon: 'gps',     label: 'Ultra-High Accuracy GPS (1.5m)' },
-      { icon: 'driver',  label: 'AI-Powered Predictive Maintenance' },
-      { icon: 'battery', label: 'Smart Power Management' },
-      { icon: 'course',  label: 'Adaptive Tracking Updates' },
-      { icon: 'cloud',   label: 'Cloud AI Analytics' },
-      { icon: 'fota',    label: 'FOTA Firmware Update OTA' },
-      { icon: 'serial',  label: 'Multi-Interface (RS232 + RS485 + CAN)' },
+      { icon: 'gps', label: 'GPS & BDS & LBS Positioning' },
+      { icon: 'lte', label: 'External Buzzer/Horn Supported' },
+      { icon: 'battery', label: 'Low Voltage Alert' },
+      { icon: 'crash', label: 'Multiple Alerts' },
+      { icon: 'sos', label: 'Remote Listen-In' },
+      { icon: 'water', label: 'IP66 Dust & Water Resistance' },
     ],
     specs: {
-      general:  { label: 'General',  items: { 'Communication': 'LTE/GPRS, TCP/UDP/SMS', 'Operating Voltage': '9-36V DC' } },
-      gps:      { label: 'GPS',      items: { 'GPS Accuracy': '1.5 meters', 'Channels': '56 Channel Multi-GNSS', 'Tracking Sensitivity': '-162dBm' } },
-      physical: { label: 'Physical', items: { 'Dimensions': '105 x 72 x 28mm', 'Operating Temp': '-30°C to +80°C' } },
-      cellular: { label: 'Cellular', items: { 'Network': '4G LTE CAT-1', '2G Fallback': 'GSM 850/900/1800/1900 MHz', 'SIM Card': '4FF Nano' } },
-      io:       { label: 'Input / Output', items: { 'Digital Inputs': '4', 'Digital Outputs': '2', 'Analog Inputs': '2', 'CAN Bus': 'Optional Module', 'Serial': 'RS232 + RS485' } },
+      overview: {
+        label: 'Overview',
+        items: {
+          'Product Type': 'LTE GNSS Terminal',
+          Tagline: 'Minimal Form. Complete Control.',
+          Purpose: 'Smarter fleet management and protection',
+        },
+      },
+      positioning: {
+        label: 'Positioning & Connectivity',
+        items: {
+          Positioning: 'GPS, BDS, and LBS',
+          'Bluetooth Accessories': 'Environmental sensors, fuel monitoring, remote control support',
+          'Sensor Use': 'Temperature, humidity, and door status monitoring',
+        },
+      },
+      safety: {
+        label: 'Safety',
+        items: {
+          'Panic Button': 'Drivers can call for help immediately',
+          'Remote Listen-In': 'Audio monitoring around the vehicle',
+          'Jamming Detection': 'GNSS / LTE jamming alerts with buzz and cutoff support',
+        },
+      },
+      essentials: {
+        label: 'Essentials',
+        items: {
+          'Ignition Detection': 'Supported',
+          'Remote Cut-Off': 'Fuel / power cutoff support',
+          'Geo-Fence': 'Entry / exit notifications',
+          'Vehicle Battery Protection': 'Internal power switch when vehicle battery dips',
+        },
+      },
     },
     applications: [
-      { title: 'Enterprise Fleets',    desc: 'Scalable AI tracking for large enterprise operations.' },
-      { title: 'Smart Logistics',      desc: 'AI-driven route and fuel cost optimization.' },
-      { title: 'Insurance Telematics', desc: 'Driving behavior data for UBI programs.' },
-      { title: 'Government Fleets',    desc: 'Compliance and accountability monitoring.' },
+      { title: 'Motorcycle Tracking', desc: 'Compact tracking with low voltage alerts for motorcycle batteries.' },
+      { title: 'Driver Safety', desc: 'Panic button, buzzer/horn, and remote listen-in support emergency awareness.' },
+      { title: 'Cold Chain & Fuel Monitoring', desc: 'Bluetooth accessories help monitor environment, door status, and fuel.' },
     ],
     accessories: [
-      { label: 'CAN Bus Interface Module', comment: '/* Add <img> here */' },
-      { label: 'External Antenna Kit',     comment: '/* Add <img> here */' },
+      { label: 'Panic Button' },
+      { label: 'External Buzzer / Horn' },
+      { label: 'Bluetooth Environmental Sensor' },
+      { label: 'Microphone' },
     ],
   },
 
-  'x3': {
-    model: 'X3', name: 'Voice Tracker', image: '/products/X3.png',
-    category: 'Vehicle Tracker', tagline: 'Track it. Hear it. Secure it.',
-    description: 'Vehicle tracker with built-in voice monitoring and two-way communication for enhanced security and driver oversight.',
+  vl808: {
+    model: 'VL808',
+    name: 'LTE Vehicle GNSS Terminal',
+    image: '/products/VL808.png',
+    category: 'Vehicle Tracker',
+    tagline: 'Intelligent Tracking Meets Expanded Fleet Control.',
+    description:
+      'VL808 unlocks fleet intelligence with LTE/GSM communication, 1-Wire peripheral support, multiple I/Os, remote fuel/power cut-off, Bluetooth accessory support, vehicle battery protection, and IP67 water and dust resistance.',
     features: [
-      { icon: 'mic',      label: 'Voice Monitoring (Remote Listening)' },
-      { icon: 'mic',      label: 'Two-Way Communication' },
-      { icon: 'gps',      label: 'Real-Time GPS Tracking' },
-      { icon: 'sos',      label: 'SOS Emergency Alert' },
-      { icon: 'geo',      label: 'Geofence Alerts' },
-      { icon: 'ignition', label: 'Ignition Detection & Remote Cutoff' },
-      { icon: 'signal',   label: '2G/3G Connectivity' },
-      { icon: 'antenna',  label: 'Built-in GSM & GPS Antenna' },
+      { icon: 'lte', label: 'LTE & GSM Network' },
+      { icon: 'serial', label: '1-Wire Peripheral Support' },
+      { icon: 'serial', label: 'Multiple I/Os for Function Expansion' },
+      { icon: 'power', label: 'Remote Cut-Off (Fuel/Power)' },
+      { icon: 'lte', label: 'Bluetooth Accessory Support' },
+      { icon: 'battery', label: 'Vehicle Battery Protection' },
+      { icon: 'water', label: 'IP67 Water & Dust Resistance' },
     ],
     specs: {
-      general:  { label: 'General',  items: { 'Communication': 'GPRS, TCP/UDP/SMS', 'Operating Voltage': '9-36V DC' } },
-      gps:      { label: 'GPS',      items: { 'GPS Accuracy': '5 meters', 'Antenna': 'Internal' } },
-      physical: { label: 'Physical', items: { 'Dimensions': '88 x 56 x 23mm', 'Operating Temp': '-20°C to +70°C' } },
-      cellular: { label: 'Cellular', items: { 'Network': '2G/3G GSM', 'Bands': '850/900/1800/1900 MHz', 'SIM Card': 'Internal' } },
-      io:       { label: 'Input / Output', items: { 'Ignition Input': '1', 'Digital Output': '1 (Fuel Cutoff)', 'Microphone': 'Built-in', 'Speaker': 'Built-in' } },
+      overview: {
+        label: 'Overview',
+        items: {
+          'Product Type': 'LTE Vehicle GNSS Terminal',
+          Tagline: 'Intelligent Tracking Meets Expanded Fleet Control',
+          Purpose: 'Expanded fleet monitoring and control',
+        },
+      },
+      connectivity: {
+        label: 'Connectivity',
+        items: {
+          Network: '4G and 2G network data transmission',
+          '1-Wire': 'Temperature sensor and iButton reader support',
+          Bluetooth: 'iBeacon and Bluetooth accessory support',
+        },
+      },
+      interfaces: {
+        label: 'Interfaces',
+        items: {
+          'Digital Outputs': '3',
+          'Digital Inputs': '4, including one multiplexed with TTL-RX',
+          'Analog I/Os': '2, multiplexed with digital I/Os',
+          'Use Cases': 'ACC, door status, SOS alert, buzzer, fuel/power cut-off',
+        },
+      },
+      protection: {
+        label: 'Protection',
+        items: {
+          'Remote Cut-Off': 'External relay fuel / power immobilization',
+          'Vehicle Battery Protection': 'Auto-disconnect at critical voltage',
+          'Ingress Protection': 'IP67 water and dust resistance',
+        },
+      },
     },
     applications: [
-      { title: 'High-Value Vehicles', desc: 'Voice monitoring adds an extra security layer.' },
-      { title: 'Driver Safety',       desc: 'Two-way communication for emergency situations.' },
-      { title: 'Security Fleets',     desc: 'Remote listening for security patrol vehicles.' },
-      { title: 'Personal Vehicles',   desc: 'SOS alerts for personal safety on the road.' },
+      { title: 'Fleet Control', desc: 'Use multiple I/Os to control and monitor vehicle signals.' },
+      { title: 'Cold Chain & Driver ID', desc: '1-Wire interface supports temperature sensors and iButton driver identification.' },
+      { title: 'Bluetooth Fleet Intelligence', desc: 'Connect iBeacon and Bluetooth accessories for expanded monitoring.' },
     ],
     accessories: [
-      { label: 'External Microphone', comment: '/* Add <img> here */' },
-      { label: 'SOS Panic Button',    comment: '/* Add <img> here */' },
+      { label: '1-Wire Temperature Sensor' },
+      { label: 'iButton Reader' },
+      { label: 'iBeacon' },
+      { label: 'External Relay' },
     ],
   },
 
-  'gt06n': {
-    model: 'GT06N', name: 'The Classic', image: '/products/GT06N.png',
-    category: 'Vehicle Tracker', tagline: 'Proven. Reliable. Trusted.',
-    description: 'The original GT06N — the world\'s most widely deployed GPS tracker with proven reliability over years of global service.',
+  vl110c: {
+    model: 'VL110C',
+    name: 'LTE Vehicle Terminal',
+    image: '/products/VL110C.png',
+    category: 'Vehicle Tracker',
+    tagline: 'One tracker. Any Vehicle. Total safety.',
+    description:
+      'VL110C is a small and easy-to-hide LTE vehicle terminal designed for many vehicle types. It provides LTE/GSM connectivity, remote fuel/power cut-off, 9-90V wide operating voltage, battery protection, IP65 resistance, and GNSS/LTE jamming detection.',
     features: [
-      { icon: 'signal',   label: '2G/3G Connectivity' },
-      { icon: 'gps',      label: 'Real-Time GPS Tracking' },
-      { icon: 'ignition', label: 'Ignition Input & Remote Fuel Cutoff' },
-      { icon: 'mic',      label: 'Voice Monitoring' },
-      { icon: 'geo',      label: 'Geofence Alerts' },
-      { icon: 'antenna',  label: 'Built-in Cellular & GPS Antenna' },
-      { icon: 'power',    label: 'Wide Voltage Range 9-36V' },
-      { icon: 'smalltrk', label: 'Easy Installation' },
+      { icon: 'lte', label: 'LTE & GSM Network' },
+      { icon: 'power', label: 'Remote Cut-Off (Fuel/Power)' },
+      { icon: 'battery', label: '9-90V Operating Voltage' },
+      { icon: 'battery', label: 'Vehicle Battery Protection' },
+      { icon: 'water', label: 'IP65 Water & Dust Resistance' },
+      { icon: 'lte', label: 'GNSS/LTE Jamming Detection' },
     ],
     specs: {
-      general:  { label: 'General',  items: { 'Communication': 'GPRS, TCP/UDP/SMS', 'Operating Voltage': '9-36V DC' } },
-      gps:      { label: 'GPS',      items: { 'GPS Accuracy': '5-10 meters', 'Antenna': 'Internal' } },
-      physical: { label: 'Physical', items: { 'Dimensions': '85 x 54 x 24mm', 'Operating Temp': '-20°C to +70°C' } },
-      cellular: { label: 'Cellular', items: { 'Network': '2G GSM / 3G', 'Bands': '850/900/1800/1900 MHz', 'SIM Card': 'Internal' } },
+      overview: {
+        label: 'Overview',
+        items: {
+          'Product Type': 'LTE Vehicle Terminal',
+          Tagline: 'One tracker. Any Vehicle. Total safety.',
+          Purpose: 'Simple tracking with built-in protection',
+        },
+      },
+      network: {
+        label: 'Network & Power',
+        items: {
+          Network: '4G LTE with 2G GSM fallback',
+          'Operating Voltage': '9-90V',
+          'Vehicle Support': 'Industrial equipment, scooters, golf carts, and more',
+        },
+      },
+      safety: {
+        label: 'Safety & Protection',
+        items: {
+          'Remote Cut-Off': 'Fuel / power cut-off via installed relay',
+          'Battery Protection': 'Internal battery operation at critical vehicle battery level',
+          'Jamming Detection': 'GNSS / LTE alarm and relay trigger',
+        },
+      },
+      durability: {
+        label: 'Durability',
+        items: {
+          Protection: 'IP65 water and dust resistance',
+          Design: 'Small, hidden, and anti-theft oriented',
+          Alerts: 'Ignition, vibration, speeding, impounding, geo-fence, driving behavior',
+        },
+      },
     },
     applications: [
-      { title: 'Budget Fleets',    desc: 'Cost-effective tracking for price-sensitive operators.' },
-      { title: 'Motorcycles',      desc: 'Simple and reliable tracking for two-wheelers.' },
-      { title: 'Small Businesses', desc: 'Affordable entry-level fleet management.' },
-      { title: 'Personal Vehicles',desc: 'Basic GPS tracking and vehicle security.' },
+      { title: 'Any Vehicle Tracking', desc: 'Wide 9-90V operating voltage supports many vehicle types.' },
+      { title: 'Anti-Theft Control', desc: 'Remote cutoff and jamming detection help prevent theft attempts.' },
+      { title: 'Simple Fleet Protection', desc: 'Precise location visibility with built-in protection and instant alerts.' },
     ],
     accessories: [
-      { label: 'Relay Fuel Cutoff',   comment: '/* Add <img> here */' },
-      { label: 'External SOS Button', comment: '/* Add <img> here */' },
+      { label: 'Installed Relay' },
+      { label: 'Tracking Platform' },
+      { label: 'Remote Cut-Off Control' },
     ],
   },
 
-  'vl502': {
-    model: 'VL502', name: 'Fleet CAN Tracker', image: '/products/VL502.png',
-    category: 'CAN/OBD Tracker', tagline: 'Deep vehicle data. Smarter fleet decisions.',
-    description: 'Professional CAN bus tracker that reads engine data directly from the vehicle ECU for comprehensive fleet analytics.',
+  vl111: {
+    model: 'VL111',
+    name: 'LTE Vehicle Terminal',
+    image: '/products/VL111.png',
+    category: 'Vehicle Tracker',
+    tagline: 'When your fleet hits the road, control should not stay behind.',
+    description:
+      'VL111 is an LTE vehicle terminal built for real-time vehicle tracking and instant action. With a built-in relay, compact motorcycle-friendly design, GNSS/LTE jamming detection, positioning support, battery protection, and IP66 durability, it puts fleet safety and control at your fingertips.',
     features: [
-      { icon: 'lte',     label: '4G LTE CAT1 Connectivity' },
-      { icon: 'gps',     label: 'High-Accuracy GPS (2.5m)' },
-      { icon: 'wire',    label: 'CAN Bus J1939 / J1708 Interface' },
-      { icon: 'fuel',    label: 'Real-Time Fuel Monitoring from ECU' },
-      { icon: 'driver',  label: 'Driver Behavior Analysis' },
-      { icon: 'serial',  label: 'RS232 / RS485 Interface' },
-      { icon: 'fota',    label: 'FOTA Firmware Update OTA' },
-      { icon: 'cloud',   label: 'Fleet Management Platform' },
+      { icon: 'lte', label: 'LTE & GSM Network' },
+      { icon: 'gps', label: 'GPS/BDS/GLONASS & LBS Positioning' },
+      { icon: 'power', label: 'Remote Cut-Off (Fuel/Power)' },
+      { icon: 'battery', label: 'Vehicle Battery Protection' },
+      { icon: 'lte', label: 'GNSS/LTE Jamming Detection' },
+      { icon: 'water', label: 'IP66 Water & Dust Resistance' },
     ],
     specs: {
-      general:  { label: 'General',  items: { 'Communication': 'LTE/GPRS, TCP/UDP/SMS', 'Operating Voltage': '9-36V DC', 'CAN Protocol': 'J1939, J1708, OBD-II' } },
-      gps:      { label: 'GPS',      items: { 'GPS Accuracy': '2.5 meters', 'Channels': '56 Channel Multi-GNSS', 'Antenna': 'Internal' } },
-      physical: { label: 'Physical', items: { 'Dimensions': '95 x 65 x 25mm', 'Operating Temp': '-30°C to +75°C' } },
-      cellular: { label: 'Cellular', items: { 'Network': '4G LTE CAT1 / 2G', 'SIM Card': '4FF Nano' } },
-      io:       { label: 'CAN / Input / Output', items: { 'CAN Bus': 'J1939 / J1708', 'Digital Inputs': '2', 'Digital Outputs': '2', 'Analog Inputs': '1', 'Serial': 'RS232 + RS485' } },
+      overview: {
+        label: 'Overview',
+        items: {
+          'Product Type': 'LTE Vehicle Terminal',
+          'Vehicle Fit': 'Compact design crafted for motorcycles',
+          'Main Control': 'Built-in relay for remote fuel and power cutoff',
+        },
+      },
+      network: {
+        label: 'Network & Positioning',
+        items: {
+          Network: '4G LTE with 2G GSM fallback',
+          Positioning: 'GPS, BDS, GLONASS, and LBS',
+          Platform: 'Cloud platform location display',
+        },
+      },
+      control: {
+        label: 'Control & Safety',
+        items: {
+          'Built-In Relay': 'Remote fuel and power cutoff',
+          'Relay Capacity': 'Safely handles up to 2A',
+          'Jamming Response': 'Alarm, buzzer, and relay trigger after GNSS/LTE jamming detection',
+        },
+      },
+      protection: {
+        label: 'Protection',
+        items: {
+          'Battery Protection': 'Internal battery operation at critical vehicle battery level',
+          'Ingress Protection': 'IP66 water and dust resistance',
+          Alerts: 'Ignition, remote cutoff, multiple alerts, geo-fence, battery protection',
+        },
+      },
     },
     applications: [
-      { title: 'Commercial Trucks',  desc: 'CAN bus reads engine data, RPM, and fuel directly from ECU.' },
-      { title: 'Bus Fleets',         desc: 'Passenger transport with deep vehicle diagnostics.' },
-      { title: 'Heavy Equipment',    desc: 'Track machinery usage and engine health data.' },
-      { title: 'Enterprise Fleets',  desc: 'Rich telemetry for large fleet cost management.' },
+      { title: 'Motorcycle Fleet Tracking', desc: 'Compact design fits motorcycles and keeps vehicles connected.' },
+      { title: 'Remote Vehicle Control', desc: 'Built-in relay enables instant fuel and power cutoff.' },
+      { title: 'Anti-Jamming Protection', desc: 'Detects interference and responds with alerts, buzzer, and relay control.' },
     ],
     accessories: [
-      { label: 'CAN Bus Splitter Cable', comment: '/* Add <img> here */' },
-      { label: 'J1939 Adapter Harness',  comment: '/* Add <img> here */' },
-      { label: 'OBD-II Adapter',         comment: '/* Add <img> here */' },
+      { label: 'Built-In PCB Relay' },
+      { label: 'Buzzer Alert Support' },
+      { label: 'Cloud Tracking Platform' },
     ],
   },
 
-  'pl200': {
-    model: 'PL200', name: 'Silent Guardian', image: '/products/PL200.png',
-    category: 'Personal Tracker', tagline: 'Protect what matters most.',
-    description: 'Discreet personal safety tracker with silent SOS alerts, long battery life, and real-time location sharing.',
+  ll301: {
+    model: 'LL301',
+    name: 'Stilled Watcher, Silent Protector',
+    image: '/products/LL301.png',
+    category: 'Asset Tracker',
+    tagline: 'Stilled Watcher, Silent Protector.',
+    description:
+      'LL301 is a compact asset tracker with industry-leading battery life, dual-network communication, zero-barrier deployment, powerful security, Bluetooth setup, and all-weather durability for fleet management, logistics, and asset protection.',
     features: [
-      { icon: 'lte',     label: '4G LTE Connectivity' },
-      { icon: 'gps',     label: 'Real-Time GPS + LBS + WiFi Hybrid Positioning' },
-      { icon: 'sos',     label: 'Silent SOS Emergency Alert' },
-      { icon: 'geo',     label: 'Geofence Alerts' },
-      { icon: 'motion',  label: 'Motion Detection' },
-      { icon: 'battery', label: 'Long-Life 1500mAh Battery' },
-      { icon: 'cloud',   label: 'Real-Time Location Sharing App' },
-      { icon: 'water',   label: 'Compact 45g Lightweight Design' },
+      { icon: 'gps', label: 'GPS & BDS & LBS Positioning' },
+      { icon: 'lte', label: 'LTE & GSM Network' },
+      { icon: 'battery', label: '10,000mAh Rechargeable Battery' },
+      { icon: 'sos', label: 'Remote Listen-in (VoLTE)' },
+      { icon: 'crash', label: 'Multiple Alerts' },
+      { icon: 'cloud', label: 'Multiple Working Modes' },
+      { icon: 'battery', label: 'Strong Magnetic Base' },
+      { icon: 'lte', label: 'Bluetooth Configuration' },
     ],
     specs: {
-      general:  { label: 'General',  items: { 'Communication': 'LTE/GPRS, TCP/UDP/SMS', 'Battery': '1500mAh Li-Ion' } },
-      gps:      { label: 'GPS',      items: { 'GPS Accuracy': '5 meters', 'Positioning': 'GPS + LBS + WiFi (Hybrid)' } },
-      physical: { label: 'Physical', items: { 'Dimensions': '68 x 42 x 16mm', 'Weight': '45g', 'Operating Temp': '-10°C to +50°C' } },
-      cellular: { label: 'Cellular', items: { 'Network': '4G LTE CAT1', 'SIM Card': '4FF Nano' } },
-      io:       { label: 'Input / Output', items: { 'SOS Button': 'Physical Button', 'Charging': 'Micro USB', 'LED Indicator': 'Power & GPS Status' } },
+      overview: {
+        label: 'Overview',
+        items: {
+          'Product Type': 'Asset Tracker',
+          Tagline: 'Stilled Watcher, Silent Protector',
+          Purpose: 'Fleet management, logistics, and asset protection',
+        },
+      },
+      battery: {
+        label: 'Battery & Deployment',
+        items: {
+          'Battery Capacity': '10,000mAh rechargeable battery',
+          'Battery Life': '7 days to 2 years depending on scenario',
+          Installation: 'Strong magnetic base and double-sided adhesive',
+        },
+      },
+      network: {
+        label: 'Network & Positioning',
+        items: {
+          Positioning: 'GPS, BDS, and LBS',
+          Accuracy: '<2.5m accuracy',
+          Network: '4G LTE and 2G GSM dual-network connectivity',
+        },
+      },
+      safety: {
+        label: 'Security & Durability',
+        items: {
+          Alerts: 'Tamper, vibration, low battery, cover removal, device removal',
+          Configuration: 'BLE 5.0 and mobile app configuration',
+          'Water Resistance': 'IPX5',
+          'Operating Temperature': '-20°C to +70°C',
+        },
+      },
     },
     applications: [
-      { title: 'Child Safety',    desc: 'Keep track of children with silent geofence alerts.' },
-      { title: 'Elderly Care',    desc: 'Monitor seniors with discreet SOS functionality.' },
-      { title: 'Personal Security',desc: 'Carry-on tracker for personal safety anywhere.' },
-      { title: 'Pet Tracking',    desc: 'Attach to pet collar for real-time location updates.' },
+      { title: 'Fleet Management', desc: 'Track valuable mobile assets with long battery life and dual-network coverage.' },
+      { title: 'Logistics Protection', desc: 'Use discreet magnetic deployment for cargo and logistics assets.' },
+      { title: 'Asset Security', desc: 'Real-time tamper, vibration, and low-battery alerts support immediate response.' },
     ],
     accessories: [
-      { label: 'Lanyard Carry Case', comment: '/* Add <img> here */' },
-      { label: 'Pet Collar Clip',    comment: '/* Add <img> here */' },
-      { label: 'Belt Clip Holster',  comment: '/* Add <img> here */' },
+      { label: 'Strong Magnetic Base' },
+      { label: 'Double-Sided Adhesive' },
+      { label: 'Mobile App Configuration' },
+      { label: 'BLE 5.0 Configuration' },
     ],
   },
 
-  'll303pro': {
-    model: 'LL303PRO', name: '5 Years Battery', image: '/products/LL303PRO.png',
-    category: 'Asset Tracker', tagline: 'Set it. Forget it. Track it.',
-    description: 'Ultra-long battery life asset tracker with up to 5 years operation, IP67 waterproofing, and magnetic mounting.',
+  pl200: {
+    model: 'PL200',
+    name: 'Silent no more, always in focus',
+    image: '/products/PL200.png',
+    category: 'Personal Tracker',
+    tagline: 'Silent no more, always in focus.',
+    description:
+      'PL200 is a personal safety tracker designed for reliable outdoor mobile work environments. It supports LTE Cat 1 with GSM fallback, GPS/BDS/GLONASS positioning, two-way communication, step counter, panic button, remote listen-in, multiple working modes, and multiple alerts.',
     features: [
-      { icon: 'battery',  label: 'Up to 5 Years Battery Life (19000mAh)' },
-      { icon: 'lte',      label: '4G LTE CAT-M / NB-IoT Connectivity' },
-      { icon: 'gps',      label: 'High-Sensitivity GPS + GLONASS + BeiDou' },
-      { icon: 'magnetic', label: 'Strong Magnetic Mounting' },
-      { icon: 'motion',   label: 'Motion & Tamper Detection' },
-      { icon: 'water',    label: 'IP67 Waterproof & Dustproof' },
-      { icon: 'temp',     label: 'Temperature Monitoring' },
-      { icon: 'cloud',    label: 'Global Coverage' },
+      { icon: 'sos', label: 'Two-Way Communication' },
+      { icon: 'lte', label: 'LTE & GSM Network' },
+      { icon: 'gps', label: 'GPS & BDS & GLONASS Positioning' },
+      { icon: 'motion', label: 'Step Counter' },
+      { icon: 'cloud', label: 'Multiple Working Modes' },
+      { icon: 'sos', label: 'Panic Button' },
+      { icon: 'sos', label: 'Remote Listen-in' },
+      { icon: 'crash', label: 'Multiple Alerts' },
     ],
     specs: {
-      general:  { label: 'General',  items: { 'Communication': 'LTE CAT-M1 / NB-IoT / 2G', 'Battery': '19000mAh Industrial Li-SOCl2' } },
-      gps:      { label: 'GPS',      items: { 'GPS Accuracy': '5 meters CEP', 'GNSS': 'GPS + GLONASS + BeiDou', 'Antenna': 'Internal' } },
-      physical: { label: 'Physical', items: { 'Dimensions': '135 x 85 x 40mm', 'Weight': '~380g', 'Operating Temp': '-40°C to +85°C', 'Protection': 'IP67' } },
-      cellular: { label: 'Cellular', items: { 'Network': '4G LTE CAT-M / NB-IoT / 2G', 'SIM Card': '4FF Nano' } },
-      sensors:  { label: 'Sensors',  items: { '3-Axis Accelerometer': 'Motion / Shock Detection', 'Temperature Sensor': 'Internal', 'Magnetic Mount': '20kg+ hold force' } },
+      overview: {
+        label: 'Overview',
+        items: {
+          'Product Type': 'Personal Tracker',
+          Tagline: 'Silent no more, always in focus',
+          Purpose: 'Worker safety and outdoor mobile tracking',
+        },
+      },
+      network: {
+        label: 'Network & Positioning',
+        items: {
+          Network: 'LTE 4G Cat 1 with GSM 2G fallback',
+          'Network Switch': 'Primary and backup network switch',
+          Positioning: 'GPS, BDS, and GLONASS',
+        },
+      },
+      battery: {
+        label: 'Battery & Modes',
+        items: {
+          Standby: 'Up to 5 days',
+          'Power Strategy': 'Step-triggered and timed mode switching',
+          'Working Modes': 'Configurable according to actual demands',
+        },
+      },
+      safety: {
+        label: 'Safety',
+        items: {
+          Communication: 'Two-way communication with speed-dials to two contacts',
+          'Panic Button': 'Single-press emergency help',
+          'Remote Listen-in': 'Audio monitoring around the device',
+          Alerts: 'Power-on/off, low battery, SIM card change, and more',
+        },
+      },
     },
     applications: [
-      { title: 'Container Tracking',  desc: 'Magnetic attach to shipping containers for years of tracking.' },
-      { title: 'Equipment Monitoring',desc: 'Monitor valuable assets across remote locations.' },
-      { title: 'Cold Chain Logistics',desc: 'Track refrigerated cargo with temperature monitoring.' },
-      { title: 'Anti-Theft Protection',desc:'Covert placement on vehicles for recovery operations.' },
+      { title: 'Worker Safety', desc: 'Designed for outdoor mobile work environments and worker protection.' },
+      { title: 'Emergency Response', desc: 'Panic button and two-way communication help workers request immediate support.' },
+      { title: 'Outdoor Tracking', desc: 'Reliable positioning and dual-network fallback help maintain tracking in remote areas.' },
     ],
     accessories: [
-      { label: 'Heavy-Duty Magnet Base',       comment: '/* Add <img> here */' },
-      { label: 'Screw Mount Bracket',          comment: '/* Add <img> here */' },
-      { label: 'External Temperature Probe',   comment: '/* Add <img> here */' },
-    ],
-  },
-
-  'll301': {
-    model: 'LL301', name: 'Silent Protector', image: '/products/LL301.png',
-    category: 'Asset Tracker', tagline: 'Invisible protection for your assets.',
-    description: 'Covert long-life asset tracker with silent operation, IP67 waterproofing, and motion-triggered alerts.',
-    features: [
-      { icon: 'battery',  label: 'Long Battery Life (10000mAh)' },
-      { icon: 'lte',      label: '4G LTE Connectivity' },
-      { icon: 'gps',      label: 'Real-Time GPS + GLONASS' },
-      { icon: 'motion',   label: 'Motion & Tamper Detection' },
-      { icon: 'temp',     label: 'Temperature Sensor' },
-      { icon: 'water',    label: 'IP67 Waterproof & Dustproof' },
-      { icon: 'magnetic', label: 'Magnetic Mounting Option' },
-      { icon: 'sos',      label: 'Covert Silent Operation' },
-    ],
-    specs: {
-      general:  { label: 'General',  items: { 'Communication': 'LTE/GPRS, TCP/UDP/SMS', 'Battery': '10000mAh Li-Ion' } },
-      gps:      { label: 'GPS',      items: { 'GPS Accuracy': '5 meters', 'GNSS': 'GPS + GLONASS', 'Antenna': 'Internal' } },
-      physical: { label: 'Physical', items: { 'Dimensions': '110 x 72 x 34mm', 'Operating Temp': '-30°C to +70°C', 'Protection': 'IP67' } },
-      cellular: { label: 'Cellular', items: { 'Network': '4G LTE CAT1 / 2G', 'SIM Card': '4FF Nano' } },
-      sensors:  { label: 'Sensors',  items: { '3-Axis Accelerometer': 'Motion / Shock Detection', 'Temperature Sensor': 'Internal', 'Status LED': 'Hidden / Silent Mode' } },
-    },
-    applications: [
-      { title: 'Cargo Tracking',     desc: 'Monitor shipments covertly without detection.' },
-      { title: 'Equipment Security', desc: 'Protect construction equipment from theft.' },
-      { title: 'Cold Chain',         desc: 'Temperature monitoring for sensitive cargo shipments.' },
-      { title: 'Vehicle Recovery',   desc: 'Hidden tracker for stolen vehicle recovery operations.' },
-    ],
-    accessories: [
-      { label: 'Magnetic Mount Bracket',    comment: '/* Add <img> here */' },
-      { label: 'Waterproof Cable Extension',comment: '/* Add <img> here */' },
-    ],
-  },
-
-  'jc371': {
-    model: 'JC371', name: 'AI Dashcam with ADAS', image: '/products/jc371.png',
-    category: 'AI Dashcam', tagline: 'See everything. Miss nothing.',
-    description: 'Powerful remote video monitoring terminal supporting up to 3 cameras with ADAS and DMS visual AI algorithms for commercial fleets.',
-    features: [
-      { icon: 'adas',   label: 'Advanced ADAS Visual AI Algorithms' },
-      { icon: 'adas',   label: 'DMS Driver Monitoring System' },
-      { icon: 'camera', label: 'Supports Up to 3 Cameras' },
-      { icon: 'night',  label: 'Night Vision with IR Cut Filter' },
-      { icon: 'lte',    label: '4G LTE Live Video Streaming' },
-      { icon: 'sos',    label: 'Panic Button & Emergency Cloud Upload' },
-      { icon: 'cloud',  label: 'Cloud Video Storage' },
-      { icon: 'antenna',label: 'Built-in Antenna System (Simplified Wiring)' },
-    ],
-    specs: {
-      general:  { label: 'General',   items: { 'Main Camera': '1080P Full HD', 'Peripheral Cameras': 'Up to 2 Additional', 'GPS': 'Built-in', 'Network': '4G LTE' } },
-      camera:   { label: 'Camera',    items: { 'Main Resolution': '1080P Full HD', 'Cabin Camera': '720P Optional', 'FOV': '120° Wide-Angle', 'Night Vision': 'IR Cut Filter' } },
-      storage:  { label: 'Storage',   items: { 'SD Card': 'Up to 256GB', 'Cloud Storage': 'Event-Triggered Upload', 'Loop Recording': 'Supported' } },
-      physical: { label: 'Physical',  items: { 'Screen': '2.4 inch LCD', 'Power': '12-24V DC', 'Operating Temp': '-20°C to +70°C' } },
-      ai:       { label: 'AI Features',items: { 'ADAS': 'FCW, LDW, Headway Monitoring', 'DMS': 'Fatigue, Distraction, Phone Use, Seatbelt Detection', 'Alert Type': 'In-Cab Audio + Visual + Platform Push' } },
-    },
-    applications: [
-      { title: 'Public Transportation',desc: 'Monitor driver attentiveness across bus and transit fleets.' },
-      { title: 'Logistics & Delivery', desc: 'ADAS warnings reduce collision risk for delivery drivers.' },
-      { title: 'Hazardous Materials',  desc: 'Enhanced monitoring for high-risk cargo transport.' },
-      { title: 'Ride-Sharing Services',desc: 'Driver and cabin monitoring for passenger safety.' },
-    ],
-    accessories: [
-      { label: 'IR Inward-Facing Cabin Camera',    comment: '/* Add <img> here */' },
-      { label: 'Rear View Camera',                 comment: '/* Add <img> here */' },
-      { label: 'External GPS Antenna',             comment: '/* Add <img> here */' },
-    ],
-  },
-
-  'jc450': {
-    model: 'JC450', name: 'Multi-Channel AI Dashcam', image: '/products/jc450.png',
-    category: 'AI Dashcam', tagline: 'Professional safety. Zero compromises.',
-    description: 'LTE dashcam system recording 4/5 channels simultaneously with ADAS and DMS for commercial vehicles.',
-    features: [
-      { icon: 'adas',   label: 'ADAS + DMS Dual AI Systems' },
-      { icon: 'camera', label: '4 / 5 Channel Simultaneous Recording' },
-      { icon: 'lte',    label: '4G LTE Live Streaming + WiFi' },
-      { icon: 'sd',     label: 'Dual SD Slot — Up to 512GB' },
-      { icon: 'sos',    label: 'In-Cab SOS Button' },
-      { icon: 'cloud',  label: 'Cloud Video Backup' },
-      { icon: 'crash',  label: 'G-Sensor Incident Detection & Lock' },
-      { icon: 'gps',    label: 'Built-in GPS Tracking' },
-    ],
-    specs: {
-      general:  { label: 'General',   items: { 'Main Camera': '720P (default) or 1080P', 'Remote Cameras': 'Up to 4 Additional', 'GPS': 'Built-in', 'Network': '4G LTE' } },
-      camera:   { label: 'Camera',    items: { 'Channels': '4 or 5 Simultaneous', 'Main Resolution': '720P / 1080P Optional', 'Remote Cameras': 'Cabin, Sides, Rear, DMS', 'Night Vision': 'IR Supported' } },
-      storage:  { label: 'Storage',   items: { 'SD Slots': '2 x MicroSD', 'Max Storage': '512GB', 'Cloud': 'Event-Triggered Upload' } },
-      physical: { label: 'Physical',  items: { 'Screen': '3.0 inch IPS', 'Power': '12-36V DC', 'Operating Temp': '-30°C to +70°C' } },
-      ai:       { label: 'AI Features',items: { 'ADAS': 'FCW, LDW, Pedestrian Detection Warning', 'DMS': 'Fatigue, Distraction, Phone Use Detection', 'Alerts': 'Real-time In-Cab + Cloud Push' } },
-    },
-    applications: [
-      { title: 'Commercial Fleets',  desc: 'Multi-channel recording for complete fleet accountability.' },
-      { title: 'Long-Haul Trucks',  desc: 'Side and rear cameras eliminate blind spots on highways.' },
-      { title: 'Public Transport',   desc: 'Inside and outside monitoring for passenger buses.' },
-      { title: 'Driver Training',    desc: 'Video evidence for coaching and performance reviews.' },
-    ],
-    accessories: [
-      { label: 'Cabin-View USB Camera',  comment: '/* Add <img> here */' },
-      { label: 'IP67 Blindspot Camera',  comment: '/* Add <img> here */' },
-      { label: 'Mini IR DMS Camera',     comment: '/* Add <img> here */' },
-      { label: 'In-Cab SOS Button',      comment: '/* Add <img> here */' },
-    ],
-  },
-
-  'jc261': {
-    model: 'JC261', name: 'Dual Camera AI Dashcam', image: '/products/jc261.png',
-    category: 'AI Dashcam', tagline: 'Watch the road. Watch the cabin.',
-    description: 'Upgrade of JC400 — 4G AI dash camera with optional secondary camera (driver-facing, cabin, or rear) plus ADAS and DMS.',
-    features: [
-      { icon: 'adas',   label: 'ADAS: FCW, LDW, Headway Monitoring' },
-      { icon: 'adas',   label: 'DMS: Fatigue, Distraction, Phone Use' },
-      { icon: 'camera', label: 'Dual Camera (Front + Optional Cabin / Rear)' },
-      { icon: 'lte',    label: '4G Live Video Streaming' },
-      { icon: 'route',  label: 'Route Replay & Video History Playback' },
-      { icon: 'mic',    label: 'Live Audio Alerts' },
-      { icon: 'cloud',  label: 'Cloud Storage & Platform Integration' },
-      { icon: 'gps',    label: 'Built-in GPS Tracking' },
-    ],
-    specs: {
-      general:  { label: 'General',   items: { 'Main Camera': '1080P Full HD', 'Secondary Camera': 'Optional (Driver / Cabin / Rear)', 'GPS': 'Built-in', 'Network': '4G LTE' } },
-      camera:   { label: 'Camera',    items: { 'Front Resolution': '1080P Full HD', 'Cabin Resolution': '720P or 1080P', 'FOV': '120° Wide-Angle Front', 'Night Vision': 'IR Supported' } },
-      storage:  { label: 'Storage',   items: { 'SD Card': 'Up to 256GB', 'Cloud': 'Event-Triggered Upload' } },
-      physical: { label: 'Physical',  items: { 'Screen': '2.5 inch LCD', 'Power': '12-24V DC', 'Operating Temp': '-20°C to +65°C' } },
-      ai:       { label: 'AI Features',items: { 'ADAS': 'FCW, LDW, Headway Monitoring', 'DMS': 'Drowsiness, Distraction, Phone, Seatbelt', 'Exception Alerts': 'Speeding, Harsh Braking, Sharp Turn' } },
-    },
-    applications: [
-      { title: 'Taxi Services',      desc: 'Cabin camera ensures passenger and driver accountability.' },
-      { title: 'Ride-Share Platforms',desc: 'Video evidence protects drivers from false claims.' },
-      { title: 'Logistics Fleets',   desc: 'Driver coaching based on real AI-scored events.' },
-      { title: 'Government Vehicles',desc: 'Compliance monitoring and incident documentation.' },
-    ],
-    accessories: [
-      { label: 'IR Inward-Facing Camera',  comment: '/* Add <img> here */' },
-      { label: 'Cabin-View USB Camera',    comment: '/* Add <img> here */' },
-    ],
-  },
-
-  'jc261p': {
-    model: 'JC261P', name: 'Pro AI Dashcam', image: '/products/jc261p.png',
-    category: 'AI Dashcam', tagline: 'Pro-grade safety for serious fleets.',
-    description: 'Professional AI dashcam with enhanced driver scoring, touchscreen interface, and full cloud fleet management integration.',
-    features: [
-      { icon: 'adas',   label: 'Advanced ADAS + DMS AI Algorithms' },
-      { icon: 'driver', label: 'AI Driver Behavior Scoring' },
-      { icon: 'camera', label: 'Professional Dual 1080P Camera' },
-      { icon: 'lte',    label: '4G LTE CAT-1 Live Streaming' },
-      { icon: 'cloud',  label: 'Cloud Video Backup & Analytics' },
-      { icon: 'sd',     label: 'Up to 512GB SD Storage' },
-      { icon: 'sos',    label: 'Fatigue & Distraction Real-Time Alerts' },
-      { icon: 'gps',    label: 'Integrated GPS Tracking' },
-    ],
-    specs: {
-      general:  { label: 'General',   items: { 'Main Camera': '1080P Full HD', 'Secondary Camera': 'Optional 1080P', 'GPS': 'Built-in', 'Network': '4G LTE CAT-1' } },
-      camera:   { label: 'Camera',    items: { 'Front Resolution': '1080P', 'Cabin Resolution': '1080P', 'FOV': '120° Front + 90° Cabin', 'Night Vision': 'IR Supported' } },
-      storage:  { label: 'Storage',   items: { 'SD Card': 'Up to 512GB', 'Cloud': 'Automatic Event Upload' } },
-      physical: { label: 'Physical',  items: { 'Screen': '3.0 inch Touchscreen', 'Power': '12-36V DC', 'Operating Temp': '-30°C to +70°C' } },
-      ai:       { label: 'AI Features',items: { 'ADAS': 'FCW, LDW, Tailgating, Pedestrian Warning', 'DMS': 'Fatigue, Distraction, Smoking, Phone, Seatbelt', 'Driver Score': 'Per-Driver AI Safety Score' } },
-    },
-    applications: [
-      { title: 'Fleet Safety Programs', desc: 'AI scoring drives measurable driver behavior improvement.' },
-      { title: 'Driver Training',       desc: 'Event video for targeted coaching sessions.' },
-      { title: 'Insurance Telematics',  desc: 'Scored driving data for premium reduction programs.' },
-      { title: 'Enterprise Fleets',     desc: 'Cloud backup and platform integration for large operations.' },
-    ],
-    accessories: [
-      { label: 'Cabin-View USB Camera',  comment: '/* Add <img> here */' },
-      { label: 'External GPS Antenna',   comment: '/* Add <img> here */' },
-    ],
-  },
-
-  'jc400d': {
-    model: 'JC400D', name: '4G AI Dashcam', image: '/products/jc400d.png',
-    category: 'AI Dashcam', tagline: 'Always connected. Always protected.',
-    description: '4G-enabled AI dashcam with DMS driver monitoring, ADAS safety alerts, and real-time fleet monitoring. (Successor: JC261)',
-    features: [
-      { icon: 'adas',   label: 'DMS: Drowsy / Distracted Driver Detection' },
-      { icon: 'adas',   label: 'ADAS: Forward Collision & Lane Warning' },
-      { icon: 'camera', label: 'Dual Channel 1080P + DMS IR Camera' },
-      { icon: 'lte',    label: '4G Real-Time Live Streaming' },
-      { icon: 'gps',    label: 'Built-in GPS Tracking' },
-      { icon: 'cloud',  label: 'Cloud Video Upload on Event' },
-      { icon: 'crash',  label: 'G-Sensor Incident Lock' },
-      { icon: 'route',  label: 'Remote Video Playback' },
-    ],
-    specs: {
-      general:  { label: 'General',   items: { 'Main Camera': '1080P Full HD', 'DMS Camera': 'Built-in Driver-Facing IR', 'GPS': 'Built-in', 'Network': '4G LTE' } },
-      camera:   { label: 'Camera',    items: { 'Front Resolution': '1080P', 'DMS Camera': '720P Driver-Facing IR', 'Front FOV': '120°', 'Driver FOV': '90°', 'Night Vision': 'IR Infrared' } },
-      storage:  { label: 'Storage',   items: { 'SD Card': 'Up to 256GB', 'Cloud': 'DMS Event Auto-Upload' } },
-      physical: { label: 'Physical',  items: { 'Power': '12-24V DC', 'Operating Temp': '-20°C to +70°C' } },
-      ai:       { label: 'AI Features',items: { 'DMS': 'Drowsy Driving, Yawning, Phone Use, Distraction', 'ADAS': 'FCW, LDW', 'Push Alerts': 'Audible In-Cab + Platform Push Notification' } },
-    },
-    applications: [
-      { title: 'Delivery Fleets',  desc: 'DMS monitoring keeps tired delivery drivers alert and safe.' },
-      { title: 'Public Transport', desc: 'Driver vigilance alerts protect passengers on every trip.' },
-      { title: 'Remote Monitoring',desc: 'Live stream and playback from anywhere via platform.' },
-      { title: 'Mixed Fleets',     desc: 'Consistent monitoring across cars, vans, and light trucks.' },
-    ],
-    accessories: [
-      { label: 'Replacement DMS Camera',  comment: '/* Add <img> here */' },
-      { label: 'Windshield Mount Kit',    comment: '/* Add <img> here */' },
-    ],
-  },
-
-  'jc181': {
-    model: 'JC181', name: 'Basic Dashcam', image: '/products/jc181.png',
-    category: 'Dashcam', tagline: 'Simple recording. Solid protection.',
-    description: 'Reliable standalone 1080P dashcam with night vision and parking mode — no SIM or subscription required.',
-    features: [
-      { icon: 'camera',   label: '1080P Full HD Recording' },
-      { icon: 'camera',   label: 'Loop Recording (Auto-Overwrite)' },
-      { icon: 'crash',    label: 'G-Sensor Emergency Lock' },
-      { icon: 'night',    label: 'Night Vision IR Array' },
-      { icon: 'motion',   label: 'Motion Detection Parking Mode' },
-      { icon: 'sd',       label: 'SD Card Storage Up to 128GB' },
-      { icon: 'power',    label: '12V Direct Wire or USB Power' },
-      { icon: 'smalltrk', label: 'Standalone — No SIM Required' },
-    ],
-    specs: {
-      general:  { label: 'General', items: { 'Type': 'Standalone Dashcam (No SIM / No 4G)', 'Recording': '1080P Full HD Loop', 'Power': '12V DC' } },
-      camera:   { label: 'Camera',  items: { 'Resolution': '1080P Full HD', 'FOV': '140° Wide-Angle', 'Night Vision': 'IR LED Array', 'Screen': '2.0 inch LCD' } },
-      storage:  { label: 'Storage', items: { 'SD Card': 'Up to 128GB MicroSD', 'Loop Recording': 'Automatic Overwrite When Full', 'G-Sensor Lock': 'Protect Event Footage' } },
-      physical: { label: 'Physical',items: { 'Power': '12V DC (Cigarette Socket / Hardwire)', 'Operating Temp': '-10°C to +60°C' } },
-    },
-    applications: [
-      { title: 'Budget Fleet Recording', desc: 'Affordable video evidence for small fleet operators.' },
-      { title: 'Personal Vehicles',      desc: 'Simple plug-and-play dashcam for personal use.' },
-      { title: 'Insurance Evidence',     desc: 'HD footage protects against fraudulent accident claims.' },
-      { title: 'Parking Security',       desc: 'Motion-triggered recording while vehicle is parked.' },
-    ],
-    accessories: [
-      { label: 'Hardwire Kit (Parking Mode)', comment: '/* Add <img> here */' },
-      { label: '128GB MicroSD Card',          comment: '/* Add <img> here */' },
+      { label: 'Speed-Dial Contact Setup' },
+      { label: 'Cloud Platform' },
+      { label: 'Remote Listen-in Support' },
     ],
   },
 };
 
-/* ─────────────────────────────────────────────────────────────
-   MAIN COMPONENT
-───────────────────────────────────────────────────────────── */
 const ProductDetail = () => {
   const { productId } = useParams();
-  const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState('features');
   const [quoteOpen, setQuoteOpen] = useState(false);
   const [quoteData, setQuoteData] = useState({
-    name: '', email: '', company: '', phone: '', country: '', quantity: '', requirement: ''
+    name: '',
+    email: '',
+    company: '',
+    phone: '',
+    country: '',
+    quantity: '',
+    requirement: '',
   });
 
   const product = productDetails[productId];
 
   const allRelated = Object.entries(productDetails)
     .filter(([id]) => id !== productId)
-    .map(([id, p]) => ({ id, model: p.model, image: p.image, category: p.category, name: p.name }));
+    .map(([id, p]) => ({
+      id,
+      model: p.model,
+      image: p.image,
+      category: p.category,
+      name: p.name,
+    }));
+
   const related = [
-    ...allRelated.filter(p => p.category === product?.category),
-    ...allRelated.filter(p => p.category !== product?.category)
+    ...allRelated.filter((p) => p.category === product?.category),
+    ...allRelated.filter((p) => p.category !== product?.category),
   ].slice(0, 4);
 
-  const handleQuoteChange = e => setQuoteData({ ...quoteData, [e.target.name]: e.target.value });
+  const handleQuoteChange = (e) => {
+    setQuoteData({ ...quoteData, [e.target.name]: e.target.value });
+  };
 
   const handleQuoteSubmit = () => {
     if (!quoteData.name || !quoteData.email) {
       alert('Please fill in Name and Email.');
       return;
     }
-    const subject = encodeURIComponent(`Quote Request: ${product.model} — ${quoteData.company || 'Timeline Telematics'}`);
+
+    const subject = encodeURIComponent(
+      `Quote Request: ${product.model} — ${quoteData.company || 'Timeline Telematics'}`
+    );
+
     const body = encodeURIComponent(
-`Quote Request — ${product.model}
+      `Quote Request — ${product.model}
 
 Name: ${quoteData.name}
 Email: ${quoteData.email}
@@ -729,6 +877,7 @@ ${quoteData.requirement}
 ---
 Sent from Timeline Telematics Product Page`
     );
+
     window.location.href = `mailto:info@teletix.me?subject=${subject}&body=${body}`;
     setQuoteOpen(false);
   };
@@ -737,16 +886,18 @@ Sent from Timeline Telematics Product Page`
     return (
       <div className="pdp-not-found">
         <h2>Product Not Found</h2>
-        <Link to="/products" className="pdp-btn-primary">Browse Products</Link>
+        <Link to="/products" className="pdp-btn-primary">
+          Browse Products
+        </Link>
       </div>
     );
   }
 
   const tabs = [
-    { key: 'features',      label: 'Features' },
-    { key: 'specifications',label: 'Specifications' },
-    { key: 'applications',  label: 'Applications' },
-    { key: 'accessories',   label: 'Accessories' },
+    { key: 'features', label: 'Features' },
+    { key: 'specifications', label: 'Specifications' },
+    { key: 'applications', label: 'Applications' },
+    { key: 'accessories', label: 'Accessories' },
   ];
 
   return (
@@ -754,80 +905,101 @@ Sent from Timeline Telematics Product Page`
       <TopBar />
       <Navbar />
 
-      {/* ── Breadcrumb ── */}
       <div className="pdp-breadcrumb">
         <div className="pdp-container">
-          <Link to="/">Home</Link><span>›</span>
-          <Link to="/products">Products</Link><span>›</span>
+          <Link to="/">Home</Link>
+          <span>›</span>
+          <Link to="/products">Products</Link>
+          <span>›</span>
           <span className="pdp-breadcrumb-active">{product.model}</span>
         </div>
       </div>
 
-      {/* ── Hero ── */}
       <section className="pdp-hero">
         <div className="pdp-container">
           <div className="pdp-hero-grid">
             <div className="pdp-hero-image-col">
               <div className="pdp-image-main">
-                <img src={product.image} alt={product.model} className="pdp-product-img"
-                  onError={e => { e.target.src = '/placeholder.png'; }} />
+                <img
+                  src={product.image}
+                  alt={product.model}
+                  className="pdp-product-img"
+                  onError={(e) => {
+                    e.currentTarget.style.display = 'none';
+                  }}
+                />
               </div>
             </div>
+
             <div className="pdp-hero-info-col">
               <span className="pdp-category-badge">{product.category}</span>
               <h1 className="pdp-model-title">{product.model}</h1>
               <h2 className="pdp-model-subtitle">{product.name}</h2>
-              <p className="pdp-tagline"><em>{product.tagline}</em></p>
+              <p className="pdp-tagline">
+                <em>{product.tagline}</em>
+              </p>
               <p className="pdp-description">{product.description}</p>
+
               <ul className="pdp-quick-features">
                 {product.features.slice(0, 5).map((f, i) => (
                   <li key={i}>
-                    <svg className="pdp-li-check" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                      <polyline points="20 6 9 17 4 12"/>
+                    <svg
+                      className="pdp-li-check"
+                      width="16"
+                      height="16"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2.5"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    >
+                      <polyline points="20 6 9 17 4 12" />
                     </svg>
                     {f.label}
                   </li>
                 ))}
               </ul>
+
               <div className="pdp-hero-actions">
-                <button className="pdp-btn-primary" onClick={() => setQuoteOpen(true)}>Get a Quote</button>
-                <a href="tel:+971563863615" className="pdp-btn-outline">Call Sales</a>
+                <button className="pdp-btn-primary" onClick={() => setQuoteOpen(true)}>
+                  Get a Quote
+                </button>
+                <a href="tel:+971563863615" className="pdp-btn-outline">
+                  Call Sales
+                </a>
               </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* ── Tabs ── */}
       <section className="pdp-tabs-section">
         <div className="pdp-container">
           <div className="pdp-tabs-nav">
-            {tabs.map(tab => (
-              <button key={tab.key}
+            {tabs.map((tab) => (
+              <button
+                key={tab.key}
                 className={`pdp-tab-btn ${activeTab === tab.key ? 'active' : ''}`}
-                onClick={() => setActiveTab(tab.key)}>
+                onClick={() => setActiveTab(tab.key)}
+              >
                 {tab.label}
               </button>
             ))}
           </div>
 
           <div className="pdp-tab-content">
-
-            {/* ─ FEATURES ─ */}
             {activeTab === 'features' && (
               <div className="pdp-features-grid">
                 {product.features.map((f, i) => (
                   <div key={i} className="pdp-feature-card">
-                    <div className="pdp-feature-icon-wrap">
-                      {Icons[f.icon] || Icons.gps}
-                    </div>
+                    <div className="pdp-feature-icon-wrap">{Icons[f.icon] || Icons.gps}</div>
                     <span>{f.label}</span>
                   </div>
                 ))}
               </div>
             )}
 
-            {/* ─ SPECIFICATIONS ─ */}
             {activeTab === 'specifications' && (
               <div className="pdp-specs-grouped">
                 {Object.values(product.specs).map((group, gi) => (
@@ -846,7 +1018,6 @@ Sent from Timeline Telematics Product Page`
               </div>
             )}
 
-            {/* ─ APPLICATIONS ─ */}
             {activeTab === 'applications' && (
               <div className="pdp-applications-grid">
                 {product.applications.map((app, i) => (
@@ -861,16 +1032,15 @@ Sent from Timeline Telematics Product Page`
               </div>
             )}
 
-            {/* ─ ACCESSORIES ─ */}
             {activeTab === 'accessories' && (
               <div className="pdp-accessories-grid">
                 {product.accessories.map((acc, i) => (
                   <div key={i} className="pdp-acc-card">
                     <div className="pdp-acc-img-placeholder">
                       <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#bbb" strokeWidth="1.5">
-                        <rect x="3" y="3" width="18" height="18" rx="2"/>
-                        <circle cx="8.5" cy="8.5" r="1.5"/>
-                        <polyline points="21 15 16 10 5 21"/>
+                        <rect x="3" y="3" width="18" height="18" rx="2" />
+                        <circle cx="8.5" cy="8.5" r="1.5" />
+                        <polyline points="21 15 16 10 5 21" />
                       </svg>
                     </div>
                     <p className="pdp-acc-label">{acc.label}</p>
@@ -878,21 +1048,24 @@ Sent from Timeline Telematics Product Page`
                 ))}
               </div>
             )}
-
           </div>
         </div>
       </section>
 
-      {/* ── Related Products ── */}
       <section className="pdp-related-section">
         <div className="pdp-container">
           <h2 className="pdp-section-heading">Related Products</h2>
           <div className="pdp-related-grid">
-            {related.map(p => (
+            {related.map((p) => (
               <Link to={`/products/${p.id}`} key={p.id} className="pdp-related-card">
                 <div className="pdp-related-img-box">
-                  <img src={p.image} alt={p.model}
-                    onError={e => { e.target.src = '/placeholder.png'; }} />
+                  <img
+                    src={p.image}
+                    alt={p.model}
+                    onError={(e) => {
+                      e.currentTarget.style.display = 'none';
+                    }}
+                  />
                 </div>
                 <div className="pdp-related-info">
                   <strong>{p.model}</strong>
@@ -905,7 +1078,6 @@ Sent from Timeline Telematics Product Page`
         </div>
       </section>
 
-      {/* ── CTA Strip ── */}
       <section className="pdp-cta-strip">
         <div className="pdp-container">
           <div className="pdp-cta-strip-inner">
@@ -914,8 +1086,12 @@ Sent from Timeline Telematics Product Page`
               <p>Get pricing, specs, and availability from our sales team.</p>
             </div>
             <div className="pdp-cta-strip-actions">
-              <button className="pdp-btn-primary" onClick={() => setQuoteOpen(true)}>Get a Quote</button>
-              <a href="tel:+971563863615" className="pdp-btn-outline">+971 56 386 3615</a>
+              <button className="pdp-btn-primary" onClick={() => setQuoteOpen(true)}>
+                Get a Quote
+              </button>
+              <a href="tel:+971563863615" className="pdp-btn-outline">
+                +971 56 386 3615
+              </a>
             </div>
           </div>
         </div>
@@ -923,9 +1099,13 @@ Sent from Timeline Telematics Product Page`
 
       <Footer />
 
-      {/* ── Quote Modal ── */}
       {quoteOpen && (
-        <div className="pdp-modal-overlay" onClick={e => { if (e.target.classList.contains('pdp-modal-overlay')) setQuoteOpen(false); }}>
+        <div
+          className="pdp-modal-overlay"
+          onClick={(e) => {
+            if (e.target.classList.contains('pdp-modal-overlay')) setQuoteOpen(false);
+          }}
+        >
           <div className="pdp-modal">
             <div className="pdp-modal-header">
               <div className="pdp-modal-header-left">
@@ -933,13 +1113,19 @@ Sent from Timeline Telematics Product Page`
                 <p>Fill in your details and we'll get back to you shortly</p>
               </div>
               <button className="pdp-modal-close" onClick={() => setQuoteOpen(false)}>
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round">
+                  <line x1="18" y1="6" x2="6" y2="18" />
+                  <line x1="6" y1="6" x2="18" y2="18" />
+                </svg>
               </button>
             </div>
 
             <div className="pdp-modal-body">
               <div className="pdp-modal-product-tag">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round"><path d="M12 22s-8-4.5-8-11.8A8 8 0 0 1 12 2a8 8 0 0 1 8 8.2c0 7.3-8 11.8-8 11.8z"/><circle cx="12" cy="10" r="3"/></svg>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round">
+                  <path d="M12 22s-8-4.5-8-11.8A8 8 0 0 1 12 2a8 8 0 0 1 8 8.2c0 7.3-8 11.8-8 11.8z" />
+                  <circle cx="12" cy="10" r="3" />
+                </svg>
                 Requesting quote for: <strong>{product.model}</strong>
               </div>
 
@@ -987,13 +1173,22 @@ Sent from Timeline Telematics Product Page`
               <div className="pdp-modal-row">
                 <div className="pdp-modal-group full">
                   <label>Your Requirement *</label>
-                  <textarea name="requirement" value={quoteData.requirement} onChange={handleQuoteChange} placeholder="Describe your requirements, use case, or questions about this product..." />
+                  <textarea
+                    name="requirement"
+                    value={quoteData.requirement}
+                    onChange={handleQuoteChange}
+                    placeholder="Describe your requirements, use case, or questions about this product..."
+                  />
                 </div>
               </div>
 
               <div className="pdp-modal-footer">
-                <button className="pdp-modal-cancel" onClick={() => setQuoteOpen(false)}>Cancel</button>
-                <button className="pdp-modal-submit" onClick={handleQuoteSubmit}>Send Quote Request</button>
+                <button className="pdp-modal-cancel" onClick={() => setQuoteOpen(false)}>
+                  Cancel
+                </button>
+                <button className="pdp-modal-submit" onClick={handleQuoteSubmit}>
+                  Send Quote Request
+                </button>
               </div>
             </div>
           </div>

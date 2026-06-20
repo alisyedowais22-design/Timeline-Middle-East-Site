@@ -20,23 +20,11 @@ const ProductsPage = () => {
       label: 'Vehicle Trackers',
       desc: 'Real-time GPS trackers for all vehicle types',
       products: [
-        { id: 'gt06n-4g', model: 'GT06N 4G', image: '/products/GT06N 4G.png', name: 'Classic, Reimagined in 4G' },
-        { id: 'vg03', model: 'VG03', image: '/products/VG03.png', name: 'Discreet Tracking' },
-        { id: 'vl103d', model: 'VL103D', image: '/products/VL103D.png', name: 'Tiny Device' },
-        { id: 'vl103m', model: 'VL103M', image: '/products/VL103M.png', name: 'Minimal Form' },
-        { id: 'vl110c', model: 'VL110C', image: '/products/VL110C.png', name: 'Any Vehicle' },
-        { id: 'vl802', model: 'VL802', image: '/products/VL802.png', name: 'More Visibility' },
-        { id: 'vl808', model: 'VL808', image: '/products/VL808.png', name: 'Intelligent Tracking' },
-        { id: 'x3', model: 'X3', image: '/products/X3.png', name: 'Voice Tracker' },
-        { id: 'gt06n', model: 'GT06N', image: '/products/GT06N.png', name: 'The Classic' },
-      ],
-    },
-    {
-      id: 'can_obd',
-      label: 'CAN & OBD Trackers',
-      desc: 'Deep vehicle data via CAN bus integration',
-      products: [
-        { id: 'vl502', model: 'VL502', image: '/products/VL502.png', name: 'Fleet CAN Tracker' },
+        { id: 'vl103d', model: 'VL103D', image: '/products/VL103D.png', name: 'LTE GNSS Terminal' },
+        { id: 'vl103m', model: 'VL103M', image: '/products/VL103M.png', name: 'LTE GNSS Terminal' },
+        { id: 'vl808', model: 'VL808', image: '/products/VL808.png', name: 'LTE Vehicle GNSS Terminal' },
+        { id: 'vl110c', model: 'VL110C', image: '/products/VL110C.png', name: 'LTE Vehicle Terminal' },
+        { id: 'vl111', model: 'VL111', image: '/products/VL111.png', name: 'LTE Vehicle Terminal' },
       ],
     },
     {
@@ -44,8 +32,8 @@ const ProductsPage = () => {
       label: 'Asset Trackers',
       desc: 'Long-life battery trackers for valuable assets',
       products: [
-        { id: 'll303pro', model: 'LL303PRO', image: '/products/LL303PRO.png', name: '5 Years Battery' },
-        { id: 'll301', model: 'LL301', image: '/products/LL301.png', name: 'Silent Protector' },
+        { id: 'll303pro', model: 'LL303PRO', image: '/products/LL303PRO.png', name: 'LTE Solar Powered GNSS Tracker' },
+        { id: 'll301', model: 'LL301', image: '/products/LL301.png', name: 'Stilled Watcher, Silent Protector' },
       ],
     },
     {
@@ -53,7 +41,7 @@ const ProductsPage = () => {
       label: 'Personal Trackers',
       desc: 'Discreet safety trackers for individuals',
       products: [
-        { id: 'pl200', model: 'PL200', image: '/products/PL200.png', name: 'Silent Guardian' },
+        { id: 'pl200', model: 'PL200', image: '/products/PL200.png', name: 'Silent no more, always in focus' },
       ],
     },
     {
@@ -61,11 +49,8 @@ const ProductsPage = () => {
       label: 'AI Dashcams',
       desc: 'ADAS & DMS AI-powered dashcams for fleet safety',
       products: [
-        { id: 'jc371', model: 'JC371', image: '/products/jc371.png', name: 'AI Dashcam with ADAS' },
-        { id: 'jc450', model: 'JC450', image: '/products/jc450.png', name: 'Multi-Channel AI Dashcam' },
-        { id: 'jc261', model: 'JC261', image: '/products/jc261.png', name: 'Dual Camera AI Dashcam' },
-        { id: 'jc261p', model: 'JC261P', image: '/products/jc261p.png', name: 'Pro AI Dashcam' },
-        { id: 'jc400d', model: 'JC400D', image: '/products/jc400d.png', name: '4G AI Dashcam' },
+        { id: 'jc371', model: 'JC371', image: '/products/jc371.png', name: 'Multi-Channel AI DashCam' },
+        { id: 'jc450', model: 'JC450', image: '/products/jc450.png', name: 'Multi-Channel AI DashCam' },
       ],
     },
     {
@@ -73,7 +58,8 @@ const ProductsPage = () => {
       label: 'Non-AI Dashcams',
       desc: 'Reliable standalone dashcams for basic recording',
       products: [
-        { id: 'jc181', model: 'JC181', image: '/products/jc181.png', name: 'Basic Dashcam' },
+        { id: 'jc181', model: 'JC181', image: '/products/jc181.png', name: 'Compact Dual-Channel DashCam' },
+        { id: 'jc182', model: 'JC182', image: '/products/jc182.png', name: '4G Mini DashCam' },
       ],
     },
   ];

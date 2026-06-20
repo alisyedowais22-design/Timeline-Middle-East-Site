@@ -9,49 +9,97 @@ const DEVICES = [
   {
     category: 'Vehicle Trackers',
     items: [
-      { label: 'GT06N 4G', desc: 'Classic Upgraded', to: '/products/gt06n-4g' },
-      { label: 'VG03', desc: 'Discreet Tracking', to: '/products/vg03' },
-      { label: 'VL103D', desc: 'Tiny Device', to: '/products/vl103d' },
-      { label: 'VL103M', desc: 'Minimal Form', to: '/products/vl103m' },
-      { label: 'VL110C', desc: 'Any Vehicle', to: '/products/vl110c' },
-      { label: 'VL802', desc: 'More Visibility', to: '/products/vl802' },
-      { label: 'VL808', desc: 'Intelligent Tracking', to: '/products/vl808' },
-      { label: 'X3', desc: 'Voice Tracker', to: '/products/x3' },
-      { label: 'GT06N', desc: 'The Classic', to: '/products/gt06n' },
+      { label: 'VL103D', desc: 'LTE GNSS Terminal', to: '/products/vl103d' },
+      { label: 'VL103M', desc: 'LTE GNSS Terminal', to: '/products/vl103m' },
+      { label: 'VL808', desc: 'LTE Vehicle GNSS Terminal', to: '/products/vl808' },
+      { label: 'VL110C', desc: 'LTE Vehicle Terminal', to: '/products/vl110c' },
+      { label: 'VL111', desc: 'LTE Vehicle Terminal', to: '/products/vl111' },
     ],
   },
   {
     category: 'AI Dashcams',
     items: [
-      { label: 'JC371', desc: 'AI Dashcam with ADAS', to: '/products/jc371' },
-      { label: 'JC450', desc: 'Multi-Channel AI Dashcam', to: '/products/jc450' },
-      { label: 'JC261', desc: 'Dual Camera AI Dashcam', to: '/products/jc261' },
-      { label: 'JC261P', desc: 'Pro AI Dashcam', to: '/products/jc261p' },
-      { label: 'JC400D', desc: '4G AI Dashcam', to: '/products/jc400d' },
+      { label: 'JC371', desc: 'Multi-Channel AI DashCam', to: '/products/jc371' },
+      { label: 'JC450', desc: 'Multi-Channel AI DashCam', to: '/products/jc450' },
     ],
-  },
-  {
-    category: 'CAN & OBD',
-    items: [{ label: 'VL502', desc: 'Fleet CAN Tracker', to: '/products/vl502' }],
   },
   {
     category: 'Asset Trackers',
     items: [
-      { label: 'LL303PRO', desc: '5 Years Battery', to: '/products/ll303pro' },
-      { label: 'LL301', desc: 'Silent Protector', to: '/products/ll301' },
+      { label: 'LL303PRO', desc: 'LTE Solar Powered GNSS Tracker', to: '/products/ll303pro' },
+      { label: 'LL301', desc: 'Stilled Watcher, Silent Protector', to: '/products/ll301' },
     ],
   },
   {
     category: 'Personal Trackers',
-    items: [{ label: 'PL200', desc: 'Silent Guardian', to: '/products/pl200' }],
+    items: [
+      { label: 'PL200', desc: 'Silent no more, always in focus', to: '/products/pl200' },
+    ],
   },
   {
     category: 'Non-AI Dashcams',
-    items: [{ label: 'JC181', desc: 'Basic Dashcam', to: '/products/jc181' }],
+    items: [
+      { label: 'JC181', desc: 'Compact Dual-Channel DashCam', to: '/products/jc181' },
+      { label: 'JC182', desc: '4G Mini DashCam', to: '/products/jc182' },
+    ],
+  },
+];
+
+const VEHICLE_SOLUTIONS = [
+  {
+    label: 'Bus Monitoring',
+    desc: 'Passenger Fleet Intelligence',
+    to: '/vehicle-solutions/bus-monitoring-solution',
   },
   {
-    category: 'Accessories',
-    items: [{ label: 'All Accessories', desc: 'Cables, Cameras & Sensors', to: '/accessories' }],
+    label: 'Cargo Truck',
+    desc: 'Cargo Visibility & Driver Safety',
+    to: '/vehicle-solutions/cargo-truck-solution',
+  },
+  {
+    label: 'Oil Truck',
+    desc: 'Hazardous Fleet Monitoring',
+    to: '/vehicle-solutions/oil-truck-solution',
+  },
+  {
+    label: 'School Bus',
+    desc: 'Student Safety & Transport Control',
+    to: '/vehicle-solutions/school-bus-solution',
+  },
+  {
+    label: 'Train Monitoring',
+    desc: 'Rail Video Intelligence',
+    to: '/vehicle-solutions/train-monitoring-solution',
+  },
+  {
+    label: 'Police Car',
+    desc: 'Law Enforcement Vehicle Intelligence',
+    to: '/vehicle-solutions/police-car-solution',
+  },
+  {
+    label: 'Police Car System',
+    desc: 'End-to-End Police Video Architecture',
+    to: '/vehicle-solutions/police-car-system',
+  },
+  {
+    label: 'Private Car/SUV',
+    desc: 'Executive Vehicle Safety',
+    to: '/vehicle-solutions/private-car-suv-solution',
+  },
+  {
+    label: 'Motorcycle',
+    desc: 'Two-Wheeler Video Telematics',
+    to: '/vehicle-solutions/motorcycle-solution',
+  },
+  {
+    label: 'Military Vehicle',
+    desc: 'Tactical Fleet Monitoring',
+    to: '/vehicle-solutions/military-vehicle-solution',
+  },
+  {
+    label: 'Fire Truck',
+    desc: 'Emergency Fleet Visibility',
+    to: '/vehicle-solutions/fire-truck-solution',
   },
 ];
 
@@ -104,7 +152,7 @@ const HoverDropdown = ({ label, to, active, children }) => {
           display: 'flex',
           alignItems: 'center',
           gap: '4px',
-          padding: '7px 14px',
+          padding: '7px 11px',
           fontSize: '13.5px',
           fontFamily: 'Poppins, sans-serif',
           fontWeight: 600,
@@ -149,6 +197,7 @@ const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [mobileServicesOpen, setMobileServicesOpen] = useState(false);
+  const [mobileVehicleSolutionsOpen, setMobileVehicleSolutionsOpen] = useState(false);
   const [mobileIndustriesOpen, setMobileIndustriesOpen] = useState(false);
   const [mobileProdOpen, setMobileProdOpen] = useState(false);
 
@@ -167,12 +216,13 @@ const Navbar = () => {
   useEffect(() => {
     setMobileOpen(false);
     setMobileServicesOpen(false);
+    setMobileVehicleSolutionsOpen(false);
     setMobileIndustriesOpen(false);
     setMobileProdOpen(false);
   }, [location.pathname]);
 
   const linkStyle = (to) => ({
-    padding: '7px 14px',
+    padding: '7px 11px',
     fontSize: '13.5px',
     fontFamily: 'Poppins, sans-serif',
     fontWeight: 600,
@@ -190,7 +240,7 @@ const Navbar = () => {
     fontSize: '15px',
     fontWeight: 600,
     fontFamily: 'Poppins, sans-serif',
-    color: isActive(to) ? '#E8312A' : '#374151',
+    color: isActive(to) || location.pathname.startsWith(to) ? '#E8312A' : '#374151',
     borderBottom: '1px solid #f3f4f6',
     textDecoration: 'none',
   });
@@ -246,9 +296,9 @@ const Navbar = () => {
         <div
           className="navbar-inner"
           style={{
-            maxWidth: '1280px',
+            maxWidth: '1440px',
             margin: '0 auto',
-            padding: '0 32px',
+            padding: '0 24px',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'space-between',
@@ -289,7 +339,7 @@ const Navbar = () => {
             />
           </Link>
 
-          <div className="desktop-nav" style={{ display: 'flex', alignItems: 'center', gap: '2px' }}>
+          <div className="desktop-nav" style={{ display: 'flex', alignItems: 'center', gap: '0px' }}>
             <Link to="/" style={linkStyle('/')}>Home</Link>
 
             <HoverDropdown label="Services" to="/solutions" active={isActive('/solutions') || isPrefixActive('/services')}>
@@ -316,6 +366,39 @@ const Navbar = () => {
 
                 <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, minmax(0, 1fr))', gap: '6px 12px' }}>
                   {SERVICES.map((item) => (
+                    <Link key={item.label} to={item.to} style={dropdownItemStyle} onMouseEnter={onItemEnter} onMouseLeave={onItemLeave}>
+                      <div style={itemTitleStyle}>{item.label}</div>
+                      <div style={itemDescStyle}>{item.desc}</div>
+                    </Link>
+                  ))}
+                </div>
+              </div>
+            </HoverDropdown>
+
+            <HoverDropdown label="Solution" to="/vehicle-solutions" active={isPrefixActive('/vehicle-solutions')}>
+              <div style={{ padding: '14px 18px', width: 640, maxWidth: '92vw' }}>
+                <div style={{
+                  fontSize: '10.5px',
+                  fontWeight: 800,
+                  letterSpacing: '0.08em',
+                  color: '#9ca3af',
+                  fontFamily: 'Poppins, sans-serif',
+                  textTransform: 'uppercase',
+                  paddingBottom: 8,
+                  marginBottom: 10,
+                  borderBottom: '1px solid #f3f4f6',
+                  display: 'flex',
+                  justifyContent: 'space-between',
+                  alignItems: 'center',
+                }}>
+                  <span>AI Video Telematics Solutions</span>
+                  <Link to="/vehicle-solutions" style={{ fontSize: '12.5px', fontWeight: 800, color: '#E8312A', textDecoration: 'none', textTransform: 'none', letterSpacing: 0 }}>
+                    View All →
+                  </Link>
+                </div>
+
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, minmax(0, 1fr))', gap: '6px 12px' }}>
+                  {VEHICLE_SOLUTIONS.map((item) => (
                     <Link key={item.label} to={item.to} style={dropdownItemStyle} onMouseEnter={onItemEnter} onMouseLeave={onItemLeave}>
                       <div style={itemTitleStyle}>{item.label}</div>
                       <div style={itemDescStyle}>{item.desc}</div>
@@ -373,10 +456,10 @@ const Navbar = () => {
                   marginBottom: 10,
                   borderBottom: '1px solid #f3f4f6',
                 }}>
-                  Fleet Hardware & Accessories
+                  Fleet Hardware
                 </div>
 
-                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(7, 1fr)', gap: '6px 12px' }}>
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(5, 1fr)', gap: '6px 12px' }}>
                   {DEVICES.map((cat) => (
                     <div key={cat.category}>
                       <div style={{
@@ -489,6 +572,43 @@ const Navbar = () => {
                     View All Services →
                   </Link>
                   {SERVICES.map((item) => (
+                    <Link key={item.label} to={item.to} style={{ display: 'block', padding: '9px 0', fontSize: '13.5px', fontWeight: 600, color: '#374151', borderBottom: '1px solid #f9fafb', textDecoration: 'none' }}>
+                      <div>{item.label}</div>
+                      <div style={{ fontSize: '11px', color: '#9ca3af', marginTop: 2 }}>{item.desc}</div>
+                    </Link>
+                  ))}
+                </div>
+              )}
+            </div>
+
+            <div>
+              <button
+                onClick={() => setMobileVehicleSolutionsOpen(!mobileVehicleSolutionsOpen)}
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'space-between',
+                  width: '100%',
+                  padding: '11px 0',
+                  fontSize: '15px',
+                  fontWeight: 600,
+                  fontFamily: 'Poppins, sans-serif',
+                  color: isPrefixActive('/vehicle-solutions') ? '#E8312A' : '#374151',
+                  background: 'none',
+                  border: 'none',
+                  borderBottom: '1px solid #f3f4f6',
+                  cursor: 'pointer',
+                }}
+              >
+                Solution <ChevronDown />
+              </button>
+
+              {mobileVehicleSolutionsOpen && (
+                <div style={{ paddingLeft: '12px' }}>
+                  <Link to="/vehicle-solutions" style={{ display: 'block', padding: '10px 0', fontSize: '13px', fontWeight: 700, color: '#E8312A', textDecoration: 'none', borderBottom: '1px solid #f9fafb' }}>
+                    View All Solutions →
+                  </Link>
+                  {VEHICLE_SOLUTIONS.map((item) => (
                     <Link key={item.label} to={item.to} style={{ display: 'block', padding: '9px 0', fontSize: '13.5px', fontWeight: 600, color: '#374151', borderBottom: '1px solid #f9fafb', textDecoration: 'none' }}>
                       <div>{item.label}</div>
                       <div style={{ fontSize: '11px', color: '#9ca3af', marginTop: 2 }}>{item.desc}</div>

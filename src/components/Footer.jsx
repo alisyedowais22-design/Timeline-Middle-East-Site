@@ -329,24 +329,6 @@ const Footer = () => (
 
             <div style={{ display: 'grid', gap: '8px' }}>
               <a
-                href="https://website.teletix.pk/"
-                target="_blank"
-                rel="noopener noreferrer"
-                style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: '9px',
-                  color: '#D1D5DB',
-                  fontSize: '13px',
-                  fontWeight: 700,
-                  textDecoration: 'none',
-                  fontFamily: P,
-                }}
-              >
-                🇵🇰 Pakistan <span style={{ color: '#22C55E' }}>● Live</span>
-              </a>
-
-              <a
                 href="https://global.timelinetelematics.com/"
                 target="_blank"
                 rel="noopener noreferrer"
@@ -362,6 +344,24 @@ const Footer = () => (
                 }}
               >
                 🇦🇪 Middle East <span style={{ color: '#22C55E' }}>● Active</span>
+              </a>
+
+              <a
+                href="https://website.teletix.pk/"
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '9px',
+                  color: '#D1D5DB',
+                  fontSize: '13px',
+                  fontWeight: 700,
+                  textDecoration: 'none',
+                  fontFamily: P,
+                }}
+              >
+                🇵🇰 Pakistan <span style={{ color: '#22C55E' }}>● Live</span>
               </a>
 
               <div

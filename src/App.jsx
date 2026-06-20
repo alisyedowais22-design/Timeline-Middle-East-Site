@@ -13,6 +13,8 @@ import ProductsPage from './pages/ProductsPage';
 import ProductDetail from './pages/ProductDetail';
 import ServiceDetailPage from './pages/ServiceDetailPage';
 import AccessoriesPage from './pages/AccessoriesPage';
+import VehicleSolutionsPage from './pages/VehicleSolutionsPage';
+import VehicleSolutionDetailPage from './pages/VehicleSolutionDetailPage';
 import './responsive.css';
 
 const ScrollToTop = () => {
@@ -72,6 +74,9 @@ function App() {
 
         <Route path="/solutions" element={<SolutionsPage />} />
         <Route path="/solutions/:slug" element={<ServiceDetailPage />} />
+
+        <Route path="/vehicle-solutions" element={<VehicleSolutionsPage />} />
+        <Route path="/vehicle-solutions/:slug" element={<VehicleSolutionDetailPage />} />
 
         <Route path="/services/:slug" element={<ServiceDetailPage />} />
 
