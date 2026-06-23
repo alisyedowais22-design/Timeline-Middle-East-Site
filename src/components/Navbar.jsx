@@ -49,6 +49,13 @@ const BASE_DEVICES = [
       { label: 'JC182', desc: '4G Mini DashCam', to: '/products/jc182' },
     ],
   },
+  {
+    category: 'Accessories',
+    desc: 'Cables, cameras & sensors',
+    items: [
+      { label: 'All Accessories', desc: 'Cables, Cameras, Sensors & Peripherals', to: '/accessories' },
+    ],
+  },
 ];
 
 const QOHO_DEVICES = QOHO_PRODUCT_CATEGORIES.map((cat) => ({
@@ -358,7 +365,7 @@ const ProductsDropdownContent = ({ onClose }) => {
             </div>
 
             <Link
-              to="/products"
+              to={activeCategory.category === 'Accessories' ? '/accessories' : '/products'}
               onClick={onClose}
               style={{
                 fontSize: '12px',
