@@ -5,6 +5,7 @@ import Navbar      from '../components/Navbar';
 import Hero        from '../components/Hero';
 import Industries  from '../components/Industries';
 import CaseStudies from '../components/CaseStudies';
+import ProductBannerSlider from '../components/ProductBannerSlider';
 import CTABanner   from '../components/CTABanner';
 import Footer      from '../components/Footer';
 
@@ -1057,7 +1058,7 @@ const HomePage = () => {
         <Hero />
         <Industries />
         <CaseStudies />
-
+        <ProductBannerSlider />
         <Ticker />
         <StatsSection />
         <CEOSection />
