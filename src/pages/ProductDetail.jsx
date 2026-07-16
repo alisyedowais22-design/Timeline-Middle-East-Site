@@ -29,6 +29,205 @@ const Icons = {
 };
 
 const productDetails = {
+  f5: {
+    model: 'F5',
+    name: 'ADAS + BSD DashCam',
+    image: '/products/f5.png',
+    category: 'AI Dashcam',
+    tagline: '4K clarity. Smarter protection. Real-time visibility.',
+    description:
+      'F5 is an advanced ADAS + BSD dashcam designed for smarter fleet safety with 4K front recording, 3.2-inch IPS screen, Wi-Fi connectivity, optional GPS, parking monitoring, rear camera support, and up to 256GB Micro SD storage.',
+    features: [
+      { icon: 'camera', label: '4K Front Recording' },
+      { icon: 'adas', label: 'ADAS Driver Assistance Support' },
+      { icon: 'adas', label: 'BSD Blind Spot Detection Support' },
+      { icon: 'camera', label: '3.2-inch Full IPS Screen' },
+      { icon: 'lte', label: 'Wi-Fi Connectivity' },
+      { icon: 'gps', label: 'Optional Built-in GPS' },
+      { icon: 'sd', label: 'Micro SD Storage up to 256GB' },
+      { icon: 'motion', label: 'Parking Monitoring Support' },
+    ],
+    specs: {
+      overview: {
+        label: 'Overview',
+        items: {
+          'Product Type': 'ADAS + BSD DashCam',
+          Model: 'F5',
+          Chipset: 'SA230D',
+          'Main Purpose': 'Fleet video safety, driver assistance and blind spot monitoring',
+          'Recording Format': 'Movie: H.264(TS), Photo: JPG',
+        },
+      },
+      camera: {
+        label: 'Camera System',
+        items: {
+          'Front Camera Sensor': 'GC4653',
+          'Front Camera Lens': '2G+4P',
+          'Inside Camera Sensor': 'AHD GC2083',
+          'Inside Camera Lens': '2G+4P with IR',
+          'Rear Camera Sensor': 'GC2083',
+          'Rear Camera Lens': 'Wide angle HD lens',
+        },
+      },
+      video: {
+        label: 'Video & Recording',
+        items: {
+          'Image Resolution': '4K(3840×2160) + 1K(1920×1080) + 2K(2560×1440)',
+          'Video Resolution': '4K(3840×2160) + 1K(1920×1080) + 2K(2560×1440)',
+          Frame: '30 FPS',
+          'Auto Recording': 'Support',
+          'Loop Recording Time': 'Off / 1 min / 3 min / 5 min / 10 min',
+          'Seamless Recording': 'Uninterrupted video recording without frame or second drop',
+        },
+      },
+      screenStorage: {
+        label: 'Screen, Storage & Connectivity',
+        items: {
+          Screen: '3.2-inch Full IPS screen',
+          'Screen Resolution': '268×800',
+          Storage: 'Micro SD 4GB–256GB U3',
+          'SD Storage': 'Max support 256GB; above 64GB should be formatted on the device',
+          WiFi: 'Support',
+          GPS: 'Built-in optional function',
+        },
+      },
+      safety: {
+        label: 'Safety & Monitoring',
+        items: {
+          ADAS: 'Support',
+          BSD: 'Support',
+          'Voice Recording': 'Support',
+          'Parking Monitoring': 'Support',
+          Mic: 'Support',
+          Speaker: 'Support',
+          'Holder / Suction Cup': 'Optional',
+        },
+      },
+      hardware: {
+        label: 'Hardware & Power',
+        items: {
+          'Working Voltage': '5V',
+          'Working Current': 'DC5V 600mA',
+          'Working Temperature': '-20°C to +70°C',
+          'Storage Temperature': '-30°C to +90°C',
+          Wires: '12V Cigarette lighter cable / 12V ACC hardwire kit / OBD cable',
+          'Super Capacitor': 'No',
+        },
+      },
+    },
+    applications: [
+      { title: 'Fleet Safety Monitoring', desc: 'Use ADAS and BSD support to improve daily fleet safety and reduce risky driving events.' },
+      { title: 'Commercial Vehicles', desc: 'Suitable for cars, vans, trucks, taxis and fleet vehicles that require video evidence and driver assistance.' },
+      { title: 'Parking & Incident Protection', desc: 'Parking monitoring and loop recording help capture important events while parked or on the road.' },
+      { title: 'Driver & Route Review', desc: 'Video recording, optional GPS and Wi-Fi support help review trips, incidents and driver behaviour.' },
+    ],
+    accessories: [
+      { label: 'Rear Camera' },
+      { label: 'GPS Antenna / Module' },
+      { label: 'ACC Hardwire Kit' },
+      { label: 'Micro SD Storage Card' },
+    ],
+  },
+
+  f7: {
+    model: 'F7',
+    name: 'ADAS + BSD DashCam',
+    image: '/products/f7.png',
+    category: 'AI Dashcam',
+    tagline: 'Smarter vision for safer driving.',
+    description:
+      'F7 is an advanced ADAS + BSD dashcam built for compact fleet intelligence. It combines 4K front recording, 3.2-inch IPS screen, Wi-Fi connectivity, optional GPS, parking monitoring, voice recording, rear camera support and up to 256GB Micro SD storage.',
+    features: [
+      { icon: 'camera', label: '4K Front Recording' },
+      { icon: 'adas', label: 'ADAS + BSD Alerts' },
+      { icon: 'camera', label: '3.2-inch IPS Screen' },
+      { icon: 'lte', label: 'Wi-Fi Connectivity' },
+      { icon: 'gps', label: 'Optional Built-in GPS' },
+      { icon: 'sd', label: 'Micro SD Storage up to 256GB' },
+      { icon: 'night', label: 'Inside IR Camera Support' },
+      { icon: 'motion', label: 'Parking Monitoring Support' },
+    ],
+    specs: {
+      overview: {
+        label: 'Overview',
+        items: {
+          'Product Type': 'ADAS + BSD DashCam',
+          Model: 'F7',
+          Chipset: 'SA230D',
+          'Main Purpose': 'Advanced video safety, ADAS alerts and blind spot monitoring',
+          'Recording Format': 'Movie: H.264(TS), Photo: JPG',
+        },
+      },
+      camera: {
+        label: 'Camera System',
+        items: {
+          'Front Camera Sensor': 'GC4653',
+          'Front Camera Lens': '6G',
+          'Inside Camera Sensor': 'GC2083',
+          'Inside Camera Lens': '6G HD lens with IR',
+          'Rear Camera Sensor': 'GC2083',
+          'Rear Camera Lens': 'Wide angle HD lens',
+        },
+      },
+      video: {
+        label: 'Video & Recording',
+        items: {
+          'Image Resolution': '4K(2560×1440) + MIPI 1080P(1920×1080) + AHD 1080P(1920×1080)',
+          'Video Resolution': '2K(2560×1440) + MIPI 1080P(1920×1080) + AHD 1080P(1920×1080)',
+          Frame: '30 FPS',
+          'Auto Recording': 'Support',
+          'Loop Recording Time': 'Off / 1 min / 3 min / 5 min / 10 min',
+          'Seamless Recording': 'Uninterrupted video recording without frame or second drop',
+        },
+      },
+      screenStorage: {
+        label: 'Screen, Storage & Connectivity',
+        items: {
+          Screen: '3.2-inch Full IPS screen',
+          'Screen Resolution': '268×800',
+          Storage: 'Micro SD 4GB–256GB U3',
+          'SD Storage': 'Max support 256GB; above 64GB should be formatted on the device',
+          WiFi: 'Support',
+          GPS: 'Built-in optional function',
+        },
+      },
+      safety: {
+        label: 'Safety & Monitoring',
+        items: {
+          ADAS: 'Support',
+          BSD: 'Support',
+          'Voice Recording': 'Support',
+          'Parking Monitoring': 'Support',
+          Mic: 'Support',
+          Speaker: 'Support',
+        },
+      },
+      hardware: {
+        label: 'Hardware & Power',
+        items: {
+          'Working Voltage': '5V',
+          'Working Current': 'DC5V 600mA',
+          'Working Temperature': '-20°C to +70°C',
+          'Storage Temperature': '-30°C to +90°C',
+          Wires: '12V Cigarette lighter cable / 12V ACC hardwire kit optional',
+          'Super Capacitor': 'No',
+        },
+      },
+    },
+    applications: [
+      { title: 'Fleet Video Safety', desc: 'Supports smarter monitoring for fleet vehicles with ADAS and BSD alert workflows.' },
+      { title: 'Commercial Vehicle Recording', desc: 'Useful for vans, taxis, trucks and business vehicles needing front, inside and rear video visibility.' },
+      { title: 'Parking Monitoring', desc: 'Parking monitoring helps capture events when the vehicle is parked and unattended.' },
+      { title: 'Driver Assistance', desc: 'ADAS + BSD support helps improve awareness, safer driving and incident prevention.' },
+    ],
+    accessories: [
+      { label: 'Rear Camera' },
+      { label: 'GPS Antenna / Module' },
+      { label: 'ACC Hardwire Kit' },
+      { label: 'Micro SD Storage Card' },
+    ],
+  },
+
   jc181: {
     model: 'JC181',
     name: 'Compact Dual-Channel DashCam',

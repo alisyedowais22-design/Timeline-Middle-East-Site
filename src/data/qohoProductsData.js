@@ -14,7 +14,7 @@ export const QOHO_PRODUCT_CATEGORIES = [
       { id: 'qh-hybrid-mobile-nvr', model: 'Hybrid Mobile NVR', image: qohoImg('Hybrid Mobile NVR.png'), name: '8CH AHD + 4CH IPC / 12CH IPC NVR' },
       { id: 'qh-smallest-mobile-dvr', model: 'Smallest Mobile DVR', image: qohoImg('Smallest Mobile DVR.png'), name: '1CH to 4CH Waterproof Mobile DVR' },
       { id: 'qh-4ch-mobile-dvr-system-kit', model: '4CH Mobile DVR System Kit', image: qohoImg('DVS System.png'), name: '1080P Cameras + Dual Lens DVR Camera' },
-      { id: 'qh-8ch-ahd-mobile-dvr-system', model: '8CH AHD Mobile DVR System', image: qohoImg('360° View System.png'), name: 'GPS 4G WiFi AHD Mobile DVR System' },
+      //{ id: 'qh-8ch-ahd-mobile-dvr-system', model: '8CH AHD Mobile DVR System', image: qohoImg('360° View System.png'), name: 'GPS 4G WiFi AHD Mobile DVR System' },
     ],
   },
   {
